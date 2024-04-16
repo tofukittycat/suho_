@@ -10,7 +10,8 @@ yarn dev
 
 - next.js v14 + app router, react 18
 - react-query v5, axios
-- shacnd/ci, tailwind-css
+- shacnd/ui, tailwind-css
+- zustand
 - react-hook-form, zod
 - eslint, prettier
 
