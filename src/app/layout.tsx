@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import Navbar from "@/components/Navbar";
+import RenderSub from "@/components/RenderSub";
+
 import AppRegister from "../AppRegister";
 import "./globals.css";
 
@@ -19,7 +22,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AppRegister>{children}</AppRegister>
+        <AppRegister>
+          <div className="fixed flex w-full flex-row items-center justify-center bg-bmpurple">
+            <div className="left-[calc(50vw - 40rem)] hidden h-screen w-[40rem] max-w-[40rem] items-center opacity-0 transition-opacity duration-200 ease-in-out lg:flex lg:opacity-100">
+              <RenderSub />
+            </div>
+            <div className="h-screen w-full max-w-[430px] bg-slate-400 ">
+              {children}
+              <Navbar />
+            </div>
+          </div>
+        </AppRegister>
       </body>
     </html>
   );
