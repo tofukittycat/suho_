@@ -1,27 +1,57 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import React from "react";
+import { useMemo } from "react";
 
-import { Icons } from "./ui/icons/icons";
+import { cn } from "@/lib/utils";
 
-const navs = [
-  { type: "홈", icon: <Icons.tab_home /> },
-  { type: "데일리 운세", icon: <Icons.tab_suho /> },
-  { type: "부적 만들기", icon: <Icons.tab_charm /> },
-  { type: "유저", icon: <Icons.tab_user /> },
-];
+import { NavIcons } from "./ui/icons/icons";
 
 export default function Navbar() {
+  const pathname = usePathname();
+
+  const routes = useMemo(() => {
+    return [
+      {
+        type: "홈",
+        icon: NavIcons.tab_home,
+        href: "/",
+        isActive: pathname === "/", //
+      },
+      {
+        type: "데일리 운세",
+        icon: NavIcons.tab_suho,
+        href: "/suho",
+        isActive: pathname === "/suho",
+      },
+      {
+        type: "부적 만들기",
+        icon: NavIcons.tab_charm,
+        href: "/charm",
+        isActive: pathname === "/charm",
+      },
+      {
+        type: "유저",
+        icon: NavIcons.tab_user,
+        href: "/me",
+        isActive: pathname === "/me",
+      },
+    ];
+  }, [pathname]);
+
   return (
     <section className="fixed bottom-0 flex h-16 w-full max-w-[430px] flex-col items-center justify-center bg-white">
       <nav className="mx-auto flex w-full px-3">
-        {navs.map(({ type, icon }) => (
+        {routes.map(route => (
           <Link
-            href="/"
+            key={route.type}
+            href={route.href}
             className="relative flex flex-1 flex-col content-center items-center text-center"
           >
-            <div>{icon}</div>
-            <span>{type}</span>
+            <route.icon className={cn("fill-[#D9D9D9]", route.isActive && "fill-[#14142B]")} />
+            {route.isActive && <span>{route.type}</span>}
           </Link>
         ))}
       </nav>
