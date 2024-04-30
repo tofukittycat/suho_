@@ -33,7 +33,7 @@ export default function RootLayout({
             <div className="left-[calc(50vw - 40rem)] hidden h-screen w-[40rem] max-w-[40rem] items-center opacity-0 transition-opacity duration-200 ease-in-out lg:flex lg:opacity-100">
               <RenderSub />
             </div>
-            <div className="h-screen w-full max-w-[430px] bg-slate-400 ">
+            <div className="h-screen w-full max-w-[430px] bg-white">
               {children}
               <Navbar />
             </div>
