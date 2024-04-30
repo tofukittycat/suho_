@@ -51,6 +51,7 @@ export default function Navbar() {
             className="relative flex flex-1 flex-col content-center items-center text-center"
           >
             <route.icon className={cn("fill-[#D9D9D9]", route.isActive && "fill-[#14142B]")} />
+            {/* {route.isActive && <span className="font-pretendard">{route.type}</span>} */}
             {route.isActive && <span>{route.type}</span>}
           </Link>
         ))}

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 
 import Navbar from "@/components/Navbar";
 import RenderSub from "@/components/RenderSub";
@@ -7,7 +7,13 @@ import RenderSub from "@/components/RenderSub";
 import AppRegister from "../AppRegister";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+/** Pretendard 폰트 적용 */
+const pretendard = localFont({
+  src: "../../public/fonts/PretendardVariable.woff2",
+  display: "swap",
+  weight: "45 920",
+  variable: "--font-pretendard",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,14 +26,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className={`${pretendard.variable} font-pretendard font-semibold`}>
+      <body className={pretendard.className}>
         <AppRegister>
           <div className="fixed flex w-full flex-row items-center justify-center bg-bmpurple">
             <div className="left-[calc(50vw - 40rem)] hidden h-screen w-[40rem] max-w-[40rem] items-center opacity-0 transition-opacity duration-200 ease-in-out lg:flex lg:opacity-100">
               <RenderSub />
             </div>
-            <div className="h-screen w-full max-w-[430px] bg-slate-400 ">
+            <div className="h-screen w-full max-w-[430px] bg-white">
               {children}
               <Navbar />
             </div>
