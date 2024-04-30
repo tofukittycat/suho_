@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        pretendard: ["var(--font-pretendard)"],
+      },
       colors: {
         bmpurple: "#B695FF",
         border: "hsl(var(--border))",
