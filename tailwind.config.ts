@@ -27,6 +27,7 @@ const config = {
         // <SUHO THEME COLORS
         "main-purple-suho": "#7B57FC",
         "pastel-purple-suho": "#E4DCFF",
+        "black-purple-suho": "#0B082B",
         "gray-90-suho": "#303538",
         "gray-70-suho": "#525A61",
         "gray-50-suho": "#808991",
@@ -89,6 +90,12 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      height: {
+        "real-screen": "calc(var(--vh) * 100)",
+      },
+    },
+    minHeight: {
+      "real-screen": "calc(var(--vh) * 100)",
     },
   },
   plugins: [require("tailwindcss-animate")],

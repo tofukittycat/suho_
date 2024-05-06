@@ -5,6 +5,7 @@ export const SHFont = "/fonts/PretendardVariable.woff2";
 export const SHColors = {
   "main-purple-suho": "#7B57FC",
   "pastel-purple-suho": "#E4DCFF",
+  "black-purple-suho": "#0B082B",
   "gray-90-suho": "#303538",
   "gray-70-suho": "#525A61",
   "gray-60-suho": "#636C73",
