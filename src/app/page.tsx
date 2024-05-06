@@ -1,11 +1,18 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
 import InputField from "@/components/base/InputField";
 import Label from "@/components/base/Label";
 import HCStack from "@/components/base/stack/HCStack";
 import HStack from "@/components/base/stack/HStack";
 import VCStack from "@/components/base/stack/VCStack";
 import VStack from "@/components/base/stack/VStack";
+import { Button } from "@mui/material";
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <main>
       <VStack>
@@ -32,6 +39,16 @@ export default function Home() {
         <Label type="Body2">Body2</Label>
         <Label type="Caption">Caption</Label>
         <Label>Custom</Label>
+      </VCStack>
+      <VCStack className="m-[50px]">
+        <Button
+          variant="contained"
+          onClick={() => {
+            router.push("signin");
+          }}
+        >
+          로그인으로 가기
+        </Button>
       </VCStack>
     </main>
   );

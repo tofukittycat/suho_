@@ -12,7 +12,7 @@ type MuiProviderProps = {
 export default function MuiProvider({ children }: MuiProviderProps) {
   return (
     <AppRouterCacheProvider>
-      <ThemeProvider theme={muiTheme}>{children}</ThemeProvider>;
+      <ThemeProvider theme={muiTheme}>{children}</ThemeProvider>
     </AppRouterCacheProvider>
   );
 }

@@ -5,7 +5,10 @@ import { createTheme } from "@mui/material/styles";
 
 const muiTheme = createTheme({
   typography: {
-    fontFamily: "Pretendard, Arial",
+    fontFamily: "Pretendard",
+    button: {
+      textTransform: "none",
+    },
   },
   components: {
     MuiCssBaseline: {

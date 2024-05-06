@@ -3,7 +3,14 @@ import { ReactNode } from "react";
 import { Label as LabelUI } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
-type LabelType = "Title1" | "Title2" | "SubTitle1" | "SubTitle2" | "Body1" | "Body2" | "Caption";
+type LabelType =
+  | "Title1" /** 18test */
+  | "Title2" // 111z1
+  | "SubTitle1"
+  | "SubTitle2"
+  | "Body1"
+  | "Body2"
+  | "Caption";
 
 type LabelProps = {
   type?: LabelType;
@@ -14,6 +21,7 @@ type LabelProps = {
 export default function Label({ type, className, children }: LabelProps) {
   switch (type) {
     case "Title1":
+      /** test!!!! */
       return (
         <LabelUI className={cn("font-pretendard text-[28px] font-bold", className)}>
           {children}
