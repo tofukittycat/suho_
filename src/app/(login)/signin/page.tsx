@@ -1,5 +1,6 @@
 "use client";
 
+import VCStack from "@/components/base/stack/VCStack";
 import VStack from "@/components/base/stack/VStack";
 import { Button } from "@/components/ui/button";
 
@@ -10,9 +11,9 @@ export default function page() {
   const { handleGoToSignUp } = useSignIn();
 
   return (
-    <VStack wFull hFull className="px-[20px]">
-      <VStack className="my-[200px] flex-grow-0 items-center justify-center">Lottie</VStack>
-      <VStack className="flex-shrink-0 gap-[7px]">
+    <VStack wFull hFull className="gap-[12px] px-[20px]">
+      <VCStack className=" mt-[40px] h-[220px] rounded-[26px] bg-[#F2F4F5]">Lottie</VCStack>
+      <VStack className="gap-[7px]">
         <LoginButton type="KAKAO" />
         <LoginButton type="NAVER" />
         <LoginButton type="GOOGLE" />

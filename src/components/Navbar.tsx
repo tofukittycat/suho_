@@ -43,7 +43,7 @@ export default function Navbar() {
   }, [pathname]);
 
   return (
-    <section className="fixed bottom-0 flex h-[64px] w-full max-w-[430px] flex-col items-center justify-center">
+    <section className="fixed bottom-0 z-50 flex h-[64px] w-full max-w-[430px] flex-col items-center justify-center bg-white">
       <nav className="mx-auto flex w-full px-3">
         {routes.map(route => (
           <Link
