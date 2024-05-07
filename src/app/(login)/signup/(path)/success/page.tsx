@@ -12,7 +12,7 @@ export default function page() {
 
   return (
     <VStack className="px-[20px]">
-      <VCStack className="mt-[40px] h-[480px] rounded-[26px] bg-[#F2F4F5]">Lottie</VCStack>
+      <VCStack className=" mt-[40px] h-[220px] rounded-[26px] bg-[#F2F4F5]">Lottie</VCStack>
       <VCStack className="mt-[60px]">
         <Label
           type="SubTitle1"
