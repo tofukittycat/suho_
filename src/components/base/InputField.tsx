@@ -1,6 +1,8 @@
 import { SHColors } from "@/lib/theme";
 import { TextField, TextFieldProps } from "@mui/material";
 
+import { Button, ButtonProps } from "../ui/button";
+
 type InputFieldProps = TextFieldProps;
 
 export default function InputField({ ...props }: InputFieldProps) {
@@ -9,6 +11,7 @@ export default function InputField({ ...props }: InputFieldProps) {
       variant="standard"
       {...props}
       sx={{
+        "width": "100%",
         "& .MuiInput-root": {
           // Base
           "color": SHColors["gray-90-suho"],
@@ -74,3 +77,17 @@ export default function InputField({ ...props }: InputFieldProps) {
     />
   );
 }
+
+/**
+ * Input Field에 사용되는 Button
+ */
+export const InputFieldButton = ({ ...props }: ButtonProps) => {
+  return (
+    <Button
+      className="ml-3 h-[28px] rounded-[14px] bg-main-purple-suho text-[13px] font-[500] text-[#FFFFFF] hover:bg-main-purple-suho/90"
+      {...props}
+    >
+      {props.children}
+    </Button>
+  );
+};

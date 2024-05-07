@@ -7,7 +7,7 @@ import LoginButton from "./components/LoginButton";
 import useSignIn from "./hooks/useSignIn";
 
 export default function page() {
-  const { handleClickSignUp } = useSignIn();
+  const { handleGoToSignUp } = useSignIn();
 
   return (
     <VStack wFull hFull className="px-[20px]">
@@ -21,7 +21,7 @@ export default function page() {
       <Button
         variant={"ghost"}
         className="text-[#918A8C] underline hover:bg-transparent"
-        onClick={handleClickSignUp}
+        onClick={handleGoToSignUp}
       >
         이메일로 회원가입
       </Button>
