@@ -3,7 +3,14 @@ import { ReactNode } from "react";
 import { Label as LabelUI } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
-type LabelType = "Title1" | "Title2" | "SubTitle1" | "SubTitle2" | "Body1" | "Body2" | "Caption";
+type LabelType =
+  | "Title1" /** 28px, 700*/
+  | "Title2" /** 24px, 600 */
+  | "SubTitle1" /** 20px 700 */
+  | "SubTitle2" /** 18px 600 */
+  | "Body1" /** 16px 400 */
+  | "Body2" /** 14px 400 */
+  | "Caption" /** 12px 400 */;
 
 type LabelProps = {
   type?: LabelType;
