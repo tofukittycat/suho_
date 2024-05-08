@@ -24,14 +24,21 @@ export default function page() {
             name="password"
             defaultValue={undefined}
             control={control}
-            render={({ field }) => <InputField {...field} type="password" label="비밀번호" />}
+            render={({ field }) => (
+              <InputField {...field} type="password" autoComplete="new-password" label="비밀번호" />
+            )}
           />
           <Controller
             name="confirmPassword"
             defaultValue={undefined}
             control={control}
             render={({ field }) => (
-              <InputField {...field} type="password" label="비밀번호를 다시 한번 입력해주세요." />
+              <InputField
+                {...field}
+                type="password"
+                autoComplete="new-password"
+                label="비밀번호를 다시 한번 입력해주세요."
+              />
             )}
           />
           <ConfirmButton onClick={handleSignUp}>확인</ConfirmButton>

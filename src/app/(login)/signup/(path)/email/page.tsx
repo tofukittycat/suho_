@@ -29,6 +29,7 @@ export default function page() {
               <InputField
                 {...field}
                 label="이메일 주소"
+                type="email"
                 InputProps={{
                   endAdornment: <InputFieldButton>인증하기</InputFieldButton>,
                 }}
@@ -39,7 +40,9 @@ export default function page() {
             name="certificationNumber"
             defaultValue={undefined}
             control={control}
-            render={({ field }) => <InputField {...field} label="인증번호" />}
+            render={({ field }) => (
+              <InputField {...field} type="text" autoComplete="one-time-code" label="인증번호" />
+            )}
           />
           <ConfirmButton onClick={handleConfirmEmail}>확인</ConfirmButton>
         </VStack>
