@@ -1,15 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
 import HamburgerNav from "@/components/HamburgerNav";
 import Label from "@/components/base/Label";
 import HStack from "@/components/base/stack/HStack";
 import VStack from "@/components/base/stack/VStack";
 
 export default function Home() {
-  const router = useRouter();
-
   return (
     <main>
       <VStack className="mx-[20px]">
