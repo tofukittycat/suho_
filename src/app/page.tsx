@@ -2,54 +2,30 @@
 
 import { useRouter } from "next/navigation";
 
-import InputField from "@/components/base/InputField";
+import HamburgerNav from "@/components/HamburgerNav";
 import Label from "@/components/base/Label";
-import HCStack from "@/components/base/stack/HCStack";
 import HStack from "@/components/base/stack/HStack";
-import VCStack from "@/components/base/stack/VCStack";
 import VStack from "@/components/base/stack/VStack";
-import { Button } from "@mui/material";
 
 export default function Home() {
   const router = useRouter();
 
   return (
     <main>
-      <VStack>
-        <InputField label={"이름"} />
-        <InputField label={"이름"} />
+      <VStack className="mx-[20px]">
+        {/* Header */}
+        <HStack className="mt-[40px] h-[60px] items-end justify-between">
+          <VStack>
+            <Label className="text-[16px] font-[800]">5월 8일 시험을 위한</Label>
+            <Label className="text-[24px] font-[800]">
+              <span className="text-main-purple-suho">승진</span>님의 행운 나무
+            </Label>
+          </VStack>
+          <div>
+            <HamburgerNav />
+          </div>
+        </HStack>
       </VStack>
-
-      <HStack>
-        <InputField label={"이름"} />
-        <InputField label={"이름"} />
-      </HStack>
-
-      <HCStack>
-        <Label type="Title1" className="text-main-purple-suho">
-          Title1
-        </Label>
-        <Label type="Title2">Title2</Label>
-      </HCStack>
-
-      <VCStack className="m-[50px]">
-        <Label type="SubTitle1">SubTitle1</Label>
-        <Label type="SubTitle2">SubTitle2</Label>
-        <Label type="Body1">Body1</Label>
-        <Label type="Body2">Body2</Label>
-        <Label type="Caption">Caption</Label>
-        <Label>Custom</Label>
-      </VCStack>
-      <VCStack className="m-[50px]">
-        <Button
-          variant="contained"
-          onClick={() => {
-            router.push("signin");
-          }}
-        >
-          로그인으로 가기
-        </Button>
-      </VCStack>
     </main>
   );
 }
