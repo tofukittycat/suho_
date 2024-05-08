@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  position: fixed;
+}
+
+:root {
+  --vh: 1vh;
+}
+
+/* Safari Mobile 사이징 */
+html.is-safari,
+html.is-safari body {
+  height: calc(var(--vh, 1vh) * 100);
+}
+
 @layer base {
   :root {
     --vh: 100%;
