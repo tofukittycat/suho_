@@ -2,18 +2,18 @@ import Image from "next/image";
 
 import { useMemo } from "react";
 
-import { Button } from "@/components/ui/button";
+import { Button, ButtonProps } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 
 type LoginType = "KAKAO" | "NAVER" | "GOOGLE" | "EMAIL";
 
-type LoginButtonProps = {
-  type: LoginType;
+type LoginButtonProps = ButtonProps & {
+  buttonType: LoginType;
 };
 
-export default function LoginButton({ type }: LoginButtonProps) {
+export default function LoginButton({ buttonType, ...props }: LoginButtonProps) {
   const [src, label, bgColor, fontColor] = useMemo(() => {
-    switch (type) {
+    switch (buttonType) {
       case "KAKAO":
         return ["/imgs/icons/ic_kakao_login.svg", "카카오로 시작하기", "#FBE34C", "#0B082B"];
       case "NAVER":
@@ -23,10 +23,10 @@ export default function LoginButton({ type }: LoginButtonProps) {
       default:
         return ["/imgs/icons/ic_email_login.svg", "이메일로 시작하기", "#F4FAFC", "#009BFF"];
     }
-  }, [type]);
+  }, [buttonType]);
 
   return (
-    <Button className={`relative h-[56px] w-full`} style={{ backgroundColor: bgColor }}>
+    <Button className={`relative h-[56px] w-full`} style={{ backgroundColor: bgColor }} {...props}>
       <Image
         src={src}
         alt="login-logo"

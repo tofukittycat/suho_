@@ -7,7 +7,7 @@ import { GiHamburgerMenu as HamburgerMenuIcon } from "react-icons/gi";
 
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
-import Label from "./base/Label";
+import SHLabel from "./base/SHLabel";
 import HStack from "./base/stack/HStack";
 import VStack from "./base/stack/VStack";
 import { Avatar, AvatarImage } from "./ui/avatar";
@@ -40,9 +40,9 @@ export default function HamburgerNav() {
               <Avatar className="size-[64px]">
                 <AvatarImage src="https://github.com/shadcn.png" />
               </Avatar>
-              <Label className="text-[24px] font-[800]">
+              <SHLabel className="text-[24px] font-[800]">
                 <span className="text-main-purple-suho">푸른 양 승진</span>님
-              </Label>
+              </SHLabel>
             </VStack>
             <nav className="mt-[20px] flex flex-col gap-[20px]">
               {routes.map(route => (

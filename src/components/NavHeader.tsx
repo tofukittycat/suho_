@@ -10,11 +10,12 @@ import { IconButton } from "@mui/material";
 import HStack from "./base/stack/HStack";
 
 type NavHeaderProps = {
+  leftColor?: string;
   leftButton?: ReactNode;
   rightButton?: ReactNode;
 };
 
-export default function NavHeader({ leftButton, rightButton }: NavHeaderProps) {
+export default function NavHeader({ leftColor, leftButton, rightButton }: NavHeaderProps) {
   const router = useRouter();
 
   const handleBackButton = () => {
@@ -27,7 +28,7 @@ export default function NavHeader({ leftButton, rightButton }: NavHeaderProps) {
         leftButton
       ) : (
         <IconButton onClick={handleBackButton} sx={{ padding: 0 }}>
-          <ArrowBackIcon className="text-black-purple-suho" />
+          <ArrowBackIcon className={leftColor ?? "text-black-purple-suho"} />
         </IconButton>
       )}
       {rightButton}

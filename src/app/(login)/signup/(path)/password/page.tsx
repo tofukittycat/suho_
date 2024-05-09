@@ -2,30 +2,33 @@
 
 import { Controller } from "react-hook-form";
 
-import NavHeader from "@/components/NavHeader";
-import InputField from "@/components/base/InputField";
-import Label from "@/components/base/Label";
+import PageLayout from "@/app/(login)/signin/@components/PageLayout";
+import NavFooter from "@/components/NavFooter";
+import SHInputField from "@/components/base/SHInputField";
+import SHLabel from "@/components/base/SHLabel";
 import VStack from "@/components/base/stack/VStack";
 
-import ConfirmButton from "../../@components/ConfirmButton";
 import useSignUp from "../../@hooks/useSignUp";
 
 export default function page() {
-  const { control, handleSignUp } = useSignUp();
+  const { router, control, handleSignUp } = useSignUp();
 
   return (
-    <VStack>
-      <NavHeader />
-
-      <VStack className="mt-[16px] px-[20px]">
-        <Label type="SubTitle1">이메일을 인증해주세요.</Label>
+    <PageLayout className="bg-white">
+      <VStack>
+        <SHLabel type="SubTitle1">이메일을 인증해주세요.</SHLabel>
         <VStack className="mt-[50px] gap-[50px]">
           <Controller
             name="password"
             defaultValue={undefined}
             control={control}
             render={({ field }) => (
-              <InputField {...field} type="password" autoComplete="new-password" label="비밀번호" />
+              <SHInputField
+                {...field}
+                type="password"
+                autoComplete="new-password"
+                label="비밀번호"
+              />
             )}
           />
           <Controller
@@ -33,7 +36,7 @@ export default function page() {
             defaultValue={undefined}
             control={control}
             render={({ field }) => (
-              <InputField
+              <SHInputField
                 {...field}
                 type="password"
                 autoComplete="new-password"
@@ -41,9 +44,15 @@ export default function page() {
               />
             )}
           />
-          <ConfirmButton onClick={handleSignUp}>확인</ConfirmButton>
+        </VStack>
+        <VStack className="mt-[50px]">
+          <NavFooter
+            ratio="1:3"
+            left={{ onClick: router.back }}
+            right={{ onClick: handleSignUp }}
+          />
         </VStack>
       </VStack>
-    </VStack>
+    </PageLayout>
   );
 }
