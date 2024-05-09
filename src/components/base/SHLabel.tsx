@@ -18,7 +18,7 @@ type LabelProps = {
   children: ReactNode;
 };
 
-export default function Label({ type, className, children }: LabelProps) {
+export default function SHLabel({ type, className, children }: LabelProps) {
   switch (type) {
     case "Title1":
       return (

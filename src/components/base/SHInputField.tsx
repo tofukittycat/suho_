@@ -3,9 +3,11 @@ import { TextField, TextFieldProps } from "@mui/material";
 
 import { Button, ButtonProps } from "../ui/button";
 
-type InputFieldProps = TextFieldProps;
+export type SHInputFieldProps = TextFieldProps & {
+  fontColor?: string;
+};
 
-export default function InputField({ ...props }: InputFieldProps) {
+export default function SHInputField({ fontColor, ...props }: SHInputFieldProps) {
   return (
     <TextField
       variant="standard"
@@ -14,7 +16,7 @@ export default function InputField({ ...props }: InputFieldProps) {
         "width": "100%",
         "& .MuiInput-root": {
           // Base
-          "color": SHColors["gray-90-suho"],
+          "color": fontColor ?? SHColors["gray-90-suho"],
           "fontSize": "20px",
           "fontWeight": "500",
 
