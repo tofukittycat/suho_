@@ -1,7 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
-
 import { cn } from "@/lib/utils";
 
 import HStack from "./base/stack/HStack";
@@ -22,35 +20,37 @@ type NavFooterProps = {
 };
 
 export default function NavFooter({ ratio = "1:1", left, right }: NavFooterProps) {
-  const [leftWidth, rightWidth] = useMemo(() => {
+  const getSize = () => {
     switch (ratio) {
       case "1:1":
-        return [50, 50];
+        return { leftWidth: "50%", rightWidth: "50%" };
       case "1:3":
-        return [30, 70];
+        return { leftWidth: "30%", rightWidth: "70%" };
       case "3:1":
-        return [70, 30];
+        return { leftWidth: "70%", rightWidth: "30%" };
       default:
-        return [50, 50];
+        return { leftWidth: "50%", rightWidth: "50%" };
     }
-  }, [ratio]);
+  };
 
   return (
     <HStack className="h-[54px] w-full items-center justify-between gap-[10px]">
       <Button
         className={cn(
-          `h-full w-[${leftWidth}%] rounded-[15px] bg-[#E4DCFF] text-[16px] font-[600] text-main-purple-suho`,
+          `h-full rounded-[15px] bg-[#E4DCFF] text-[16px] font-[600] text-main-purple-suho hover:bg-[#d9d0f4]`,
           left?.className,
         )}
+        style={{ width: getSize().leftWidth }}
         onClick={left?.onClick}
       >
         {left?.title ?? "이전"}
       </Button>
       <Button
         className={cn(
-          `h-full w-[${rightWidth}%] rounded-[15px] bg-main-purple-suho text-[16px] font-[600] text-white`,
+          `h-full rounded-[15px] bg-main-purple-suho text-[16px] font-[600] text-white hover:bg-[#7553f0]`,
           right?.className,
         )}
+        style={{ width: getSize().rightWidth }}
         onClick={right?.onClick}
       >
         {right?.title ?? "다음"}
