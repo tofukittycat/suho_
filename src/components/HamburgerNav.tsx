@@ -31,7 +31,7 @@ export default function HamburgerNav() {
   return (
     <Drawer direction="right" open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger>
-        <HamburgerMenuIcon className="size-[22px]" />
+        <HamburgerMenuIcon className="size-[22px] text-white" />
       </DrawerTrigger>
       <DrawerContent className="left-auto right-0 top-0 mt-0 h-screen w-[80%] rounded-none md:w-[400px]">
         <VStack className="m-[26px] h-full justify-between">
