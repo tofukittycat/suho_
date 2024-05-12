@@ -8,7 +8,11 @@ import HStack from "@/components/base/stack/HStack";
 import VStack from "@/components/base/stack/VStack";
 import { Button } from "@/components/ui/button";
 
+import useHome from "./_hooks/useHome";
+
 export default function Home() {
+  const { handleGoToTodayHoroscope } = useHome();
+
   return (
     <main className="h-full w-full bg-[url('/imgs/home_bg.svg')] bg-cover bg-no-repeat">
       <VStack className="h-full w-full bg-[url('/imgs/home_bg_universe.svg')] bg-cover bg-no-repeat">
@@ -61,6 +65,7 @@ export default function Home() {
                 ratio="1:1"
                 left={{
                   title: "데일리 운세보기",
+                  onClick: handleGoToTodayHoroscope,
                 }}
                 right={{
                   title: "행운나무 공유하기",
