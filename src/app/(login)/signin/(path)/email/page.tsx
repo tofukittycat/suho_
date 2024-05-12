@@ -5,8 +5,8 @@ import SHInputField from "@/components/base/SHInputField";
 import SHLabel from "@/components/base/SHLabel";
 import VStack from "@/components/base/stack/VStack";
 
-import PageLayout from "../../@components/PageLayout";
-import useSignIn from "../../@hooks/useSignIn";
+import PageLayout from "../../_components/PageLayout";
+import useSignIn from "../../_hooks/useSignIn";
 
 export default function page() {
   const { router, handleEmailSignIn } = useSignIn();

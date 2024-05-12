@@ -6,7 +6,7 @@ import SHLabel from "@/components/base/SHLabel";
 import HStack from "@/components/base/stack/HStack";
 import VStack from "@/components/base/stack/VStack";
 
-import CharmShareCustomizeDrawer from "../../@components/CharmShareCustomizeDrawer";
+import CharmShareCustomizeDrawer from "../../_components/CharmShareCustomizeDrawer";
 
 // import useHoroscope from "../../@hooks/useHoroscope";
 
