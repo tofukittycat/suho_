@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { SignUpScheme, SignUpType } from "../../signin/@types/scheme";
+import { SignUpScheme, SignUpType } from "../../signin/_types/scheme";
 
 export default function useSignUp() {
   const router = useRouter();

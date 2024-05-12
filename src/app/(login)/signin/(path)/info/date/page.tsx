@@ -7,8 +7,8 @@ import SHLabel from "@/components/base/SHLabel";
 import SHRadioGroup from "@/components/base/SHRadio";
 import VStack from "@/components/base/stack/VStack";
 
-import PageLayout from "../../../@components/PageLayout";
-import useSignIn from "../../../@hooks/useSignIn";
+import PageLayout from "../../../_components/PageLayout";
+import useSignIn from "../../../_hooks/useSignIn";
 
 const 십이간지시간Items = [
   {

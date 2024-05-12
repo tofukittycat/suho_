@@ -2,13 +2,13 @@
 
 import { Controller } from "react-hook-form";
 
-import PageLayout from "@/app/(login)/signin/@components/PageLayout";
+import PageLayout from "@/app/(login)/signin/_components/PageLayout";
 import NavFooter from "@/components/NavFooter";
 import SHInputField from "@/components/base/SHInputField";
 import SHLabel from "@/components/base/SHLabel";
 import VStack from "@/components/base/stack/VStack";
 
-import useSignUp from "../../@hooks/useSignUp";
+import useSignUp from "../../_hooks/useSignUp";
 
 export default function page() {
   const { router, control, handleSignUp } = useSignUp();

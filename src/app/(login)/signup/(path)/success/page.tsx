@@ -4,8 +4,8 @@ import SHLabel from "@/components/base/SHLabel";
 import VCStack from "@/components/base/stack/VCStack";
 import VStack from "@/components/base/stack/VStack";
 
-import ConfirmButton from "../../@components/ConfirmButton";
-import useSignUp from "../../@hooks/useSignUp";
+import ConfirmButton from "../../_components/ConfirmButton";
+import useSignUp from "../../_hooks/useSignUp";
 
 export default function page() {
   const { handleGoToSignIn } = useSignUp();

@@ -4,8 +4,8 @@ import VCStack from "@/components/base/stack/VCStack";
 import VStack from "@/components/base/stack/VStack";
 import { Button } from "@/components/ui/button";
 
-import LoginButton from "./@components/LoginButton";
-import useSignIn from "./@hooks/useSignIn";
+import LoginButton from "./_components/LoginButton";
+import useSignIn from "./_hooks/useSignIn";
 
 export default function page() {
   const { handleGoToSignUp, handleGoToEmail } = useSignIn();
