@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
-import RenderSub from "@/components/RenderSub";
+import HCStack from "@/components/base/stack/HCStack";
 
 import AppRegister from "../AppRegister";
 import "./globals.css";
@@ -28,12 +28,9 @@ export default function RootLayout({
     <html lang="en" className={`${pretendard.variable} font-pretendard font-semibold`}>
       <body className={pretendard.className}>
         <AppRegister>
-          <div className="fixed flex w-full flex-row items-center justify-center bg-bmpurple">
-            <div className="left-[calc(50vw - 40rem)] hidden h-screen w-[40rem] max-w-[40rem] items-center opacity-0 transition-opacity duration-200 ease-in-out lg:flex lg:opacity-100">
-              <RenderSub />
-            </div>
-            <div className="h-screen w-full max-w-[430px] bg-white">{children}</div>
-          </div>
+          <HCStack className="w-screen justify-center">
+            <HCStack className="h-screen w-full min-w-[375px] max-w-[430px]">{children}</HCStack>
+          </HCStack>
         </AppRegister>
       </body>
     </html>
