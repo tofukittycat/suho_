@@ -7,9 +7,9 @@ import VStack from "@/components/base/stack/VStack";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
-// type CharmShareCustomizeDrawerProps = {};
+// type CharmShareCustomizeSheetProps = {};
 
-export default function CharmShareCustomizeDrawer() {
+export default function CharmShareCustomizeSheet() {
   return (
     <Drawer direction="bottom">
       <DrawerTrigger>
@@ -17,8 +17,8 @@ export default function CharmShareCustomizeDrawer() {
           행운 부적 받기
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="left-0 right-0 h-full w-full rounded-none border-none bg-transparent md:left-auto md:right-[365px] md:w-[430px]">
-        <VStack wFull hFull className="bordr bg-black/50 px-[20px]">
+      <DrawerContent className="mx-auto flex h-full w-full items-center justify-center rounded-none border-none bg-transparent  md:w-[430px]">
+        <VStack wFull hFull className="bordr bg-black/50 px-[20px] ">
           <HStack className="mt-[48px] justify-end">
             <CloseIcon className="size-[24px] text-white" />
           </HStack>

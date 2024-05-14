@@ -6,7 +6,7 @@ import SHLabel from "@/components/base/SHLabel";
 import HStack from "@/components/base/stack/HStack";
 import VStack from "@/components/base/stack/VStack";
 
-import CharmShareCustomizeDrawer from "../../_components/CharmShareCustomizeDrawer";
+import CharmShareCustomizeSheet from "../../_components/CharmShareCustomizeSheet";
 
 // import useHoroscope from "../../@hooks/useHoroscope";
 
@@ -133,7 +133,7 @@ export default function page() {
                   휴식이 곧 찾아올 거예요. 일이 마무리 단계에 접어들면서 결과는 처음 생각했던 것보다
                   조금 못 미치지만, 충분히 만족스러울 만큼 잘 풀렸어요.
                 </SHLabel>
-                <CharmShareCustomizeDrawer />
+                <CharmShareCustomizeSheet />
               </VStack>
             </SHCard>
           </VStack>
