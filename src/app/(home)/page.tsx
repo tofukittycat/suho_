@@ -22,7 +22,7 @@ export default function Home() {
             <VStack>
               <SHLabel className="text-[16px] font-[800] text-white">5월 8일 시험을 위한</SHLabel>
               <SHLabel className="text-[24px] font-[800] text-white">
-                <span className="text-main-purple-suho">승진</span>님의 행운 나무
+                <span className="text-[#B49FFF]">승진</span>님의 행운 나무
               </SHLabel>
             </VStack>
             {/* Header_HamburgerNav */}
@@ -35,6 +35,7 @@ export default function Home() {
         {/* Tree BG */}
         <VStack wFull hFull className="mt-[10px]">
           {/* Tree BG_Top */}
+          {/* 로그인 했을때 안했을때 홈화면 나눠져야함 */}
           <VStack className="mx-[40px] mb-[-26px] h-[500px] gap-[5px] bg-[url('/imgs/home_tree_top.svg')] bg-contain bg-bottom bg-no-repeat pt-[40px]">
             <VStack>
               <HStack className="mt-[-5px] h-[60px] items-end justify-center gap-[40px]">
