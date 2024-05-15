@@ -21,8 +21,8 @@ export default function HamburgerNav() {
     return {
       main: [
         { type: "홈", href: "/" },
-        { type: "행운 나무 설정", href: "/" },
-        { type: "데일리 운세 보기", href: "/horoscope" },
+        { type: "행운 나무 설정", href: "/horoscope/remove" },
+        { type: "데일리 운세 보기", href: "/horoscope/today" },
       ],
       sub: [
         { type: "계정 설정", href: "/" },
@@ -32,10 +32,6 @@ export default function HamburgerNav() {
       ],
     };
   }, []);
-
-  const handleDrawerClose = () => {
-    setIsOpen(false);
-  };
 
   return (
     <Drawer direction="right" open={isOpen} onOpenChange={setIsOpen}>
@@ -65,7 +61,6 @@ export default function HamburgerNav() {
                   key={route.type}
                   href={route.href}
                   className="text-[20px] font-[800] text-[#0B082B]"
-                  onClick={handleDrawerClose}
                 >
                   {route.type}
                 </Link>
@@ -76,7 +71,6 @@ export default function HamburgerNav() {
                   key={route.type}
                   href={route.href}
                   className="text-[16px] font-[500] text-[#40474D]"
-                  onClick={handleDrawerClose}
                 >
                   {route.type}
                 </Link>
