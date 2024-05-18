@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Layer, Stage } from "react-konva";
 
 import UrlImage from "./UrlImage";
@@ -21,6 +21,50 @@ function Canvas({ images, setImages, forwardedRef }) {
       setSelectedId(null);
     }
   };
+
+  // Intiially set the size of the canvas to the size of the parent div.
+  useEffect(() => {
+    if (divRef.current?.offsetHeight && divRef.current?.offsetWidth) {
+      setSize({
+        width: Math.min(divRef.current.offsetWidth, CANVAS_VIRTUAL_WIDTH),
+        height: Math.min(divRef.current.offsetHeight, CANVAS_VIRTUAL_HEIGHT),
+      });
+    }
+    setScale(
+      Math.min(
+        window.innerWidth / CANVAS_VIRTUAL_WIDTH,
+        window.innerHeight / CANVAS_VIRTUAL_HEIGHT,
+      ),
+    );
+  }, []);
+
+  // Update the size of the canvas when the window is resized.
+  // height of canvas should always use virtual aspect ratio.
+  const checkSize = () => {
+    if (divRef.current?.offsetHeight && divRef.current?.offsetWidth) {
+      setSize({
+        width: Math.min(divRef.current.offsetWidth, CANVAS_VIRTUAL_WIDTH),
+        height: Math.min(divRef.current.offsetHeight, CANVAS_VIRTUAL_HEIGHT),
+      });
+      setScale(
+        Math.min(
+          divRef.current.offsetWidth / CANVAS_VIRTUAL_WIDTH,
+          divRef.current.offsetHeight / CANVAS_VIRTUAL_HEIGHT,
+        ),
+      );
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", checkSize);
+    return () => {
+      window.removeEventListener("resize", checkSize);
+    };
+  }, []);
+
+  useEffect(() => {
+    checkSize();
+  }, []);
 
   const toggleControls = visible => {
     const newImages = images.map(image => {

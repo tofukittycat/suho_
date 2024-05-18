@@ -1,3 +1,5 @@
+/** 원본 */
+
 export async function getStickers(id: string) {
   // const res = await fetch(`http://15.165.250.72/stickers/${encodeURIComponent(id)}`, {
   const res = await fetch(`http://15.165.250.72/tree/${id}/stickers`, {

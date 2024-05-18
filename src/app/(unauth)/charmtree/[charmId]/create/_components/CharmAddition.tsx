@@ -55,7 +55,6 @@ export default function CharmAddition() {
 
   const treeId = 10;
   const { charmImageURL, supplementTypes } = useStickerDetailQuery(treeId);
-  console.log(charmImageURL, supplementTypes);
 
   return (
     <VStack className={cn("h-full w-full bg-black-purple-suho pt-[60px]")}>

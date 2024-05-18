@@ -8,9 +8,6 @@ import React, { FC, ForwardedRef, forwardRef, useRef, useState } from "react";
 import SHLabel from "@/components/base/SHLabel";
 import { Stage as StageType } from "konva/lib/Stage";
 import { v4 as uuidv4 } from "uuid";
-
-import { useServerImage } from "../_hooks/useServerImage";
-import useStickerDetailQuery from "../_hooks/useStickerDetailQuery";
 import downloadILmage from "../_utils/downloadImage";
 import { CharmStickers } from "./CharmStickers";
 
@@ -40,9 +37,6 @@ export default function CharmImageAdditon({ form, charmImageURL, supplementTypes
     await downloadILmage(downloadImageRef);
   };
 
-  // const bgurl = useServerImage(charmImageURL);
-
-  // console.log("brurl blob", bgurl);
 
   const stageRef = useRef<StageType>(null);
   const [dragUrl, setDragUrl] = useState(null);
