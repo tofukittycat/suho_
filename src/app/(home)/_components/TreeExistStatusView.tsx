@@ -2,11 +2,10 @@ import HamburgerNav from "@/components/HamburgerNav";
 import NavFooter from "@/components/NavFooter";
 import SHLabel from "@/components/base/SHLabel";
 import SHPagination from "@/components/base/SHPagination";
-import { SHGlobalSpinner, SHSpinner } from "@/components/base/SHSpinner";
+import { SHGlobalSpinner } from "@/components/base/SHSpinner";
 import TreeBGView from "@/components/base/bg/TreeBGView";
 import HStack from "@/components/base/stack/HStack";
 import VStack from "@/components/base/stack/VStack";
-import useUserInfo from "@/components/hooks/useAppRepository";
 import useAppRepository from "@/components/hooks/useAppRepository";
 import { Button } from "@/components/ui/button";
 import dayjs from "dayjs";
@@ -29,14 +28,10 @@ export default function TreeExistStatusView({
     userInfoStore: [userInfo],
   } = useAppRepository();
 
-  const { userInfoData, handleGoToTodayHoroscope, treeURLCopyToClipboard } = useHomeStatus;
-  const { data: treeInfoData, isPending: isTreeInfoPending } = useFetchTreeInfo;
+  const { handleGoToTodayHoroscope, treeURLCopyToClipboard } = useHomeStatus;
+  const { data: treeInfoData } = useFetchTreeInfo;
 
-  const {
-    data: treeCharmsData,
-    isPending: isTreeCharmsPending,
-    updateCurrentPage,
-  } = useQueryFetchTreeCharms();
+  const { data: treeCharmsData, isPending: isTreeCharmsPending } = useQueryFetchTreeCharms();
 
   const charmList = treeCharmsData?.treeCharmResponseList ?? [];
 

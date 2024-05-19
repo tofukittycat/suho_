@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 import { GiHamburgerMenu as HamburgerMenuIcon } from "react-icons/gi";
 import { IoClose as CloseIcon } from "react-icons/io5";
 
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
 import HDivider from "./HDivider";
 import SHLabel from "./base/SHLabel";
@@ -28,7 +28,7 @@ export default function HamburgerNav() {
         { type: "계정 설정", href: "/setting/account" },
         { type: "자주 묻는 질문", href: "/" },
         { type: "이용약관", href: "/" },
-        { type: "로그아웃", href: "/" },
+        { type: "로그아웃", href: "/signin" },
       ],
     };
   }, []);
@@ -43,7 +43,9 @@ export default function HamburgerNav() {
           <VStack>
             {/* close */}
             <HStack className="my-[12px] justify-end">
-              <CloseIcon className="size-[24px] text-[#0B082B]" />
+              <DrawerClose>
+                <CloseIcon className="size-[24px] text-[#0B082B]" />
+              </DrawerClose>
             </HStack>
             {/* User Profile */}
             <HStack className="items-center gap-[16px]">

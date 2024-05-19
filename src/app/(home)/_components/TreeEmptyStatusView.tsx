@@ -47,7 +47,6 @@ export default function TreeEmptyStatusView({
                   행운 나무를 만들어보세요
                 </SHLabel>
               </VStack>
-              메ㅔ
               {/* Header_HamburgerNav */}
               <div>
                 <HamburgerNav />

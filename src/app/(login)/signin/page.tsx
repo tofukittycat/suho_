@@ -4,17 +4,17 @@ import { useEffect } from "react";
 
 import VCStack from "@/components/base/stack/VCStack";
 import VStack from "@/components/base/stack/VStack";
-import useAuth from "@/components/hooks/useAuth";
+import useStorage from "@/components/hooks/useAuth";
 
 import LoginButton from "./_components/LoginButton";
 import useSignIn from "./_hooks/useSignIn";
 
 export default async function SigninPage() {
-  const { handleClearToken } = useAuth();
+  const { clearStorage } = useStorage();
   const { handleSiginKakao } = useSignIn();
 
   useEffect(() => {
-    handleClearToken();
+    clearStorage();
   }, []);
 
   return (

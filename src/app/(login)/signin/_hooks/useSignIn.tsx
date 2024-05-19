@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 
 import { useState } from "react";
 
-import useUserInfo from "@/components/hooks/useAppRepository";
 import useAppRepository from "@/components/hooks/useAppRepository";
 import { AddUserInfoType } from "@/services/login/signin";
 

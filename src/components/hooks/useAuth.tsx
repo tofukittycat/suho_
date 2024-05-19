@@ -1,22 +1,11 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import lStorage from "@/utils/storage";
 
-import { useEffect } from "react";
-
-import lStorage, { StorageKeys } from "@/utils/storage";
-import { isEmpty } from "lodash";
-
-export default function useAuth() {
-  const { push, replace } = useRouter();
-
-  const searchParams = useSearchParams();
-  const path = usePathname();
-
-  const handleClearToken = () => {
+export default function useStorage() {
+  const clearStorage = () => {
     lStorage.clearAll();
   };
-
   const set = (key: string, value: string) => {
     lStorage.set(key, value);
   };
@@ -25,27 +14,8 @@ export default function useAuth() {
     return lStorage.get(key);
   };
 
-  useEffect(() => {
-    // "/" 에서만 체크
-    if (path !== "/") {
-      return;
-    }
-
-    const token = searchParams.get("token");
-
-    if (!token) {
-      // 로그인 화면으로
-      push("/signin");
-      lStorage.clearAll();
-    } else {
-      // 홈 화면으로
-      lStorage.set("token", token);
-      push("/home");
-    }
-  }, [path]);
-
   return {
-    handleClearToken,
+    clearStorage,
     get,
     set,
   };
