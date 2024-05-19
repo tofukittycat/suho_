@@ -4,10 +4,12 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { useEffect } from "react";
 
-import lStorage from "@/utils/storage";
+import lStorage, { StorageKeys } from "@/utils/storage";
+import { isEmpty } from "lodash";
 
 export default function useAuth() {
-  const { push } = useRouter();
+  const { push, replace } = useRouter();
+
   const searchParams = useSearchParams();
   const path = usePathname();
 

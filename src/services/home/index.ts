@@ -15,6 +15,18 @@ export const getTreeInfo = async ({ userId }: { userId: number }): Promise<TreeI
   return (await apiClient.get(`/tree/users/${userId}`)).data;
 };
 
+type TreeCharmsResponse = {
+  totalSize: number;
+  treeCharmResponseList: TreeCharmItem[];
+};
+
+type TreeCharmItem = {
+  charmId: number;
+  sender: string;
+  imageUrl?: string | null;
+  thumbnailUrl?: string | null;
+};
+
 // 홈에 나무 부적들 조회
 export const getTreeCharms = async ({
   userId,
@@ -24,6 +36,6 @@ export const getTreeCharms = async ({
   userId: number;
   page: number;
   size: number;
-}): Promise<TreeInfoResponse> => {
+}): Promise<TreeCharmsResponse> => {
   return (await apiClient.get(`/tree/charm/${userId}?page=${page}&size=${size}`)).data;
 };

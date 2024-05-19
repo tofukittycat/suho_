@@ -5,11 +5,13 @@ import { useParams } from "next/navigation";
 import { useEffect } from "react";
 
 import LuckyResultPending from "@/app/luckytree/_components/LuckyResultPending";
+import ElementalLottie from "@/components/ElementalLottie";
 import SHCard from "@/components/base/SHCard";
 import SHImage from "@/components/base/SHImage";
 import SHLabel from "@/components/base/SHLabel";
 import TreeBGView from "@/components/base/bg/TreeBGView";
 import VStack from "@/components/base/stack/VStack";
+import useAppRepository from "@/components/hooks/useAppRepository";
 import { Button } from "@/components/ui/button";
 import dayjs from "dayjs";
 
@@ -17,6 +19,9 @@ import useLuckyTree from "../../../_hooks/useLuckyTree";
 
 export default function page() {
   const { router, handleGoToHome, queryTreeFortune } = useLuckyTree();
+  const {
+    userInfoStore: [userInfo],
+  } = useAppRepository();
   const { data, isPending, fetchTreeFortune } = queryTreeFortune;
   const params = useParams();
 
@@ -54,6 +59,7 @@ export default function page() {
               <TreeBGView
                 className="relative mt-0 overflow-auto"
                 hiddenTree
+                treeLayoutClassName="static z-10 w-full h-[480px]"
                 treeLayout={
                   <VStack className="mt-[60px]">
                     <VStack className="items-center gap-[5px]">
@@ -63,45 +69,45 @@ export default function page() {
                       >
                         {foramttedDate(luckySpirit.luckyDate)}
                       </SHLabel>
-                      <VStack className="mb-[-20px] mt-[26px] shrink-0">
+                      <VStack className="mb-[-20px] mt-[26px] shrink-0 ">
                         <SHImage
                           src={guardian.imageURL ?? ""}
-                          fallbackElement={<div>123</div>}
+                          fallbackElement={<div>수호 이미지 </div>}
                           className="h-[420px] w-[300px] rounded-[30px] object-contain"
                         />
                       </VStack>
                     </VStack>
                   </VStack>
                 }
+                hillLayoutClassName="static z-0 bg-cover h-full bg-center"
                 hillLayout={
-                  <VStack className="h-full w-full">
-                    <VStack className="mt-[40px] gap-[20px] px-[20px] pb-[40px]">
+                  <VStack className="w-full">
+                    <VStack className="mb-[20px] mt-[40px] h-full gap-[20px] px-[20px]">
                       <SHLabel className="mx-[30px] mt-[30px] whitespace-pre-wrap text-center text-[16px] font-[500] text-[#0B082B]">
                         {guardian.tendency}
                       </SHLabel>
                       {/* 총평 */}
-                      <SHCard className="mt-[30px] py-[24px]">
+                      <SHCard className="mt-[30px] bg-[#0B082B] py-[44px]">
                         <VStack className="gap-[16px]">
-                          <SHImage
-                            src="https://github.com111/shad1.png"
-                            size="80px"
-                            fallbackElement={<div className="bg-gray-500"></div>}
-                          />
-                          <SHLabel type="SubTitle2" className="whitespace-pre-wrap text-[#525A61]">
-                            {`오늘 유진님에게\n`}
-                            <span className="text-[#FF6395]">불의 기운</span>이 행운을 가져다줘요.
+                          <ElementalLottie luckySpirit={luckySpirit.luckySpirit} />
+                          <SHLabel type="SubTitle2" className="whitespace-pre-wrap text-white">
+                            {`오늘 ${userInfo?.username ?? "유저"}님에게\n`}
+                            <span className="text-[#A48AFF]">{`${luckySpirit.luckySpirit}의 기운`}</span>
+                            이 행운을 가져다줘요.
                           </SHLabel>
-                          <SHLabel className="whitespace-pre-wrap text-[14px] font-[500] text-[#808991]">
+                          <SHLabel className="whitespace-pre-wrap text-[14px] font-[500] text-white">
                             {guardian.description}
                           </SHLabel>
                         </VStack>
                       </SHCard>
-                      <Button
-                        className="mt-[20px] h-[94px] w-full rounded-[15px] bg-main-purple-suho text-[16px] font-[600] text-white hover:bg-[#7553f0]"
-                        onClick={handleGoToHome}
-                      >
-                        내 행운 나무 보러가기
-                      </Button>
+                      <div>
+                        <Button
+                          className=" mt-[20px] h-[54px] w-full rounded-[15px] bg-main-purple-suho text-[16px] font-[600] text-white hover:bg-[#7553f0]"
+                          onClick={handleGoToHome}
+                        >
+                          내 행운 나무 보러가기
+                        </Button>
+                      </div>
                     </VStack>
                   </VStack>
                 }

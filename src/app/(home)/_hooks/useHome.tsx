@@ -33,6 +33,7 @@ export default function useHome() {
 
   return {
     router,
+    userInfoData,
     handleGoToTodayHoroscope,
     handleGoToLuckyTree,
     treeURLCopyToClipboard,

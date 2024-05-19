@@ -8,14 +8,21 @@ import HStack from "@/components/base/stack/HStack";
 import VStack from "@/components/base/stack/VStack";
 import useAppRepository from "@/components/hooks/useAppRepository";
 
+import { UseFetchTreeInfoType } from "../_hooks/queries/useQueryFetchTreeInfo";
 import { UseHomeType } from "../_hooks/useHome";
 
 type TreeEmptyStatusViewProps = {
   useHomeStatus: UseHomeType;
+  useFetchTreeInfo: UseFetchTreeInfoType;
 };
 
-export default function TreeEmptyStatusView({ useHomeStatus }: TreeEmptyStatusViewProps) {
+export default function TreeEmptyStatusView({
+  useHomeStatus,
+  useFetchTreeInfo,
+}: TreeEmptyStatusViewProps) {
   const { handleGoToTodayHoroscope, handleGoToLuckyTree } = useHomeStatus;
+
+  useFetchTreeInfo;
 
   const {
     userInfoStore: [userInfo],
@@ -40,6 +47,7 @@ export default function TreeEmptyStatusView({ useHomeStatus }: TreeEmptyStatusVi
                   행운 나무를 만들어보세요
                 </SHLabel>
               </VStack>
+              메ㅔ
               {/* Header_HamburgerNav */}
               <div>
                 <HamburgerNav />

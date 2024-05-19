@@ -24,3 +24,5 @@ export default function useQueryFetchTreeInfo() {
     isPending,
   };
 }
+
+export type UseFetchTreeInfoType = ReturnType<typeof useQueryFetchTreeInfo>;

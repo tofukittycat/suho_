@@ -1,6 +1,5 @@
 import { useCallback, useRef, useState } from "react";
 
-import useUserInfo from "@/components/hooks/useAppRepository";
 import useAppRepository from "@/components/hooks/useAppRepository";
 import { getTreeCharms } from "@/services/home";
 import { QueryKeys } from "@/services/queryKeys";

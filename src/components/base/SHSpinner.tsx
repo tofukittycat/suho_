@@ -1,6 +1,6 @@
 import Lottie from "react-lottie";
 
-import * as animationData from "../../../public/spinner.json";
+import * as animationData from "../../../public/lotties/spinner.json";
 import VCStack from "./stack/VCStack";
 
 export function SHGlobalSpinner() {
