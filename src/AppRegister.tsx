@@ -2,10 +2,13 @@
 
 import { ReactNode, useEffect } from "react";
 
+import { Toaster } from "./components/ui/toaster";
 import DayjsProvider from "./providers/dayjs/DayjsProvider";
 import MuiProvider from "./providers/mui/MuiProvider";
 import ReactQueryProvider from "./providers/react-query/ReactQueryProvider";
+import RecoilProvider from "./providers/recoil/RecoilProvider";
 import { ThemeProvider } from "./providers/shacnd/ThemeProvider";
+import ApiErrorBoundary from "./services/ApiErrorBoundary";
 import setMobileHeight from "./utils/mobileSize";
 
 type AppRegisterProps = {
@@ -22,12 +25,17 @@ export default function AppRegister({ children }: AppRegisterProps) {
   }, []);
 
   return (
-    <ThemeProvider>
-      <DayjsProvider>
-        <MuiProvider>
-          <ReactQueryProvider>{children}</ReactQueryProvider>
-        </MuiProvider>
-      </DayjsProvider>
-    </ThemeProvider>
+    <RecoilProvider>
+      <ThemeProvider>
+        <DayjsProvider>
+          <MuiProvider>
+            <ReactQueryProvider>
+              <ApiErrorBoundary>{children}</ApiErrorBoundary>
+            </ReactQueryProvider>
+            <Toaster />
+          </MuiProvider>
+        </DayjsProvider>
+      </ThemeProvider>
+    </RecoilProvider>
   );
 }

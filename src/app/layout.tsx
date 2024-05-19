@@ -32,7 +32,7 @@ export default function RootLayout({
         <AppRegister>
           <VCStack className="relative h-full w-screen justify-center bg-[url(/imgs/bg_back.svg)] bg-cover">
             {/* 로고 */}
-            <div className=" absolute left-[57px] top-[66px] h-[20px] w-[200px] text-white">
+            <div className="invisible absolute left-[57px] top-[66px] h-[20px] w-[200px] text-white lg:visible">
               <Image fill src={"/imgs/logo.svg"} alt="logo" />
             </div>
             {/* Content */}
@@ -40,7 +40,7 @@ export default function RootLayout({
               {children}
             </HCStack>
             {/* BG_BOTTOM(언덕) */}
-            {/* <div className="fixed bottom-0 left-0 right-0 z-0 h-[40%] w-screen bg-[url(/imgs/bg_bottom.svg)] bg-cover bg-no-repeat" /> */}
+            {/* <div className="z-00 invisible absolute bottom-0 left-0 right-0 h-[30%] w-full bg-[url('/imgs/home_tree_bottom.svg')] bg-cover bg-no-repeat md:visible" /> */}
           </VCStack>
         </AppRegister>
       </body>

@@ -1,5 +1,7 @@
 "use client";
 
+import { ReactNode } from "react";
+
 import { cn } from "@/lib/utils";
 
 import HStack from "./base/stack/HStack";
@@ -9,12 +11,14 @@ type NavFooterProps = {
   ratio: "1:1" | "1:3" | "3:1";
   left?: {
     className?: string;
-    title?: string;
+    children?: ReactNode;
+    disabled?: boolean;
     onClick?: () => void;
   };
   right?: {
     className?: string;
-    title?: string;
+    children?: ReactNode;
+    disabled?: boolean;
     onClick?: () => void;
   };
 };
@@ -43,7 +47,7 @@ export default function NavFooter({ ratio = "1:1", left, right }: NavFooterProps
         style={{ width: getSize().leftWidth }}
         onClick={left?.onClick}
       >
-        {left?.title ?? "이전"}
+        {left?.children ?? "이전"}
       </Button>
       <Button
         className={cn(
@@ -51,9 +55,10 @@ export default function NavFooter({ ratio = "1:1", left, right }: NavFooterProps
           right?.className,
         )}
         style={{ width: getSize().rightWidth }}
+        disabled={right?.disabled}
         onClick={right?.onClick}
       >
-        {right?.title ?? "다음"}
+        {right?.children ?? "다음"}
       </Button>
     </HStack>
   );
