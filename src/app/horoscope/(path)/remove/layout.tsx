@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import UniverseBGView from "@/components/UniverseBGView";
+import UniverseBGView from "@/components/base/bg/UniverseBGView";
 
 type LayoutProps = {
   children: ReactNode;

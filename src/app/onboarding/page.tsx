@@ -14,7 +14,7 @@ const StepKeys = {
   StepThree: "StepThree",
 };
 
-export default function page() {
+export default function OnboardingPage() {
   const { router } = useOnboarding();
 
   const onSubmit = () => {
@@ -24,7 +24,7 @@ export default function page() {
         next();
         break;
       case StepKeys.StepThree:
-        router.push("/");
+        router.push("/home");
         break;
       default:
         break;

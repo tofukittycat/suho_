@@ -1,17 +1,20 @@
 "use client";
 
-import useLuckyTree from "@/app/luckytree/_hooks/useLuckyTree";
+// import useLuckyTree from "@/app/luckytree/_hooks/useLuckyTree";
 import HDivider from "@/components/HDivider";
-import NavFooter from "@/components/NavFooter";
-import TreeBGView from "@/components/TreeBGView";
 import SHLabel from "@/components/base/SHLabel";
+import TreeBGView from "@/components/base/bg/TreeBGView";
+import HStack from "@/components/base/stack/HStack";
 import VStack from "@/components/base/stack/VStack";
+import { Button } from "@/components/ui/button";
+
+import ConfirmDeletionSheet from "../../_components/ConfirmDeletionSheet";
 
 export default function page() {
-  const { router } = useLuckyTree();
+  // const { router } = useLuckyTree();
 
   return (
-    <VStack className="h-full">
+    <VStack className="relative h-full">
       <TreeBGView hiddenTree />
       {/* Header */}
       <VStack className=" z-10 mt-[40px] gap-[30px] px-[20px]">
@@ -41,11 +44,14 @@ export default function page() {
         </VStack>
         {/* CTA */}
         <VStack className="mt-[50px]">
-          <NavFooter
-            ratio="1:1"
-            left={{ onClick: router.back }}
-            right={{ title: "삭제하기", onClick: () => {}, className: "bg-[#EB5847]" }}
-          />
+          <HStack className="h-[54px] w-full items-center justify-between gap-[10px]">
+            <Button
+              className={`h-full w-full rounded-[15px] bg-[#E4DCFF] text-[16px] font-[600] text-main-purple-suho hover:bg-[#d9d0f4]`}
+            >
+              이전
+            </Button>
+            <ConfirmDeletionSheet />
+          </HStack>
         </VStack>
       </VStack>
     </VStack>

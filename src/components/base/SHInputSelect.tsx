@@ -55,7 +55,7 @@ export default function SHInputSelect({ fontColor, items, ...props }: SHInputSel
         },
         // Label
         "& .MuiInputLabel-standard": {
-          "color": SHColors["gray-60-suho"],
+          "color": "#E6E8EB",
           "fontSize": "16px",
           "fontWeight": "500",
 

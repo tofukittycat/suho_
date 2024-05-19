@@ -50,7 +50,7 @@ export default function SHInputField({ fontColor, ...props }: SHInputFieldProps)
         },
         // Label
         "& .MuiInputLabel-standard": {
-          "color": SHColors["gray-60-suho"],
+          "color": "#E6E8EB",
           "fontSize": "16px",
           "fontWeight": "500",
 

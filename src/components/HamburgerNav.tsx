@@ -20,12 +20,12 @@ export default function HamburgerNav() {
   const routes = useMemo(() => {
     return {
       main: [
-        { type: "홈", href: "/" },
+        { type: "홈", href: "/home" },
         { type: "행운 나무 설정", href: "/horoscope/remove" },
         { type: "데일리 운세 보기", href: "/horoscope/today" },
       ],
       sub: [
-        { type: "계정 설정", href: "/" },
+        { type: "계정 설정", href: "/setting/account" },
         { type: "자주 묻는 질문", href: "/" },
         { type: "이용약관", href: "/" },
         { type: "로그아웃", href: "/" },
