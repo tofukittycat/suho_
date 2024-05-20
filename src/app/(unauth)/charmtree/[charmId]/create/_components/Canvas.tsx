@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import { Layer, Stage } from "react-konva";
 
@@ -8,7 +10,7 @@ const CANVAS_VIRTUAL_HEIGHT = 310;
 
 function Canvas({ images, setImages, forwardedRef }) {
   const divRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(1);
+  const [scale, setScale] = useState(0);
   const [size, setSize] = useState({
     width: CANVAS_VIRTUAL_WIDTH,
     height: CANVAS_VIRTUAL_HEIGHT,

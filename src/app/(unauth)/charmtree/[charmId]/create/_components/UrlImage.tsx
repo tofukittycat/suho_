@@ -10,6 +10,8 @@ function UrlImage({ shapeProps, showControls, onSelect, onChange, interactable }
   const image = shapeProps;
   const [img, setImg] = useState(null);
 
+  console.log("image ", image);
+
   useEffect(() => {
     let newImgsrc = new Image();
     newImgsrc.crossOrigin = "anonymous";
