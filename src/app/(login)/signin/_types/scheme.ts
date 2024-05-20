@@ -1,5 +1,12 @@
 import { z } from "zod";
 
+export const EmailScheme = z.object({
+  email: z.string().min(1).email("유효한 이메일 주소가 아닙니다."),
+  certificationNumber: z.number().min(1).optional(),
+});
+
+export type EmailSchemeType = z.infer<typeof EmailScheme>;
+
 export const SignUpScheme = z
   .object({
     email: z.string().min(1).email("유효한 이메일 주소가 아닙니다."),

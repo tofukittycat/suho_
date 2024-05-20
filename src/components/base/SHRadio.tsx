@@ -1,17 +1,19 @@
 "use client";
 
+import { ChangeEvent } from "react";
+
 import { SHColors } from "@/lib/theme";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 
 type SHRadioGroupProps = {
   isRow: boolean;
-
   items: { value: string; label: string }[];
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function SHRadioGroup({ isRow, items }: SHRadioGroupProps) {
+export default function SHRadioGroup({ isRow, items, onChange }: SHRadioGroupProps) {
   return (
-    <RadioGroup row={isRow} defaultValue={items && items[0].value}>
+    <RadioGroup row={isRow} onChange={onChange}>
       {items.map(({ label, value }, index) => (
         <SHRadio key={index} label={label} value={value} />
       ))}

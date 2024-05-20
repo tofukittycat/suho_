@@ -1,6 +1,6 @@
 import CTAButton from "@/components/CTAButton";
-import TreeBGView from "@/components/TreeBGView";
 import SHLabel from "@/components/base/SHLabel";
+import TreeBGView from "@/components/base/bg/TreeBGView";
 import VCStack from "@/components/base/stack/VCStack";
 
 type StepTwoProps = {

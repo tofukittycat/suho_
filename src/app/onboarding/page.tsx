@@ -1,7 +1,9 @@
 "use client";
 
 import VStack from "@/components/base/stack/VStack";
+import useStorage from "@/components/hooks/useAuth";
 import useMultiStepForm from "@/components/hooks/useMultiStep";
+import { StorageKeys } from "@/utils/storage";
 
 import StepOne from "./_components/steps/StepOne";
 import StepThree from "./_components/steps/StepThree";
@@ -14,8 +16,9 @@ const StepKeys = {
   StepThree: "StepThree",
 };
 
-export default function page() {
+export default function OnboardingPage() {
   const { router } = useOnboarding();
+  const { set } = useStorage();
 
   const onSubmit = () => {
     switch (step.key) {
@@ -24,7 +27,8 @@ export default function page() {
         next();
         break;
       case StepKeys.StepThree:
-        router.push("/");
+        set(StorageKeys.HavSeenOnboarding, "YES");
+        router.push("/home");
         break;
       default:
         break;
