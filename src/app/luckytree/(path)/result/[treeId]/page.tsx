@@ -72,7 +72,7 @@ export default function page() {
                       <VStack className="mb-[-20px] mt-[26px] shrink-0 ">
                         <SHImage
                           src={guardian.imageURL ?? ""}
-                          fallbackElement={<div>수호 이미지 </div>}
+                          fallbackElement={<div>수호 이미지</div>}
                           className="h-[420px] w-[300px] rounded-[30px] object-contain"
                         />
                       </VStack>

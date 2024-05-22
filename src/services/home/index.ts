@@ -20,7 +20,7 @@ type TreeCharmsResponse = {
   treeCharmResponseList: TreeCharmItem[];
 };
 
-type TreeCharmItem = {
+export type TreeCharmItem = {
   charmId: number;
   sender: string;
   imageUrl?: string | null;

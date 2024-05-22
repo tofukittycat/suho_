@@ -26,6 +26,12 @@ type CreateLuckyTreeResponse = {
   id: string;
 };
 
+type TreeCharmDetailsResponse = {
+  id: number;
+  sender: string;
+  imageURL?: string;
+};
+
 /** 나무 생성 */
 export const postCreateLuckyTree = async ({
   luckyDate,
@@ -40,4 +46,13 @@ export const postCreateLuckyTree = async ({
 /** 나무 사주 확인 */
 export const getTreeFortune = async ({ treeId }: { treeId: number }): Promise<TreeFortuneType> => {
   return (await apiClient.get(`/tree/${treeId}/sandbar`)).data;
+};
+
+/** 부적 상세 조회 */
+export const getTreeCharmDetails = async ({
+  charmId,
+}: {
+  charmId: number;
+}): Promise<TreeCharmDetailsResponse> => {
+  return (await apiClient.get(`/charms/${charmId}`)).data;
 };
