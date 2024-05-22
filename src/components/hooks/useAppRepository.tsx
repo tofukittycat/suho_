@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { RecoilKeys } from "@/providers/recoil/keys";
 import { atom, useRecoilState } from "recoil";
 
@@ -14,10 +16,16 @@ export const userInfoState = atom<UserInfoType>({
   default: undefined,
 });
 
+export const visibleBGState = atom<boolean>({
+  key: RecoilKeys.VisibleBG,
+  default: false,
+});
+
 export default function useAppRepository() {
   const userInfoStore = useRecoilState(userInfoState);
+  const visibleBGStore = useRecoilState(visibleBGState);
 
-  return { userInfoStore };
+  return { userInfoStore, visibleBGStore };
 }
 
 // type UserInfoStateType = {

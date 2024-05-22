@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Image from "next/image";
 
+import AppLayout from "@/components/AppLayout";
 import HCStack from "@/components/base/stack/HCStack";
 import VCStack from "@/components/base/stack/VCStack";
 
@@ -30,18 +31,7 @@ export default function RootLayout({
     <html lang="en" className={`${pretendard.variable} font-pretendard font-semibold`}>
       <body className={pretendard.className}>
         <AppRegister>
-          <VCStack className="relative h-full w-screen justify-center bg-[url(/imgs/bg_back.svg)] bg-cover">
-            {/* 로고 */}
-            <div className="invisible absolute left-[57px] top-[66px] h-[20px] w-[200px] text-white lg:visible">
-              <Image fill src={"/imgs/logo.svg"} alt="logo" />
-            </div>
-            {/* Content */}
-            <HCStack className="z-10 h-screen w-full min-w-[375px] max-w-[430px]">
-              {children}
-            </HCStack>
-            {/* BG_BOTTOM(언덕) */}
-            {/* <div className="z-00 invisible absolute bottom-0 left-0 right-0 h-[30%] w-full bg-[url('/imgs/home_tree_bottom.svg')] bg-cover bg-no-repeat md:visible" /> */}
-          </VCStack>
+          <AppLayout>{children}</AppLayout>
         </AppRegister>
       </body>
     </html>

@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import { SHGlobalSpinner } from "@/components/base/SHSpinner";
+import { isEmpty } from "lodash";
 
 import TreeEmptyStatusView from "../../_components/TreeEmptyStatusView";
 import TreeExistStatusView from "../../_components/TreeExistStatusView";
@@ -19,6 +20,10 @@ export default function Home() {
 
   const useFetchTreeInfo = useQueryFetchTreeInfo();
   const { data: treeInfoData, isPending: isTreeInfoPending } = useFetchTreeInfo;
+
+  const visibleTree = useMemo(() => {
+    return !isEmpty(treeInfoData?.treeId) || treeInfoData?.treeId !== 0;
+  }, [treeInfoData]);
 
   useEffect(() => {
     if (!userCheckInfoData) {
@@ -37,7 +42,7 @@ export default function Home() {
       ) : (
         <>
           {(() => {
-            if (treeInfoData?.treeYn) {
+            if (visibleTree) {
               return (
                 <TreeExistStatusView
                   useHomeStatus={useHomeState}

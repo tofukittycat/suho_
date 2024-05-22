@@ -2,12 +2,11 @@ import apiClient from "../apiClient";
 
 type TreeInfoResponse = {
   userId: number;
-  treeId?: number;
+  treeId?: number | null;
   username?: string;
   date?: string;
   tag?: string;
-  isvisible?: false; // 3일전이면 true, 3일 이상 남았으면 false
-  treeYn?: false; // 나무 존재 여부
+  visibleCharm?: false; // 3일전이면 true, 3일 이상 남았으면 false
 };
 
 // 홈에 나무 정보 조회

@@ -23,6 +23,8 @@ export default function OnboardingPage() {
   const onSubmit = () => {
     switch (step.key) {
       case StepKeys.StepOne:
+        goTo(1);
+        break;
       case StepKeys.StepTwo:
         next();
         break;
@@ -35,11 +37,11 @@ export default function OnboardingPage() {
     }
   };
 
-  const { step, next } = useMultiStepForm([
+  const { step, next, goTo } = useMultiStepForm([
     <StepOne key={StepKeys.StepOne} onClickSubmit={onSubmit} />,
     <StepTwo key={StepKeys.StepTwo} onClickSubmit={onSubmit} />,
     <StepThree key={StepKeys.StepThree} onClickSubmit={onSubmit} />,
   ]);
 
-  return <VStack className="relative h-full w-full">{step}</VStack>;
+  return <VStack className="h-full w-full">{step}</VStack>;
 }

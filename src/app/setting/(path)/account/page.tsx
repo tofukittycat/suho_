@@ -95,15 +95,15 @@ export default function page() {
             items={십이간지시간Items}
             onChange={handleChangeInput}
           />
-          <div className="mt-[100px]">
-            <NavFooter
-              ratio="1:1"
-              left={{ disabled: isPending, onClick: router.back }}
-              right={{ disabled: isPending, onClick: onSubmit }}
-            />
-          </div>
         </VStack>
       )}
+      <VStack className="mb-[80px] h-full w-full justify-end">
+        <NavFooter
+          ratio="1:1"
+          left={{ disabled: isPending, onClick: router.back }}
+          right={{ disabled: isPending, onClick: onSubmit }}
+        />
+      </VStack>
     </VStack>
   );
 }
