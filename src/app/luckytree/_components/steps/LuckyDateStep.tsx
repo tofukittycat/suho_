@@ -47,7 +47,7 @@ export default function LuckyDateStep({ useluckyTree, onClickSubmit }: LuckyDate
       className="relative"
       hiddenTree
       treeLayout={
-        <VStack className="z-30 h-full w-full justify-between">
+        <VStack className="z-50 h-full w-full justify-between">
           <VStack className="mx-[20px]">
             {/* Header */}
             <HStack className="mt-[40px] items-end justify-between">
@@ -62,7 +62,7 @@ export default function LuckyDateStep({ useluckyTree, onClickSubmit }: LuckyDate
                 mode="single"
                 selected={date}
                 onSelect={onSelectDate}
-                className="w-full max-w-[280px] rounded-md border border-[#40407C] bg-[#0B082B] text-white"
+                className="max-w-[280px] rounded-md border border-[#40407C] bg-[#0B082B] px-[50px] text-white"
               />
             </VStack>
           </VStack>

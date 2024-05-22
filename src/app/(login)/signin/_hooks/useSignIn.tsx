@@ -59,7 +59,7 @@ export default function useSignIn() {
   };
 
   const handleSiginKakao = () => {
-    window.location.href = "http://15.165.250.72/oauth2/authorization/kakao";
+    window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/oauth2/authorization/kakao`;
   };
 
   const handleAddUserInfo = (infoData: AddUserInfoType) => {

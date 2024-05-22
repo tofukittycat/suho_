@@ -38,7 +38,7 @@ export default function TreeEmptyStatusView({
             {/* Header */}
             <HStack className="mt-[40px] items-end justify-between">
               <VStack>
-                {userInfo.username && (
+                {userInfo?.username && (
                   <SHLabel className="text-[24px] font-[800] text-white">
                     <span className="text-[#B49FFF]">{userInfo.username}님</span>
                   </SHLabel>

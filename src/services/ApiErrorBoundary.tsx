@@ -41,7 +41,8 @@ export default function ApiErrorBoundary({ children }: ApiErrorBoundaryProps) {
         window.location.href = "/signin";
         break;
       default:
-        toast({ description: message });
+        toast({ description: `⚠️ ${message}: ${statusCode}` });
+        // window.location.href = "/signin"; // 일단 로그인으로~
         break;
     }
   }

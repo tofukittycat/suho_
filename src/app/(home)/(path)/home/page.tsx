@@ -21,7 +21,11 @@ export default function Home() {
   const { data: treeInfoData, isPending: isTreeInfoPending } = useFetchTreeInfo;
 
   useEffect(() => {
-    if (userCheckInfoData?.hasInfo === false) {
+    if (!userCheckInfoData) {
+      return;
+    }
+
+    if (userCheckInfoData.hasInfo === false) {
       router.push("/signin/info");
     }
   }, [userCheckInfoData]);

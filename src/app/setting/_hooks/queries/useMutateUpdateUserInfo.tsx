@@ -11,8 +11,6 @@ export default function useMutateUpdateUserInfo() {
     mutationFn: ({ birth, birthTime }: { birth: string; birthTime: string }) =>
       patchUpdateUserInfo({ userId: userInfo.userId ?? 0, birth, birthTime }),
     onSuccess(data) {
-      console.log("잘탔냐?", data);
-
       setUserInfo({
         ...userInfo,
         birth: data.birth,

@@ -35,6 +35,7 @@ export default function useQueryFetchTreeCharms() {
   return {
     data,
     isPending,
+    currentPage,
     updateCurrentPage,
   };
 }
