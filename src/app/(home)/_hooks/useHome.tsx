@@ -2,6 +2,9 @@
 
 import { useRouter } from "next/navigation";
 
+import { useEffect } from "react";
+
+import useAppRepository from "@/components/hooks/useAppRepository";
 import { useToast } from "@/components/ui/use-toast";
 
 import useQueryFetchUserInfo from "../../setting/_hooks/queries/useQueryFetchUserInfo";
@@ -9,6 +12,10 @@ import useQueryFetchUserInfo from "../../setting/_hooks/queries/useQueryFetchUse
 export default function useHome() {
   const router = useRouter();
   const { toast } = useToast();
+
+  const {
+    visibleBGStore: [_, setVisibleBG],
+  } = useAppRepository();
 
   const { data: userInfoData } = useQueryFetchUserInfo();
 
@@ -30,6 +37,10 @@ export default function useHome() {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    setVisibleBG(true);
+  }, []);
 
   return {
     router,

@@ -5,15 +5,14 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 
 import { SHGlobalSpinner } from "@/components/base/SHSpinner";
-import useStorage from "@/components/hooks/useAuth";
+import useAuth from "@/components/hooks/useAuth";
 
 function EntryRouting() {
-  const { push } = useRouter();
-
   const searchParams = useSearchParams();
   const path = usePathname();
 
-  const { set, clearStorage } = useStorage();
+  const { push } = useRouter();
+  const { isEmptyToken, updateToken } = useAuth();
 
   useEffect(() => {
     // "/" 에서만 체크
@@ -21,16 +20,19 @@ function EntryRouting() {
       return;
     }
 
+    // 로그인성공시 param으로 token이 들어옴
     const token = searchParams.get("token");
 
-    if (!token) {
-      // 로그인 화면으로
-      push("/signin");
-      clearStorage();
-    } else {
+    if (token) {
       // 홈 화면으로
-      set("token", token);
+      updateToken(token);
       push("/home");
+    } else {
+      if (isEmptyToken) {
+        push("/onboarding");
+      } else {
+        push("/home");
+      }
     }
   }, [path, searchParams]);
 
@@ -40,7 +42,7 @@ function EntryRouting() {
 // token 리다이렉션 page
 export default function RedirectionEntryPage() {
   return (
-    <Suspense>
+    <Suspense fallback={<SHGlobalSpinner />}>
       <EntryRouting />
     </Suspense>
   );

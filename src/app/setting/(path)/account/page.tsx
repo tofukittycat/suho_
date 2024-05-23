@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 
 import { 십이간지시간Items } from "@/app/(login)/signin/_components/steps/InfoDateStep";
+import CTAContainer from "@/components/CTAContainer";
 import NavFooter from "@/components/NavFooter";
 import SHDateInputField from "@/components/base/SHDateInputField";
 import SHInputField from "@/components/base/SHInputField";
@@ -97,13 +98,13 @@ export default function page() {
           />
         </VStack>
       )}
-      <VStack className="mb-[80px] h-full w-full justify-end">
+      <CTAContainer className="px-0">
         <NavFooter
           ratio="1:1"
           left={{ disabled: isPending, onClick: router.back }}
           right={{ disabled: isPending, onClick: onSubmit }}
         />
-      </VStack>
+      </CTAContainer>
     </VStack>
   );
 }
