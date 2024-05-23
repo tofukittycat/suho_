@@ -56,3 +56,8 @@ export const getTreeCharmDetails = async ({
 }): Promise<TreeCharmDetailsResponse> => {
   return (await apiClient.get(`/charms/${charmId}`)).data;
 };
+
+/** 나무 삭제 */
+export const deleteTree = async ({ treeId }: { treeId: number }) => {
+  return (await apiClient.delete(`/tree/delete/${treeId}`)).data;
+};

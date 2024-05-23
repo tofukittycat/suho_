@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { RecoilKeys } from "@/providers/recoil/keys";
+import { localStorageEffect } from "@/providers/recoil/persistEffect";
 import { atom, useRecoilState } from "recoil";
 
 type UserInfoType = {
@@ -14,11 +15,13 @@ type UserInfoType = {
 export const userInfoState = atom<UserInfoType>({
   key: RecoilKeys.UserInfo,
   default: undefined,
+  effects: [localStorageEffect(RecoilKeys.UserInfo)],
 });
 
 export const visibleBGState = atom<boolean>({
   key: RecoilKeys.VisibleBG,
   default: false,
+  effects: [localStorageEffect(RecoilKeys.VisibleBG)],
 });
 
 export default function useAppRepository() {

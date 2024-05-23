@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Image from "next/image";
 
+import { useEffect } from "react";
+
 import AppLayout from "@/components/AppLayout";
 import HCStack from "@/components/base/stack/HCStack";
 import VCStack from "@/components/base/stack/VCStack";

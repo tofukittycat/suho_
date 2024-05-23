@@ -26,6 +26,7 @@ export default function useQueryFetchTreeCharms() {
         size: pagePerPage.current,
       });
     },
+    enabled: Boolean(userInfo.userId),
   });
 
   const updateCurrentPage = useCallback((page: number) => {

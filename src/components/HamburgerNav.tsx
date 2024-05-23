@@ -21,7 +21,7 @@ export default function HamburgerNav() {
     return {
       main: [
         { type: "홈", href: "/home" },
-        { type: "행운 나무 설정", href: "/horoscope/remove" },
+        { type: "행운 나무 설정", href: "/luckytree/remove" },
         { type: "데일리 운세 보기", href: "/horoscope/today" },
       ],
       sub: [

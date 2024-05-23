@@ -5,8 +5,12 @@ import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 
 import useMutateCreateLuckyTree from "@/app/luckytree/_hooks/queries/useMutateCreateLuckyTree";
+import SHImage from "@/components/base/SHImage";
+import SHLabel from "@/components/base/SHLabel";
+import VCStack from "@/components/base/stack/VCStack";
 import { useToast } from "@/components/ui/use-toast";
 
+import useMutateRemoveTree from "./queries/useMutateRemoveTree";
 import useQueryFetchTreeFortune from "./queries/useQueryFetchTreeFortune";
 
 type LuckyTreeInfoType = {
@@ -20,6 +24,7 @@ export default function useLuckyTree() {
 
   const queryTreeFortune = useQueryFetchTreeFortune();
   const { mutate: createLuckyTree } = useMutateCreateLuckyTree();
+  const { mutate: removeLuckyTree } = useMutateRemoveTree();
 
   const [infoData, setInfoData] = useState<LuckyTreeInfoType>({ luckyDate: null, tag: null });
 
@@ -61,6 +66,37 @@ export default function useLuckyTree() {
     );
   };
 
+  const handleRemoveLuckyTree = (treeId: number) => {
+    removeLuckyTree(
+      { treeId },
+      {
+        onSuccess: () => {
+          handleGoToHome();
+
+          toast({
+            duration: 3000,
+            customView: (
+              <VCStack className="h-full w-full">
+                <SHImage src="/imgs/icons/ic_sheet_tree.svg" className="h-[100px] w-[100px]" />
+                <SHLabel className="mt-[16px] whitespace-pre-wrap text-center font-[600] leading-4 text-[#0B082B]">
+                  {`행운나무가 삭제되었어요.\n`}
+                  <span className="text-main-purple-suho">다른 행운나무를 만들어보세요.</span>
+                </SHLabel>
+              </VCStack>
+            ),
+          });
+        },
+        onError(error) {
+          toast({
+            title: "Uh on! Error",
+            description: `${error.message}`,
+            duration: 2000,
+          });
+        },
+      },
+    );
+  };
+
   return {
     router,
     infoData,
@@ -69,6 +105,7 @@ export default function useLuckyTree() {
     handleGoToHome,
     handleGoToTreeFortuneResult,
     handleCreateLuckyTree,
+    handleRemoveLuckyTree,
   };
 }
 

@@ -17,6 +17,7 @@ export default function useQueryFetchTreeInfo() {
 
       return getTreeInfo({ userId: userInfo.userId });
     },
+    enabled: Boolean(userInfo.userId),
   });
 
   return {

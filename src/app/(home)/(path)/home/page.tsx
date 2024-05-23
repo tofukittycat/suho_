@@ -22,7 +22,7 @@ export default function Home() {
   const { data: treeInfoData, isPending: isTreeInfoPending } = useFetchTreeInfo;
 
   const visibleTree = useMemo(() => {
-    return !isEmpty(treeInfoData?.treeId) || treeInfoData?.treeId !== 0;
+    return treeInfoData?.treeId !== null;
   }, [treeInfoData]);
 
   useEffect(() => {
@@ -34,6 +34,10 @@ export default function Home() {
       router.push("/signin/info");
     }
   }, [userCheckInfoData]);
+
+  if (typeof window !== "object") {
+    return <></>;
+  }
 
   return (
     <>

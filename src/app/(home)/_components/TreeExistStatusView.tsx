@@ -1,5 +1,6 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
+import BottomSheet from "@/components/BottomSheet";
 import HamburgerNav from "@/components/HamburgerNav";
 import NavFooter from "@/components/NavFooter";
 import SHLabel from "@/components/base/SHLabel";
@@ -28,14 +29,6 @@ export default function TreeExistStatusView({
   const {
     userInfoStore: [userInfo],
   } = useAppRepository();
-
-  // const [open, setOpen] = useState(false);
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
-  // const handleOpen = () => {
-  //   setOpen(true);
-  // };
 
   const { handleGoToTodayHoroscope, treeURLCopyToClipboard } = useHomeStatus;
   const { data: treeInfoData } = useFetchTreeInfo;
@@ -74,7 +67,7 @@ export default function TreeExistStatusView({
         <TreeBGView
           className="relative"
           treeLayout={
-            <VStack className="h-full w-full justify-between ">
+            <VStack className="h-full w-full justify-between">
               <VStack className="mx-[20px]">
                 {/* Header */}
                 <HStack className="mt-[40px] h-[60px] items-end justify-between">
@@ -92,26 +85,76 @@ export default function TreeExistStatusView({
                 </SHLabel>
               </VStack>
               {/* Tree BG_Top */}
-              <VStack className="mx-[40px] mb-[110px] justify-end gap-[5px]">
-                <VStack>
-                  <HStack className="h-[60px] items-end justify-center gap-[40px]">
-                    {charmList[0] && <CharmDownloadAndShareSheet charmData={charmList[0]} />}
-                    {charmList[1] && <CharmDownloadAndShareSheet charmData={charmList[1]} />}
-                    {charmList[2] && <CharmDownloadAndShareSheet charmData={charmList[2]} />}
+              <VStack className="mx-[40px] mb-[90px] justify-end gap-[5px]">
+                <VStack className="gap-[5px]">
+                  <HStack className="h-[60px] items-end justify-center gap-[30px]">
+                    {charmList[0] && treeInfoData && (
+                      <CharmDownloadAndShareSheet
+                        charmData={charmList[0]}
+                        visibleCharm={treeInfoData.visibleCharm}
+                      />
+                    )}
+                    {charmList[1] && treeInfoData && (
+                      <CharmDownloadAndShareSheet
+                        charmData={charmList[1]}
+                        visibleCharm={treeInfoData.visibleCharm}
+                      />
+                    )}
+                    {charmList[2] && treeInfoData && (
+                      <CharmDownloadAndShareSheet
+                        charmData={charmList[2]}
+                        visibleCharm={treeInfoData.visibleCharm}
+                      />
+                    )}
                   </HStack>
                   <HStack className="h-[60px] items-end justify-center gap-[25px]">
-                    {charmList[3] && <CharmDownloadAndShareSheet charmData={charmList[3]} />}
-                    {charmList[4] && <CharmDownloadAndShareSheet charmData={charmList[4]} />}
-                    {charmList[5] && <CharmDownloadAndShareSheet charmData={charmList[5]} />}
-                    {charmList[6] && <CharmDownloadAndShareSheet charmData={charmList[6]} />}
+                    {charmList[3] && treeInfoData && (
+                      <CharmDownloadAndShareSheet
+                        charmData={charmList[3]}
+                        visibleCharm={treeInfoData.visibleCharm}
+                      />
+                    )}
+                    {charmList[4] && treeInfoData && (
+                      <CharmDownloadAndShareSheet
+                        charmData={charmList[4]}
+                        visibleCharm={treeInfoData.visibleCharm}
+                      />
+                    )}
+                    {charmList[5] && treeInfoData && (
+                      <CharmDownloadAndShareSheet
+                        charmData={charmList[5]}
+                        visibleCharm={treeInfoData.visibleCharm}
+                      />
+                    )}
+                    {charmList[6] && treeInfoData && (
+                      <CharmDownloadAndShareSheet
+                        charmData={charmList[6]}
+                        visibleCharm={treeInfoData.visibleCharm}
+                      />
+                    )}
                   </HStack>
-                  <HStack className="h-[60px] w-full items-end justify-between px-[10px]">
-                    <HStack className="] h-full w-[110px] items-end justify-between gap-[6px]">
-                      {charmList[7] && <CharmDownloadAndShareSheet charmData={charmList[7]} />}
-                      {charmList[8] && <CharmDownloadAndShareSheet charmData={charmList[8]} />}
+                  <HStack className="mt-[5px] h-[60px] w-full items-end justify-between px-[5px]">
+                    <HStack className="h-full w-[110px] items-end justify-between gap-[6px]">
+                      {charmList[7] && treeInfoData && (
+                        <CharmDownloadAndShareSheet
+                          charmData={charmList[7]}
+                          visibleCharm={treeInfoData.visibleCharm}
+                        />
+                      )}
+                      {charmList[8] && treeInfoData && (
+                        <CharmDownloadAndShareSheet
+                          charmData={charmList[8]}
+                          visibleCharm={treeInfoData.visibleCharm}
+                        />
+                      )}
                     </HStack>
                     <HStack className="h-full w-[50px] items-end justify-end gap-[10px] ">
-                      {charmList[9] && <CharmDownloadAndShareSheet charmData={charmList[9]} />}
+                      {charmList[9] && treeInfoData && (
+                        <CharmDownloadAndShareSheet
+                          charmData={charmList[9]}
+                          visibleCharm={treeInfoData.visibleCharm}
+                        />
+                      )}
                     </HStack>
                   </HStack>
                 </VStack>
@@ -119,7 +162,7 @@ export default function TreeExistStatusView({
             </VStack>
           }
           hillLayout={
-            <VStack className="z-50 h-full w-full ">
+            <VStack className="z-50 h-full w-full">
               <VStack sx={{ justifyContent: "center", alignItems: "center", mt: "30px" }}>
                 <Pagination
                   count={totalSize}
@@ -153,21 +196,6 @@ export default function TreeExistStatusView({
                   }}
                 />
               </VStack>
-              {/* <ButtonBottomSheet isOpen={open} onClose={handleClose}>
-                <VStack className="pb-[32px]">
-                  <HStack className="mr-[16px] mt-[16px] justify-end">
-                    <CloseIcon className="size-[24px] text-[#ADABC6]" />
-                  </HStack>
-                  <VCStack>
-                    <SHImage src="/imgs/icons/ic_treasure.svg" className="h-[100px] w-[100px]" />
-                    <SHLabel className="mt-[16px] whitespace-pre-wrap text-center font-[600] text-[#0B082B]">
-                      {`행운 부적은 행운이 필요한 날의\n`}
-                      <span className="text-[#7B57FC]">3일 전부터</span>
-                      {` 열람할 수 있어요!`}
-                    </SHLabel>
-                  </VCStack>
-                </VStack>
-              </ButtonBottomSheet> */}
             </VStack>
           }
         />

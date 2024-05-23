@@ -2,7 +2,7 @@ import apiClient from "../apiClient";
 
 type UserCheckInfoResponse = {
   id: number;
-  hasInfo: boolean;
+  hasInfo: boolean; // false이면 유저 추가 정보를 입력해야 함.
 };
 
 // 추가 정보 입력 체크
