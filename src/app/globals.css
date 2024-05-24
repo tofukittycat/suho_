@@ -10,22 +10,11 @@ body {
 
   /* mobile viewport bug fix */
   min-height: -webkit-fill-available;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 :root {
   --vh: 1vh;
-}
-
-/* Safari Mobile 사이징 */
-html.is-safari,
-html.is-safari body {
-  height: calc(var(--vh, 1vh) * 100);
-}
-
-/* iOS only */
-@supports (-webkit-touch-callout: none) {
-  height: -webkit-fill-available;
 }
 
 @layer base {
