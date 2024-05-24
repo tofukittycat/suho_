@@ -5,6 +5,8 @@
 html,
 body {
   position: fixed;
+  height: auto;
+  min-height: 100vh;
 }
 
 :root {

@@ -28,7 +28,7 @@ export default function StepOne({ onClickSubmit }: StepOneProps) {
   }, []);
 
   return (
-    <VCStack className="h-full w-full bg-transparent">
+    <VCStack className="h-full w-full">
       <VStack className="aspect-square w-full">
         <Lottie
           options={{

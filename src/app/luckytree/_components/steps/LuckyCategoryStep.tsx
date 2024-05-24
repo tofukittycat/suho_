@@ -1,7 +1,6 @@
-import CTABottomPadding from "@/components/CTABottomPadding";
+import CTAContainer from "@/components/CTAContainer";
 import NavFooter from "@/components/NavFooter";
 import SHLabel from "@/components/base/SHLabel";
-import TreeBGView from "@/components/base/bg/TreeBGView";
 import HStack from "@/components/base/stack/HStack";
 import VStack from "@/components/base/stack/VStack";
 import { Button } from "@/components/ui/button";
@@ -45,61 +44,52 @@ export default function LuckyCategoryStep({
   };
 
   return (
-    <TreeBGView
-      className="relative"
-      hiddenTree
-      treeLayout={
-        <VStack className="z-30 h-full w-full justify-between">
-          <VStack className="mx-[20px]">
-            {/* Header */}
-            <HStack className="mt-[40px] items-end justify-between">
-              <VStack>
-                <SHLabel className="whitespace-pre-line text-[24px] font-[800] text-white">
-                  {`그 날 행운이\n필요한 이유는 뭔가요?`}
-                </SHLabel>
-              </VStack>
-            </HStack>
-            <HStack className="z-20 mt-[100px] flex-wrap justify-start">
-              {categoryItems.map(item => {
-                if (item === "직접 입력하기+") {
-                  return (
-                    <div onClick={() => updateFields({ tag: null })}>
-                      <LuckyAddCategorySheet useluckyTree={useluckyTree} />
-                    </div>
-                  );
-                }
+    <VStack className="h-full w-full overflow-auto px-[20px]">
+      <VStack className="mt-[60px]">
+        <SHLabel className="whitespace-pre-line text-[24px] font-[800] text-white">
+          {`그 날 행운이\n필요한 이유는 뭔가요?`}
+        </SHLabel>
+        {/* 카테고리 */}
+        <VStack className="mt-[20px] items-center sm:mt-[80px]">
+          <HStack className="flex-wrap justify-start">
+            {categoryItems.map(item => {
+              if (item === "직접 입력하기+") {
                 return (
-                  <Button
-                    className={cn(
-                      "my-[8px] mr-[6px] rounded-[20px] bg-[#0B082B] text-[18px] font-[500] hover:bg-[#0B082B]/50 focus:bg-main-purple-suho",
-                      infoData.tag === item && "bg-main-purple-suho",
-                    )}
-                    onClick={() => onClickCategory(item)}
-                  >
-                    {item}
-                  </Button>
+                  <div onClick={() => updateFields({ tag: null })}>
+                    <LuckyAddCategorySheet useluckyTree={useluckyTree} />
+                  </div>
                 );
-              })}
-            </HStack>
-          </VStack>
+              }
+              return (
+                <Button
+                  className={cn(
+                    "my-[8px] mr-[6px] rounded-[20px] bg-[#0B082B] text-[18px] font-[500] hover:bg-[#0B082B]/50 focus:bg-main-purple-suho",
+                    infoData.tag === item && "bg-main-purple-suho",
+                  )}
+                  onClick={() => onClickCategory(item)}
+                >
+                  {item}
+                </Button>
+              );
+            })}
+          </HStack>
         </VStack>
-      }
-      hillLayout={
-        <CTABottomPadding className="mb-[60px]">
-          <NavFooter
-            ratio="1:3"
-            left={{
-              children: "이전",
-              onClick: onClickBack,
-            }}
-            right={{
-              children: "다음",
-              disabled: isEmpty(infoData.tag),
-              onClick: onClickSubmit,
-            }}
-          />
-        </CTABottomPadding>
-      }
-    />
+      </VStack>
+      {/* CTA */}
+      <CTAContainer>
+        <NavFooter
+          ratio="1:3"
+          left={{
+            children: "이전",
+            onClick: onClickBack,
+          }}
+          right={{
+            children: "다음",
+            disabled: isEmpty(infoData.tag),
+            onClick: onClickSubmit,
+          }}
+        />
+      </CTAContainer>
+    </VStack>
   );
 }

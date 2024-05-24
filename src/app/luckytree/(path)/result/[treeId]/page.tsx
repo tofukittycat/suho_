@@ -42,7 +42,17 @@ export default function page() {
 
   return (
     <>
-      {isPending ? (
+      <LuckyResultPending />
+    </>
+  );
+}
+
+/**
+ *
+ *
+ *
+ *
+ * {isPending ? (
         <LuckyResultPending />
       ) : (
         <>
@@ -86,7 +96,7 @@ export default function page() {
                       <SHLabel className="mx-[30px] mt-[30px] whitespace-pre-wrap text-center text-[16px] font-[500] text-[#0B082B]">
                         {guardian.tendency}
                       </SHLabel>
-                      {/* 총평 */}
+
                       <SHCard className="mt-[30px] bg-[#0B082B] py-[44px]">
                         <VStack className="gap-[16px]">
                           <ElementalLottie luckySpirit={luckySpirit.luckySpirit} />
@@ -116,6 +126,5 @@ export default function page() {
           })()}
         </>
       )}
-    </>
-  );
-}
+
+ */
