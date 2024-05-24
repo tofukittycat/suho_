@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import AppLayout from "@/components/AppLayout";
 import HCStack from "@/components/base/stack/HCStack";
 import VCStack from "@/components/base/stack/VCStack";
+import { cn } from "@/lib/utils";
 
 import AppRegister from "../AppRegister";
 import "./globals.css";
@@ -30,8 +31,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${pretendard.variable} font-pretendard font-semibold`}>
-      <body className={pretendard.className}>
+    <html lang="ko" className={`${pretendard.variable} font-pretendard font-semibold`}>
+      <body
+        className={cn(
+          pretendard.className,
+          "h-full w-full bg-gradient-to-b from-[#030329] to-[#9E83FF] bg-cover",
+        )}
+      >
         <AppRegister>
           <AppLayout>{children}</AppLayout>
         </AppRegister>

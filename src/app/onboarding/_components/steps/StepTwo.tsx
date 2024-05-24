@@ -17,9 +17,9 @@ type StepTwoProps = {
 export default function StepTwo({ onClickSubmit }: StepTwoProps) {
   return (
     <VStack className="h-full w-full justify-between">
-      <VStack className="mt-[36px] w-full items-center">
+      <VStack className="mt-[60px] w-full items-center">
         <Image src={"/imgs/small_logo_blue.svg"} alt="logo" width={74} height={14} />
-        <div className="px-[50px]">
+        <div className="px-[60px]">
           <Lottie
             options={{
               loop: true,
