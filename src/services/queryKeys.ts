@@ -1,5 +1,6 @@
 export const QueryKeys = {
   TodayHoroscope: "TodayHoroscope", // 오늘의 운세
+  TodayHoroscopeCharmInfo: "TodayHoroscopeCharmInfo", // 오늘의 운세운에의 부적 조회
 
   TreeFortune: "TreeFortune", // 해당 나무 사주
   TreeInfo: "TreeInfo", // 해당 나무 정보

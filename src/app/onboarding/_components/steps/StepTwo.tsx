@@ -1,23 +1,32 @@
 import Image from "next/image";
 
+import { useEffect } from "react";
 import Lottie from "react-lottie";
 
 import CTAButton from "@/components/CTAButton";
 import CTAContainer from "@/components/CTAContainer";
 import SHLabel from "@/components/base/SHLabel";
 import VStack from "@/components/base/stack/VStack";
+import useAppRepository from "@/components/hooks/useAppRepository";
 
-// import * as animationData from "../../../../../public/lotties/onboarding_card.json";
-import * as animationData from "../../../../../public/lotties/test_2.json";
+import * as animationData from "../../../../../public/lotties/onboarding_card.json";
 
 type StepTwoProps = {
   onClickSubmit: () => void;
 };
 
 export default function StepTwo({ onClickSubmit }: StepTwoProps) {
+  const {
+    visibleBGStore: [_, setVisibleBG],
+  } = useAppRepository();
+
+  useEffect(() => {
+    setVisibleBG(true);
+  }, []);
+
   return (
     <VStack className="h-full w-full justify-between">
-      <VStack className="mt-[60px] w-full items-center">
+      <VStack className="mt-[36px] w-full items-center">
         <Image src={"/imgs/small_logo_blue.svg"} alt="logo" width={74} height={14} />
         <div className="px-[60px]">
           <Lottie

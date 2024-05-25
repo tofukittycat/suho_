@@ -22,6 +22,11 @@ export const getTodayHoroscope = async ({ id }: { id: number }): Promise<TodayHo
   return (await apiClient.get(`/users/dailies/${id}`)).data;
 };
 
+/** 데일리 운세 부적 조회 */
+export const getTodayHoroscopeCharmInfo = async (): Promise<{ imageURL: string }> => {
+  return (await apiClient.get(`/users/dailies/charm`)).data;
+};
+
 /** 부적 삭제 */
 export const deleteCharm = async ({ charmId }: { charmId: number }) => {
   return (await apiClient.delete(`/charms/${charmId}`)).data;

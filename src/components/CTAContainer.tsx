@@ -11,7 +11,7 @@ type CTAContainerProps = {
 
 export default function CTAContainer({ children, className }: CTAContainerProps) {
   return (
-    <VStack className={cn("mb-[120px] h-full w-full justify-end px-[20px]", className)}>
+    <VStack className={cn("mb-[40px] h-full w-full justify-end px-[20px]", className)}>
       {children}
     </VStack>
   );

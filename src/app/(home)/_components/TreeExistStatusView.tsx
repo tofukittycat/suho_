@@ -1,3 +1,5 @@
+import { useRouter } from "next/navigation";
+
 import { useEffect, useMemo } from "react";
 
 import BottomSheet from "@/components/BottomSheet";
@@ -16,6 +18,7 @@ import useQueryFetchTreeCharms from "../_hooks/queries/useQueryFetchTreeCharms";
 import { UseFetchTreeInfoType } from "../_hooks/queries/useQueryFetchTreeInfo";
 import { UseHomeType } from "../_hooks/useHome";
 import CharmDownloadAndShareSheet from "./CharmDownloadAndShareSheet";
+import LuckyBox from "./LuckyBox";
 
 type TreeExistStatusViewProps = {
   useHomeStatus: UseHomeType;
@@ -26,6 +29,7 @@ export default function TreeExistStatusView({
   useHomeStatus,
   useFetchTreeInfo,
 }: TreeExistStatusViewProps) {
+  const { push } = useRouter();
   const {
     userInfoStore: [userInfo],
   } = useAppRepository();
@@ -57,6 +61,14 @@ export default function TreeExistStatusView({
 
   const handleChangePagination = (event: React.ChangeEvent<unknown>, value: number) => {
     updateCurrentPage(value);
+  };
+
+  const handleClickLuckyBox = () => {
+    const treeId = treeInfoData?.treeId;
+
+    if (treeId) {
+      push(`/luckytree/result/${treeId}`);
+    }
   };
 
   return (
@@ -163,6 +175,11 @@ export default function TreeExistStatusView({
           }
           hillLayout={
             <VStack className="z-50 h-full w-full">
+              {treeInfoData?.date && (
+                <VStack className="mt-[-50px] items-end">
+                  <LuckyBox date={foramttedDate(treeInfoData.date)} onClick={handleClickLuckyBox} />
+                </VStack>
+              )}
               <VStack sx={{ justifyContent: "center", alignItems: "center", mt: "30px" }}>
                 <Pagination
                   count={totalSize}

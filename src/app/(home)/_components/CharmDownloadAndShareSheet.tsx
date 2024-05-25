@@ -70,7 +70,7 @@ export default function CharmDownloadAndShareSheet({
                   <SHImage
                     src={charmDetailsData.imageURL}
                     fallbackElement={<div>수호 이미지</div>}
-                    className="h-[400px] w-[270px] rounded-[30px] bg-red-200 object-contain"
+                    className="rounded-[30px]object-contain h-[400px] w-[270px]"
                   />
                 )}
               </VStack>

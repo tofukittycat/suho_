@@ -1,6 +1,6 @@
 import { ChangeEvent, useMemo } from "react";
 
-import CTABottomPadding from "@/components/CTABottomPadding";
+import CTAContainer from "@/components/CTAContainer";
 import NavFooter from "@/components/NavFooter";
 import SHDateInputField from "@/components/base/SHDateInputField";
 import SHInputSelect from "@/components/base/SHInputSelect";
@@ -87,8 +87,8 @@ export default function InfoDateStep({ useSignin, onClickSubmit }: InfoDateStepP
   };
 
   return (
-    <VStack className="z-10 px-[20px] pt-[60px]">
-      <VStack>
+    <VStack className="h-full px-[20px]">
+      <VStack className="mt-[60px]">
         <SHLabel type="SubTitle1" className="text-white">
           생년월일을 알려주세요.
         </SHLabel>
@@ -99,12 +99,14 @@ export default function InfoDateStep({ useSignin, onClickSubmit }: InfoDateStepP
           <VStack>
             <SHDateInputField
               label="생년월일"
+              defaultValue={infoData.birth}
               fontColor="white"
               className="text-white"
               onChange={handleChangeInputBirth}
             />
             <SHRadioGroup
               isRow
+              value={infoData.birthType ?? 0}
               items={[
                 { label: "양력", value: "0" },
                 { label: "음력", value: "1" },
@@ -117,6 +119,7 @@ export default function InfoDateStep({ useSignin, onClickSubmit }: InfoDateStepP
             <SHInputSelect
               label="태어난 시간"
               fontColor="white"
+              defaultValue={infoData.birthTime}
               items={십이간지시간Items}
               onChange={handleChangeBirthTime}
             />
@@ -126,13 +129,13 @@ export default function InfoDateStep({ useSignin, onClickSubmit }: InfoDateStepP
           </VStack>
         </VStack>
       </VStack>
-      <CTABottomPadding>
+      <CTAContainer className="px-0">
         <NavFooter
           ratio="1:3"
           left={{ onClick: router.back }}
           right={{ disabled: disabledSubmitButton, onClick: onClickSubmit }}
         />
-      </CTABottomPadding>
+      </CTAContainer>
     </VStack>
   );
 }

@@ -11,6 +11,11 @@ body {
   /* mobile viewport bug fix */
   min-height: -webkit-fill-available;
   min-height: 100dvh;
+
+  background-image: url("/imgs/back.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 :root {

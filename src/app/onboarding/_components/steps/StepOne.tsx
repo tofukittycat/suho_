@@ -7,7 +7,6 @@ import SHLabel from "@/components/base/SHLabel";
 import VCStack from "@/components/base/stack/VCStack";
 import VStack from "@/components/base/stack/VStack";
 import useAppRepository from "@/components/hooks/useAppRepository";
-import { Button } from "@/components/ui/button";
 
 import * as animationData from "../../../../../public/lotties/onboarding_splash.json";
 
@@ -21,8 +20,9 @@ export default function StepOne({ onClickSubmit }: StepOneProps) {
   } = useAppRepository();
 
   useEffect(() => {
+    setVisibleBG(false);
+
     setTimeout(() => {
-      setVisibleBG(true);
       onClickSubmit();
     }, 5000);
   }, []);

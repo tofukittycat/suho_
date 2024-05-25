@@ -1,8 +1,12 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { ReactNode, useEffect, useState } from "react";
+
+import { useIsClient } from "@uidotdev/usehooks";
+import { read } from "fs";
 
 import HCStack from "./base/stack/HCStack";
 import VCStack from "./base/stack/VCStack";
@@ -16,20 +20,22 @@ export default function AppLayout({ children }: AppLayoutProps) {
   const {
     visibleBGStore: [visibleBG],
   } = useAppRepository();
-  const [mounted, setMounted] = useState<boolean>(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const { replace } = useRouter();
+  const isClient = useIsClient();
+
+  const handleGoToHome = () => {
+    replace("/home");
+  };
 
   return (
     <>
-      {mounted && (
+      {isClient && (
         <VCStack className="relative h-full w-screen justify-center bg-gradient-to-b from-[#030329] to-[#9E83FF] bg-cover">
-          <VCStack className="h-full w-full justify-center bg-[url(/imgs/back.svg)] bg-center ">
+          <VCStack className="h-full w-full justify-center bg-[url(/imgs/back.svg)] bg-cover bg-center ">
             {/* 로고 */}
-            <div className="invisible absolute left-[57px] top-[66px] h-[20px] w-[200px] text-white lg:visible">
-              <Image fill src={"/imgs/logo.svg"} alt="logo" />
+            <div className="invisible absolute left-[57px] top-[66px] h-[20px] w-[200px] cursor-pointer text-white lg:visible">
+              <Image fill src={"/imgs/logo.svg"} alt="logo" onClick={handleGoToHome} />
             </div>
             {/* Content */}
             <HCStack className="z-10 h-screen w-full min-w-[375px] max-w-[430px]">

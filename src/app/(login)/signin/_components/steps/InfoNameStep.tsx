@@ -1,6 +1,6 @@
 import { ChangeEvent, useMemo } from "react";
 
-import CTABottomPadding from "@/components/CTABottomPadding";
+import CTAContainer from "@/components/CTAContainer";
 import NavFooter from "@/components/NavFooter";
 import SHInputField from "@/components/base/SHInputField";
 import SHLabel from "@/components/base/SHLabel";
@@ -27,27 +27,28 @@ export default function InfoNameStep({ useSignin, onClickBack, onClickSubmit }: 
   };
 
   return (
-    <VStack className="z-10 px-[20px] pt-[60px]">
-      <VStack>
+    <VStack className="h-full px-[20px]">
+      <VStack className="mt-[60px]">
         <SHLabel type="SubTitle1" className="text-white">
           이름을 입력해주세요.
         </SHLabel>
         <VStack className="mt-[50px] gap-[50px]">
           <SHInputField
             label="이름"
+            defaultValue={infoData.name}
             type="text"
             fontColor="white"
             onChange={handleChangeInputName}
           />
         </VStack>
       </VStack>
-      <CTABottomPadding>
+      <CTAContainer className="px-0">
         <NavFooter
           ratio="1:3"
           left={{ onClick: onClickBack }}
           right={{ disabled: disabledSubmitButton, onClick: onClickSubmit }}
         />
-      </CTABottomPadding>
+      </CTAContainer>
     </VStack>
   );
 }

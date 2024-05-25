@@ -5,9 +5,14 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 
 import { SHGlobalSpinner } from "@/components/base/SHSpinner";
+import useAppRepository from "@/components/hooks/useAppRepository";
 import useAuth from "@/components/hooks/useAuth";
 
 function EntryRouting() {
+  const {
+    visibleBGStore: [visibleBG, setVisibleBG],
+  } = useAppRepository();
+
   const searchParams = useSearchParams();
   const path = usePathname();
 
@@ -15,10 +20,7 @@ function EntryRouting() {
   const { isEmptyToken, updateToken } = useAuth();
 
   useEffect(() => {
-    // "/" 에서만 체크
-    if (path !== "/") {
-      return;
-    }
+    setVisibleBG(false);
 
     // 로그인성공시 param으로 token이 들어옴
     const token = searchParams.get("token");
