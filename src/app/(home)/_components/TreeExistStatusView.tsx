@@ -1,13 +1,12 @@
 import { useRouter } from "next/navigation";
 
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
-import BottomSheet from "@/components/BottomSheet";
+import CTAContainer from "@/components/CTAContainer";
 import HamburgerNav from "@/components/HamburgerNav";
 import NavFooter from "@/components/NavFooter";
 import SHLabel from "@/components/base/SHLabel";
 import { SHGlobalSpinner } from "@/components/base/SHSpinner";
-import TreeBGView from "@/components/base/bg/TreeBGView";
 import HStack from "@/components/base/stack/HStack";
 import VStack from "@/components/base/stack/VStack";
 import useAppRepository from "@/components/hooks/useAppRepository";
@@ -40,6 +39,7 @@ export default function TreeExistStatusView({
   const {
     data: treeCharmsData,
     isPending: isTreeCharmsPending,
+    isError: isTreeCharmsError,
     currentPage,
     updateCurrentPage,
   } = useQueryFetchTreeCharms();
@@ -54,7 +54,7 @@ export default function TreeExistStatusView({
     return 1;
   }, [treeCharmsData]);
 
-  const foramttedDate = (value: string) => {
+  const formattedDate = (value: string) => {
     const date = dayjs(value);
     return `${date.month() + 1}월 ${date.date()}일`;
   };
@@ -67,7 +67,7 @@ export default function TreeExistStatusView({
     const treeId = treeInfoData?.treeId;
 
     if (treeId) {
-      push(`/luckytree/result/${treeId}`);
+      push(`/luckytree/result/${treeId}/from-LuckyBox`);
     }
   };
 
@@ -76,29 +76,33 @@ export default function TreeExistStatusView({
       {isTreeCharmsPending ? (
         <SHGlobalSpinner />
       ) : (
-        <TreeBGView
-          className="relative"
-          treeLayout={
-            <VStack className="h-full w-full justify-between">
-              <VStack className="mx-[20px]">
-                {/* Header */}
-                <HStack className="mt-[40px] h-[60px] items-end justify-between">
-                  <VStack>
-                    <SHLabel className="text-[16px] font-[800] text-white">{`${foramttedDate(treeInfoData?.date ?? "")} ${treeInfoData?.tag}을 위한`}</SHLabel>
-                    <SHLabel className="text-[24px] font-[800] text-white">
-                      <span className="text-[#B49FFF]">{userInfo.username}</span>님의 행운 나무
-                    </SHLabel>
-                  </VStack>
-                  {/* Header_HamburgerNav */}
-                  <HamburgerNav />
-                </HStack>
-                <SHLabel className="mt-[12px] text-[16px] font-[500] text-white">
-                  {`${treeCharmsData?.totalSize ?? 0}개의 행운 부적이 걸렸어요!`}
+        <VStack className="h-full justify-between">
+          {/* Header */}
+          <VStack className="mx-[20px] mt-[60px]">
+            <HStack className="h-[60px] items-end justify-between">
+              <VStack>
+                <SHLabel className="text-[16px] font-[800] text-white">{`${formattedDate(treeInfoData?.date ?? "")} ${treeInfoData?.tag}을 위한`}</SHLabel>
+                <SHLabel className="text-[24px] font-[800] text-white">
+                  <span className="text-[#B49FFF]">{userInfo.username}</span>님의 행운 나무
                 </SHLabel>
               </VStack>
-              {/* Tree BG_Top */}
-              <VStack className="mx-[40px] mb-[90px] justify-end gap-[5px]">
-                <VStack className="gap-[5px]">
+
+              <HamburgerNav />
+            </HStack>
+            <SHLabel className="mt-[12px] text-[16px] font-[500] text-white">
+              {`${treeCharmsData?.totalSize ?? 0}개의 행운 부적이 걸렸어요!`}
+            </SHLabel>
+          </VStack>
+
+          {/* 나무 Tree */}
+          <VStack className="h-[52%] w-full items-center justify-end">
+            <VStack>
+              <VStack
+                className={
+                  "relative h-[280px] w-[310px] items-center bg-[url('/imgs/home_tree_top.svg')] bg-contain bg-bottom bg-no-repeat pt-[15px] sm:h-[370px] sm:w-[350px] sm:pt-[70px]"
+                }
+              >
+                <VStack className="b w-full gap-[5px]">
                   <HStack className="h-[60px] items-end justify-center gap-[30px]">
                     {charmList[0] && treeInfoData && (
                       <CharmDownloadAndShareSheet
@@ -145,7 +149,7 @@ export default function TreeExistStatusView({
                       />
                     )}
                   </HStack>
-                  <HStack className="mt-[5px] h-[60px] w-full items-end justify-between px-[5px]">
+                  <HStack className="h-[60px] w-full items-end justify-between px-[5px]">
                     <HStack className="h-full w-[110px] items-end justify-between gap-[6px]">
                       {charmList[7] && treeInfoData && (
                         <CharmDownloadAndShareSheet
@@ -170,82 +174,62 @@ export default function TreeExistStatusView({
                     </HStack>
                   </HStack>
                 </VStack>
+                {/* LuckyBox */}
+                {treeInfoData?.date && (
+                  <VStack className="absolute bottom-[-36px] right-[40px] items-end">
+                    <LuckyBox
+                      date={formattedDate(treeInfoData.date)}
+                      onClick={handleClickLuckyBox}
+                    />
+                  </VStack>
+                )}
               </VStack>
             </VStack>
-          }
-          hillLayout={
-            <VStack className="z-50 h-full w-full">
-              {treeInfoData?.date && (
-                <VStack className="mt-[-50px] items-end">
-                  <LuckyBox date={foramttedDate(treeInfoData.date)} onClick={handleClickLuckyBox} />
-                </VStack>
-              )}
-              <VStack sx={{ justifyContent: "center", alignItems: "center", mt: "30px" }}>
-                <Pagination
-                  count={totalSize}
-                  page={currentPage}
-                  shape="rounded"
-                  color="secondary"
-                  onChange={handleChangePagination}
-                  sx={{
-                    "bgcolor": "rgba(123, 87, 252, 0.2)",
-                    "borderRadius": "18px",
-                    "& .MuiPaginationItem-root": {
-                      color: "#fff",
-                    },
-                    "& li .Mui-selected": {
-                      color: "white",
-                      backgroundColor: "rgba(123, 87, 252, 0.8)",
-                    },
-                  }}
-                />
-              </VStack>
-              <VStack className="mx-[20px] mt-[50px]">
-                <NavFooter
-                  ratio="1:1"
-                  left={{
-                    children: "데일리 운세보기",
-                    onClick: handleGoToTodayHoroscope,
-                  }}
-                  right={{
-                    children: "행운나무 공유하기",
-                    onClick: treeURLCopyToClipboard,
-                  }}
-                />
-              </VStack>
+            {/* Pagination */}
+            <VStack
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                pt: "40px",
+                px: "20px",
+              }}
+            >
+              <Pagination
+                count={totalSize}
+                page={currentPage}
+                shape="rounded"
+                color="secondary"
+                onChange={handleChangePagination}
+                sx={{
+                  "bgcolor": "rgba(123, 87, 252, 0.2)",
+                  "borderRadius": "18px",
+                  "& .MuiPaginationItem-root": {
+                    color: "#fff",
+                  },
+                  "& li .Mui-selected": {
+                    color: "white",
+                    backgroundColor: "rgba(123, 87, 252, 0.8)",
+                  },
+                }}
+              />
             </VStack>
-          }
-        />
+          </VStack>
+          {/* CTA */}
+          <CTAContainer className="h-fit">
+            <NavFooter
+              ratio="1:1"
+              left={{
+                children: "데일리 운세보기",
+                onClick: handleGoToTodayHoroscope,
+              }}
+              right={{
+                children: "행운나무 공유하기",
+                onClick: treeURLCopyToClipboard,
+              }}
+            />
+          </CTAContainer>
+        </VStack>
       )}
     </>
   );
 }
-
-// Components
-
-// const Charm = ({
-//   charmData,
-//   onClick,
-// }: {
-//   charmData: TreeCharmItem;
-//   onClick: ({ charmId, imageUrl }: { charmId: number; imageUrl: string }) => void;
-// }) => {
-//   const { charmId, sender, imageUrl, thumbnailUrl } = charmData;
-
-//   const handleClickCharm = () => {
-//     onClick({ charmId, imageUrl: imageUrl ?? "" });
-//   };
-
-//   return (
-//     <VStack
-//       component={Button}
-//       className="h-[60px] w-[60px] items-center justify-between bg-gray-600/15 p-0"
-//       onClick={handleClickCharm}
-//     >
-//       <SHImage src={thumbnailUrl ?? ""} className="h-[40px] w-[40px]" />
-//       <SHLabel className="h-full w-[65px] truncate text-center text-[12px] font-[500] text-white">
-//         {sender}
-//       </SHLabel>
-//     </VStack>
-//   );
-// };

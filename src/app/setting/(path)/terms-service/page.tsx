@@ -1,3 +1,3 @@
 export default function page() {
-  return <>꾸미기</>;
+  return <>추가될 예정</>;
 }

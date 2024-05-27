@@ -76,7 +76,7 @@ export default function LuckyCategoryStep({
         </VStack>
       </VStack>
       {/* CTA */}
-      <CTAContainer>
+      <CTAContainer className="px-0">
         <NavFooter
           ratio="1:3"
           left={{

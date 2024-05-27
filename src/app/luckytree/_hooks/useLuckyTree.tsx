@@ -37,8 +37,12 @@ export default function useLuckyTree() {
   }, []);
 
   const handleGoToTreeFortuneResult = useCallback((treeId: string) => {
-    router.push(`/luckytree/result/${treeId}`);
+    router.push(`/luckytree/result/${treeId}/from-CreateTree`);
   }, []);
+
+  const handleGoToLuckyTreeRemove = () => {
+    router.push("/luckytree/remove");
+  };
 
   const handleCreateLuckyTree = () => {
     const { luckyDate, tag } = infoData;
@@ -106,6 +110,7 @@ export default function useLuckyTree() {
     handleGoToTreeFortuneResult,
     handleCreateLuckyTree,
     handleRemoveLuckyTree,
+    handleGoToLuckyTreeRemove,
   };
 }
 

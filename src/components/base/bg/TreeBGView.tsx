@@ -44,18 +44,19 @@ export default function TreeBGView({
             treeLayoutClassName,
           )}
         >
-          {/* <VStack className="absolute bottom-0 left-0 right-0 z-0 h-[40%] w-full bg-[url('/imgs/home_tree_bottom.svg')] bg-cover bg-no-repeat"></VStack> */}
-          {/* <VStack className="mx-[40px] mb-[-24px] h-[300px]  bg-contain bg-bottom bg-no-repeat"> */}
           {treeLayout}
         </VStack>
       )}
 
       <VStack
+        className={cn("absolute bottom-0 left-0 right-0 z-10 h-[30%] w-full ", hillLayoutClassName)}
+      >
+        {/* <VStack
         className={cn(
           "absolute bottom-0 left-0 right-0 z-10 h-[30%] w-full bg-[url('/imgs/home_tree_bottom.svg')] bg-cover bg-no-repeat",
           hillLayoutClassName,
         )}
-      >
+      > */}
         {hillLayout}
       </VStack>
     </VStack>

@@ -5,7 +5,6 @@ import {
   ToastClose,
   ToastDescription,
   ToastProvider,
-  ToastTitle,
   ToastViewport,
 } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
@@ -23,9 +22,12 @@ export function Toaster() {
                 <>{customView}</>
               ) : (
                 <>
-                  <div className="grid gap-1">
-                    {title && <ToastTitle>{title}</ToastTitle>}
-                    {description && <ToastDescription>{description}</ToastDescription>}
+                  <div className="grid w-full gap-1">
+                    {description && (
+                      <ToastDescription className="w-full text-center text-main-purple-suho">
+                        {description}
+                      </ToastDescription>
+                    )}
                   </div>
                   {action}
                   <ToastClose />

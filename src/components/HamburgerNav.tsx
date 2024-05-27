@@ -26,8 +26,8 @@ export default function HamburgerNav() {
       ],
       sub: [
         { type: "계정 설정", href: "/setting/account" },
-        { type: "자주 묻는 질문", href: "/" },
-        { type: "이용약관", href: "/" },
+        { type: "자주 묻는 질문", href: "/setting/help-center" },
+        { type: "이용약관", href: "/setting/terms-service" },
         { type: "로그아웃", href: "/signin" },
       ],
     };

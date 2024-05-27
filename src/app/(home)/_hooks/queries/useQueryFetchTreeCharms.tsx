@@ -13,7 +13,7 @@ export default function useQueryFetchTreeCharms() {
   const [currentPage, setCurrentPage] = useState(1);
   const pagePerPage = useRef(10);
 
-  const { data, isPending } = useQuery({
+  const { data, isPending, isError } = useQuery({
     queryKey: [QueryKeys.TreeCharms, { currentPage, pagePerPage }],
     queryFn: () => {
       if (!userInfo.userId) {
@@ -36,6 +36,7 @@ export default function useQueryFetchTreeCharms() {
   return {
     data,
     isPending,
+    isError,
     currentPage,
     updateCurrentPage,
   };

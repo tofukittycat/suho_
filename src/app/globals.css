@@ -18,6 +18,10 @@ body {
   background-size: cover;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 :root {
   --vh: 1vh;
 }

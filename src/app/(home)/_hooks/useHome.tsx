@@ -23,8 +23,8 @@ export default function useHome() {
     router.push("horoscope/today");
   };
 
-  const handleGoToLuckyTree = () => {
-    router.push("luckytree");
+  const handleGoToLuckyTreeCreate = () => {
+    router.push("luckytree/create");
   };
 
   const treeURLCopyToClipboard = async () => {
@@ -46,7 +46,7 @@ export default function useHome() {
     router,
     userInfoData,
     handleGoToTodayHoroscope,
-    handleGoToLuckyTree,
+    handleGoToLuckyTreeCreate,
     treeURLCopyToClipboard,
   };
 }

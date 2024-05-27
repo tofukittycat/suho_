@@ -55,7 +55,7 @@ export default function LuckyDateStep({ useluckyTree, onClickSubmit }: LuckyDate
           />
         </VStack>
       </VStack>
-      <CTAContainer>
+      <CTAContainer className="px-0">
         <NavFooter
           ratio="1:3"
           left={{

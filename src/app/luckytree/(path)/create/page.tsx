@@ -3,9 +3,9 @@
 import VStack from "@/components/base/stack/VStack";
 import useMultiStepForm from "@/components/hooks/useMultiStep";
 
-import LuckyCategoryStep from "./_components/steps/LuckyCategoryStep";
-import LuckyDateStep from "./_components/steps/LuckyDateStep";
-import useLuckyTree from "./_hooks/useLuckyTree";
+import LuckyCategoryStep from "../../_components/steps/LuckyCategoryStep";
+import LuckyDateStep from "../../_components/steps/LuckyDateStep";
+import useLuckyTree from "../../_hooks/useLuckyTree";
 
 const StepKeys = {
   LuckyDate: "LuckyDate-Step",
