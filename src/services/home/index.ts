@@ -7,6 +7,7 @@ type TreeInfoResponse = {
   date?: string;
   tag?: string;
   visibleCharm: false; // 3일전이면 true, 3일 이상 남았으면 false
+  owner: boolean; // 자기 자신이면 true
 };
 
 // 홈에 나무 정보 조회

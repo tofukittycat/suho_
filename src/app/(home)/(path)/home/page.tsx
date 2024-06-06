@@ -1,46 +1,50 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
+
+import { useMemo } from "react";
 
 import { SHGlobalSpinner } from "@/components/base/SHSpinner";
+import useAppRepository from "@/components/hooks/useAppRepository";
+import { isEmpty } from "lodash";
 
 import TreeEmptyStatusView from "../../_components/TreeEmptyStatusView";
 import TreeExistStatusView from "../../_components/TreeExistStatusView";
+import TreeSharedStatusView from "../../_components/TreeSharedStatusView";
 import useQueryFetchTreeInfo from "../../_hooks/queries/useQueryFetchTreeInfo";
-import useQueryFetchUserCheckInfo from "../../_hooks/queries/useQueryFetchUserCheckInfo";
 import useHome from "../../_hooks/useHome";
 
 export default function Home() {
+  const searchParmas = useSearchParams();
   const useHomeState = useHome();
-  const { router } = useHomeState;
 
-  const { data: userCheckInfoData, isPending: isUserCheckInfoPending } =
-    useQueryFetchUserCheckInfo();
+  const {
+    userInfoStore: [userInfo],
+  } = useAppRepository();
 
-  const useFetchTreeInfo = useQueryFetchTreeInfo();
+  const useFetchTreeInfo = useQueryFetchTreeInfo({ userId: userInfo.userId });
   const { data: treeInfoData, isPending: isTreeInfoPending } = useFetchTreeInfo;
 
   const treeId = useMemo(() => {
     return treeInfoData?.treeId;
   }, [treeInfoData]);
 
-  useEffect(() => {
-    if (!userCheckInfoData) {
-      return;
-    }
+  const fromSharedWithTreeIdAndUserId = useMemo(() => {
+    const treeId = searchParmas.get("shTI");
+    const userId = searchParmas.get("shUI");
 
-    if (userCheckInfoData.hasInfo === false) {
-      router.push("/signin/info");
-    }
-  }, [userCheckInfoData]);
-
-  if (typeof window !== "object") {
-    return <></>;
-  }
+    return { treeId: treeId ? Number(treeId) : null, userId: userId ? Number(userId) : null };
+  }, [searchParmas]);
 
   return (
     <>
-      {isUserCheckInfoPending || isTreeInfoPending ? (
+      {fromSharedWithTreeIdAndUserId.treeId && fromSharedWithTreeIdAndUserId.userId ? (
+        <TreeSharedStatusView
+          useHomeStatus={useHomeState}
+          treeId={fromSharedWithTreeIdAndUserId.treeId}
+          userId={fromSharedWithTreeIdAndUserId.userId}
+        />
+      ) : isTreeInfoPending ? (
         <SHGlobalSpinner />
       ) : (
         <>

@@ -14,27 +14,30 @@ import { Pagination } from "@mui/material";
 import dayjs from "dayjs";
 
 import useQueryFetchTreeCharms from "../_hooks/queries/useQueryFetchTreeCharms";
-import { UseFetchTreeInfoType } from "../_hooks/queries/useQueryFetchTreeInfo";
+import useQueryFetchTreeInfo, {
+  UseFetchTreeInfoType,
+} from "../_hooks/queries/useQueryFetchTreeInfo";
 import { UseHomeType } from "../_hooks/useHome";
 import CharmDownloadAndShareSheet from "./CharmDownloadAndShareSheet";
 import LuckyBox from "./LuckyBox";
 
-type TreeExistStatusViewProps = {
+type TreeSharedStatusViewProps = {
   useHomeStatus: UseHomeType;
-  useFetchTreeInfo: UseFetchTreeInfoType;
+  treeId: number;
+  userId: number;
 };
 
-export default function TreeExistStatusView({
+export default function TreeSharedStatusView({
   useHomeStatus,
-  useFetchTreeInfo,
-}: TreeExistStatusViewProps) {
+  treeId,
+  userId,
+}: TreeSharedStatusViewProps) {
   const { push } = useRouter();
-  const {
-    userInfoStore: [userInfo],
-  } = useAppRepository();
 
-  const { handleGoToTodayHoroscope, treeURLCopyToClipboard } = useHomeStatus;
-  const { data: treeInfoData } = useFetchTreeInfo;
+  const useFetchTreeInfo = useQueryFetchTreeInfo({ userId: userId });
+  const { data: treeInfoData, isPending: isTreeInfoPending } = useFetchTreeInfo;
+
+  const { handleGoToLuckyTreeCreate, handleGoToWriteCharm } = useHomeStatus;
 
   const {
     data: treeCharmsData,
@@ -82,7 +85,7 @@ export default function TreeExistStatusView({
               <VStack>
                 <SHLabel className="text-[16px] font-[800] text-white">{`${formattedDate(treeInfoData?.date ?? "")} ${treeInfoData?.tag}을 위한`}</SHLabel>
                 <SHLabel className="text-[24px] font-[800] text-white">
-                  <span className="text-[#B49FFF]">{userInfo.username}</span>님의 행운 나무
+                  <span className="text-[#B49FFF]">{treeInfoData?.username}</span>님의 행운 나무
                 </SHLabel>
               </VStack>
 
@@ -218,15 +221,13 @@ export default function TreeExistStatusView({
             <NavFooter
               ratio="1:1"
               left={{
-                children: "데일리 운세보기",
-                onClick: handleGoToTodayHoroscope,
+                children: "내 행운나무 만들기",
+                onClick: handleGoToLuckyTreeCreate,
               }}
               right={{
-                children: "행운나무 공유하기",
+                children: "행운부적 써주기",
                 onClick: () => {
-                  const treeId = treeInfoData?.treeId;
-                  const userId = userInfo.userId;
-                  treeURLCopyToClipboard({ treeId, userId });
+                  handleGoToWriteCharm(treeId);
                 },
               }}
             />

@@ -6,6 +6,7 @@ export const QueryKeys = {
   TreeInfo: "TreeInfo", // 해당 나무 정보
   TreeCharms: "TreeCharms", // 해당 나무 부적 정보
   TreeCharmsDetails: "TreeCharmsDetails", // 해당 나무 부적 정보
+  TreeStickers: "TreeStickers", // 해당 나무 스티커들
 
   UserCheckInfo: "UserCheckInfo", // 유저 추가 정보 입력 체크
   UserInfo: "UserInfo", // 유저 정보

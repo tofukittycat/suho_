@@ -6,6 +6,7 @@ import { atom, useRecoilState } from "recoil";
 
 type UserInfoType = {
   userId?: number | null;
+  treeId?: number | null;
   birth?: string;
   birthType?: number;
   birthTime?: string;

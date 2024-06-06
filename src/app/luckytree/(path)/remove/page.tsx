@@ -11,6 +11,7 @@ import { SHGlobalSpinner } from "@/components/base/SHSpinner";
 import HStack from "@/components/base/stack/HStack";
 import VCStack from "@/components/base/stack/VCStack";
 import VStack from "@/components/base/stack/VStack";
+import useAppRepository from "@/components/hooks/useAppRepository";
 import useToggle from "@/components/hooks/useToggle";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
@@ -20,7 +21,13 @@ import useLuckyTree from "../../_hooks/useLuckyTree";
 
 export default function page() {
   const { router, handleRemoveLuckyTree } = useLuckyTree();
-  const { data: treeInfoData, isPending: isTreeInfoPending } = useQueryFetchTreeInfo();
+  const {
+    userInfoStore: [userInfo],
+  } = useAppRepository();
+
+  const { data: treeInfoData, isPending: isTreeInfoPending } = useQueryFetchTreeInfo({
+    userId: userInfo.userId,
+  });
 
   const { isOpen, open, close } = useToggle();
   const { toast } = useToast();

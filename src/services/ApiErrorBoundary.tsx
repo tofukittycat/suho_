@@ -1,8 +1,10 @@
+"use client";
+
 import { ReactNode } from "react";
 
 import { useToast } from "@/components/ui/use-toast";
 import { useQueryClient } from "@tanstack/react-query";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 
 type ErrorResponseType = {
   status: number;
@@ -27,6 +29,11 @@ export default function ApiErrorBoundary({ children }: ApiErrorBoundaryProps) {
   };
 
   function handleError(axiosError: AxiosError) {
+    if (!axiosError) {
+      window.location.href = "/signin";
+      return;
+    }
+
     const errorResponse = axiosError.response?.data as ErrorResponseType;
     const statusCode = errorResponse.status;
     const message = errorResponse.error;
@@ -38,7 +45,7 @@ export default function ApiErrorBoundary({ children }: ApiErrorBoundaryProps) {
       case 401:
       case 403:
         toast({ description: message });
-        window.location.href = "/signin";
+
         break;
       default:
         toast({ description: `⚠️ ${message}: ${statusCode}` });

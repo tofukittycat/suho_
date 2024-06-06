@@ -13,7 +13,7 @@ import useStorage from "@/components/hooks/useStorage";
 import LoginButton from "./_components/LoginButton";
 import useSignIn from "./_hooks/useSignIn";
 
-export default async function SigninPage() {
+export default function SigninPage() {
   const { clearStorage } = useStorage();
   const { handleSiginKakao } = useSignIn();
 
