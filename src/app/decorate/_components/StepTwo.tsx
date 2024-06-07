@@ -1,11 +1,8 @@
 import { useParams } from "next/navigation";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosCloseCircle as CloseIcon } from "react-icons/io";
-import { Sheet, SheetRef } from "react-modal-sheet";
 import { Rnd } from "react-rnd";
-import { BottomSheet } from "react-spring-bottom-sheet";
-import "react-spring-bottom-sheet/dist/style.css";
 
 import SwipeableBottomSheet from "@/components/SwipeableBottomSheet";
 import SHImage from "@/components/base/SHImage";
@@ -15,12 +12,8 @@ import VCStack from "@/components/base/stack/VCStack";
 import VStack from "@/components/base/stack/VStack";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { Button, SwipeableDrawer, styled } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { Button } from "@mui/material";
 import { useClickAway } from "@uidotdev/usehooks";
-import * as htmlToImage from "html-to-image";
-import { toBlob, toJpeg, toPixelData, toPng, toSvg } from "html-to-image";
-import { useOnClickOutside } from "usehooks-ts";
 
 import useQueryFetchTreeStickers from "../_hooks/queries/useQueryFetchTreeStickers";
 
