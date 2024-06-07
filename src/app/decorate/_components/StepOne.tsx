@@ -19,11 +19,11 @@ export default function StepOne({ useDecorateControls, onClickSubmit }: StepOneP
   const { router, infoData, updateFields } = useDecorateControls;
 
   const handleChangeInputSender = (event: ChangeEvent<HTMLInputElement>) => {
+    const sender = infoData.sender ?? "";
+
     if (maxLength) {
-      const sender = infoData.sender ?? "";
-      if (sender.length > maxLength) {
+      if (event.target.value.length > maxLength) {
         event.target.value = sender.substring(0, maxLength);
-        return;
       }
     }
 
@@ -50,7 +50,11 @@ export default function StepOne({ useDecorateControls, onClickSubmit }: StepOneP
         </SHLabel>
       </VStack>
       <CTAContainer className="px-0">
-        <NavFooter ratio="1:3" left={{ onClick: router.back }} right={{ onClick: onClickSubmit }} />
+        <NavFooter
+          ratio="1:3"
+          left={{ onClick: router.back }}
+          right={{ disabled: (infoData.sender ?? "").length < 1, onClick: onClickSubmit }}
+        />
       </CTAContainer>
     </VStack>
   );
