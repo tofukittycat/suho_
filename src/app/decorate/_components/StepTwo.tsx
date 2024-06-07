@@ -7,6 +7,7 @@ import { Rnd } from "react-rnd";
 import { BottomSheet } from "react-spring-bottom-sheet";
 import "react-spring-bottom-sheet/dist/style.css";
 
+import SwipeableBottomSheet from "@/components/SwipeableBottomSheet";
 import SHImage from "@/components/base/SHImage";
 import { SHSpinner } from "@/components/base/SHSpinner";
 import HStack from "@/components/base/stack/HStack";
@@ -22,24 +23,6 @@ import { toBlob, toJpeg, toPixelData, toPng, toSvg } from "html-to-image";
 import { useOnClickOutside } from "usehooks-ts";
 
 import useQueryFetchTreeStickers from "../_hooks/queries/useQueryFetchTreeStickers";
-
-const CustomSheet = styled(Sheet)`
-  .react-modal-sheet-backdrop {
-    /* custom styles */
-  }
-  .react-modal-sheet-container {
-    /* custom styles */
-  }
-  .react-modal-sheet-header {
-    /* custom styles */
-  }
-  .react-modal-sheet-drag-indicator {
-    /* custom styles */
-  }
-  .react-modal-sheet-content {
-    /* custom styles */
-  }
-`;
 
 type StepTwoProps = {
   onClickSubmit: () => void;
@@ -62,8 +45,7 @@ const SUHO_CAPTURE_IMAGE = "to-capture-suho-image";
 export default function StepTwo({ onClickSubmit }: StepTwoProps) {
   const params = useParams();
 
-  const [isOpen, setIsOpen] = useState(true);
-  const sheetRef = useRef<SheetRef>(null);
+  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(true);
 
   const outsideRef = useClickAway<HTMLDivElement>(() => {
     console.log("clicked outside");
@@ -81,18 +63,11 @@ export default function StepTwo({ onClickSubmit }: StepTwoProps) {
   const stickerImageURLs =
     stickersData?.supplementTypes.flatMap(sticker => sticker.images.map(image => image.url)) ?? [];
 
-  function dismiss() {
-    setIsOpen(false);
-  }
-
   function captureScreenshot() {
-    setIsOpen(true);
     // const element = document.getElementById(SUHO_CAPTURE_IMAGE);
-
     // if (!element) {
     //   return;
     // }
-
     // toPng(element, { cacheBust: true })
     //   .then(function (dataUrl) {
     //     const img = new Image();
@@ -102,7 +77,6 @@ export default function StepTwo({ onClickSubmit }: StepTwoProps) {
     //   .catch(function (error) {
     //     console.error("이미지화 에러 (decorate)", error);
     //   });
-
     // toBlob(element).then(function (blob) {
     //   if (window.saveAs) {
     //     window.saveAs(blob, "my-node.png");
@@ -203,83 +177,49 @@ export default function StepTwo({ onClickSubmit }: StepTwoProps) {
         </VStack>
       </VStack>
       {/* 받아오는 스티커 이미지들 */}
-      <CustomSheet
-        rootId="root"
-        isOpen={isOpen}
-        onClose={dismiss}
-        ref={sheetRef}
+      <SwipeableBottomSheet
+        isOpen={isOpenBottomSheet}
+        onOpen={() => setIsOpenBottomSheet(true)}
+        onClose={() => setIsOpenBottomSheet(false)}
+        // ref={sheetRef}
         snapPoints={[400, 100, 0]}
         initialSnap={1}
-        onSnap={snapIndex => {
-          if (snapIndex === 2) {
-            setIsOpen(true);
-          }
-        }}
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          margin: "0 auto",
-          minWidth: "375px",
-          maxWidth: "430px",
-        }}
       >
-        <Sheet.Container
-        // style={{
-        //   paddingBottom: sheetRef.current?.y,
-        // }}
-        >
-          <Sheet.Header style={{ height: "30px" }}>
-            <Puller />
-          </Sheet.Header>
-          <Sheet.Content>
-            <HStack className="w-full flex-wrap justify-center gap-[4px] overflow-auto bg-white p-[20px] sm:h-[460px]">
-              {(() => {
-                if (isPendingStickers) {
-                  return (
-                    <VStack className="h-full w-full pt-[50px]">
-                      <SHSpinner />
-                    </VStack>
-                  );
-                }
+        <HStack className="w-full flex-wrap justify-center gap-[4px] overflow-auto bg-white p-[20px] sm:h-[460px]">
+          {(() => {
+            if (isPendingStickers) {
+              return (
+                <VStack className="h-full w-full pt-[50px]">
+                  <SHSpinner />
+                </VStack>
+              );
+            }
 
-                return (
-                  stickersData && (
-                    <>
-                      {stickerImageURLs.map((url, index) => (
-                        <Button
-                          key={index}
-                          sx={{ width: "80px", height: "80px", bgcolor: "#8957d90d" }}
-                          onClick={() => {
-                            const sticker: StickerType = {
-                              id: `sticker-${tempStickers.length + 1}`,
-                              imageURL: url,
-                              isSelected: false,
-                            };
-                            setTempStickers(prev => [...prev, sticker]);
-                          }}
-                        >
-                          <img src={url} alt="sticker" className="h-full w-full" />
-                        </Button>
-                      ))}
-                    </>
-                  )
-                );
-              })()}
-            </HStack>
-          </Sheet.Content>
-        </Sheet.Container>
-        {/* <Sheet.Backdrop /> */}
-      </CustomSheet>
+            return (
+              stickersData && (
+                <>
+                  {stickerImageURLs.map((url, index) => (
+                    <Button
+                      key={index}
+                      sx={{ width: "80px", height: "80px", bgcolor: "#8957d90d" }}
+                      onClick={() => {
+                        const sticker: StickerType = {
+                          id: `sticker-${tempStickers.length + 1}`,
+                          imageURL: url,
+                          isSelected: false,
+                        };
+                        setTempStickers(prev => [...prev, sticker]);
+                      }}
+                    >
+                      <img src={url} alt="sticker" className="h-full w-full" />
+                    </Button>
+                  ))}
+                </>
+              )
+            );
+          })()}
+        </HStack>
+      </SwipeableBottomSheet>
     </>
   );
 }
-const Puller = styled("div")(({ theme }) => ({
-  width: 30,
-  height: 6,
-  backgroundColor: theme.palette.mode === "light" ? grey[300] : grey[900],
-  borderRadius: 3,
-  position: "absolute",
-  top: 8,
-  left: "calc(50% - 15px)",
-}));
