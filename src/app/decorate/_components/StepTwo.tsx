@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { IoIosCloseCircle as CloseIcon } from "react-icons/io";
 import { Rnd } from "react-rnd";
 
+import CTAContainer from "@/components/CTAContainer";
+import NavFooter from "@/components/NavFooter";
 import SwipeableBottomSheet from "@/components/SwipeableBottomSheet";
 import SHImage from "@/components/base/SHImage";
 import { SHSpinner } from "@/components/base/SHSpinner";
@@ -13,11 +15,13 @@ import VStack from "@/components/base/stack/VStack";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Button } from "@mui/material";
-import { useClickAway } from "@uidotdev/usehooks";
+import { toBlob } from "html-to-image";
 
 import useQueryFetchTreeStickers from "../_hooks/queries/useQueryFetchTreeStickers";
+import { UseDecorateType } from "../_hooks/useDecorate";
 
 type StepTwoProps = {
+  useDecorateControls: UseDecorateType;
   onClickSubmit: () => void;
 };
 
@@ -35,19 +39,13 @@ const style = {
 
 const SUHO_CAPTURE_IMAGE = "to-capture-suho-image";
 
-export default function StepTwo({ onClickSubmit }: StepTwoProps) {
-  const params = useParams();
+export default function StepTwo({ useDecorateControls, onClickSubmit }: StepTwoProps) {
+  const { treeId, router, updateFields } = useDecorateControls;
 
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(true);
 
-  const outsideRef = useClickAway<HTMLDivElement>(() => {
-    console.log("clicked outside");
-  });
-
-  const treeId = params.treeId as string;
-
   const { data: stickersData, isPending: isPendingStickers } = useQueryFetchTreeStickers({
-    treeId: Number(treeId),
+    treeId,
   });
 
   const [tempStickers, setTempStickers] = useState<StickerType[]>([]);
@@ -56,38 +54,34 @@ export default function StepTwo({ onClickSubmit }: StepTwoProps) {
   const stickerImageURLs =
     stickersData?.supplementTypes.flatMap(sticker => sticker.images.map(image => image.url)) ?? [];
 
-  function captureScreenshot() {
-    // const element = document.getElementById(SUHO_CAPTURE_IMAGE);
-    // if (!element) {
-    //   return;
-    // }
-    // toPng(element, { cacheBust: true })
-    //   .then(function (dataUrl) {
-    //     const img = new Image();
-    //     img.src = dataUrl;
-    //     document.body.appendChild(img);
-    //   })
-    //   .catch(function (error) {
-    //     console.error("이미지화 에러 (decorate)", error);
-    //   });
-    // toBlob(element).then(function (blob) {
-    //   if (window.saveAs) {
-    //     window.saveAs(blob, "my-node.png");
-    //   } else {
-    //     FileSaver.saveAs(blob, "my-node.png");
-    //   }
-    // });
+  async function captureScreenshot() {
+    initStickers();
+
+    const element = document.getElementById(SUHO_CAPTURE_IMAGE);
+
+    if (!element) {
+      return;
+    }
+
+    const blob = await toBlob(element, { includeQueryParams: true }).catch(function (error) {
+      console.error("이미지화 에러 (decorate)", error);
+    });
+
+    if (blob) {
+      updateFields({ image: blob });
+    }
+
+    onClickSubmit();
   }
 
-  const handleClickOutSide = () => {
-    console.log("clicked outside");
+  const openBottomSheet = () => setIsOpenBottomSheet(true);
+  const closeBottomSheet = () => setIsOpenBottomSheet(false);
 
+  const initStickers = () => {
     setTempStickers(prevStickers =>
       prevStickers.map(sticker => ({ ...sticker, isSelected: false })),
     );
   };
-
-  // useOnClickOutside(outsideRef, handleClickOutSide);
 
   useEffect(() => {
     setSelectedSticker(tempStickers.find(sticker => sticker.isSelected === true));
@@ -102,38 +96,40 @@ export default function StepTwo({ onClickSubmit }: StepTwoProps) {
               행운을 담은 마음을 적어주세요.
             </Label>
             <Label className="text-[13px] font-[500] text-white">24자내로 작성할 수 있어요.</Label>
-            <Button onClick={captureScreenshot}>어떻게 할래</Button>
           </VStack>
 
-          <VCStack className="shrink-0 items-center justify-center">
+          <VCStack className="shrink-0 items-center justify-center" onClick={initStickers}>
             <SHImage
               id={SUHO_CAPTURE_IMAGE}
-              src={"/test_suho.svg"}
-              className="z-0 h-[360px] w-[70%] bg-yellow-300 object-cover sm:h-[460px]"
+              src={stickersData?.charmImageURL ?? ""}
+              className="z-0 h-[360px] w-[70%] object-contain sm:h-[460px] sm:w-[70%]"
             >
-              {/* <div ref={outsideRef}> */}
               {tempStickers.map(item => (
                 <Rnd
                   key={item.id}
                   style={style}
                   lockAspectRatio
                   default={{ x: 125, y: 175, width: "50px", height: "50px" }}
+                  allowAnyClick
                   resizeHandleComponent={{
-                    topRight: (
-                      <CloseIcon
-                        style={{
-                          backgroundColor: "white",
-                          borderStyle: "hidden",
-                          borderRadius: "100px",
-                          fill: "#7B57FC",
-                        }}
-                        onClick={() => {
-                          setTempStickers(prevStickers =>
-                            prevStickers.filter(sticker => sticker.id !== item.id),
-                          );
-                        }}
-                      />
-                    ),
+                    topRight:
+                      item.id === selectedSticker?.id ? (
+                        <CloseIcon
+                          style={{
+                            backgroundColor: "white",
+                            borderStyle: "hidden",
+                            borderRadius: "100px",
+                            fill: "#7B57FC",
+                          }}
+                          onClick={() => {
+                            setTempStickers(prevStickers =>
+                              prevStickers.filter(sticker => sticker.id !== item.id),
+                            );
+                          }}
+                        />
+                      ) : (
+                        <></>
+                      ),
                   }}
                   resizeHandleStyles={{
                     topRight: {
@@ -144,6 +140,15 @@ export default function StepTwo({ onClickSubmit }: StepTwoProps) {
                     },
                   }}
                   enableUserSelectHack={false}
+                  onMouseDown={e => {
+                    setTempStickers(prevStickers =>
+                      prevStickers.map(sticker =>
+                        item.id === sticker.id
+                          ? { ...sticker, isSelected: true }
+                          : { ...sticker, isSelected: false },
+                      ),
+                    );
+                  }}
                 >
                   <div
                     key={item.id}
@@ -152,28 +157,30 @@ export default function StepTwo({ onClickSubmit }: StepTwoProps) {
                       "h-full w-full ",
                       selectedSticker?.id === item.id ? "border border-main-purple-suho" : "",
                     )}
-                    onMouseDown={e => {
-                      setTempStickers(prevStickers =>
-                        prevStickers.map(sticker =>
-                          item.id === sticker.id ? { ...sticker, isSelected: true } : sticker,
-                        ),
-                      );
-                    }}
                   >
                     <img src={item.imageURL} alt="sticker" className="h-full w-full" />
                   </div>
                 </Rnd>
               ))}
-              {/* </div> */}
             </SHImage>
           </VCStack>
+          <CTAContainer className="mt-[30px]">
+            <NavFooter
+              ratio="1:3"
+              left={{ onClick: router.back }}
+              right={{
+                children: "보내기",
+                onClick: captureScreenshot,
+              }}
+            />
+          </CTAContainer>
         </VStack>
       </VStack>
       {/* 받아오는 스티커 이미지들 */}
       <SwipeableBottomSheet
         isOpen={isOpenBottomSheet}
-        onOpen={() => setIsOpenBottomSheet(true)}
-        onClose={() => setIsOpenBottomSheet(false)}
+        onOpen={openBottomSheet}
+        onClose={closeBottomSheet}
         // ref={sheetRef}
         snapPoints={[400, 100, 0]}
         initialSnap={1}
@@ -199,9 +206,14 @@ export default function StepTwo({ onClickSubmit }: StepTwoProps) {
                         const sticker: StickerType = {
                           id: `sticker-${tempStickers.length + 1}`,
                           imageURL: url,
-                          isSelected: false,
+                          isSelected: true,
                         };
-                        setTempStickers(prev => [...prev, sticker]);
+                        setTempStickers(prevStickers => [
+                          ...prevStickers.map(sticker => ({ ...sticker, isSelected: false })),
+                          sticker,
+                        ]);
+
+                        closeBottomSheet();
                       }}
                     >
                       <img src={url} alt="sticker" className="h-full w-full" />

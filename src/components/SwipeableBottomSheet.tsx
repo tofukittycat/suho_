@@ -42,6 +42,7 @@ export default function SwipeableBottomSheet({
         margin: "0 auto",
         minWidth: "375px",
         maxWidth: "430px",
+        zIndex: 10,
       }}
     >
       <Sheet.Container>

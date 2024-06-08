@@ -21,7 +21,7 @@ export default function useHome() {
   };
 
   const handleGoToWriteCharm = (treeId: number) => {
-    router.push(`decorate/${treeId}`);
+    router.push(`/luckytree/result/${treeId}/from-WriteCharm`);
   };
 
   const handleGoToLuckyTreeCreate = () => {

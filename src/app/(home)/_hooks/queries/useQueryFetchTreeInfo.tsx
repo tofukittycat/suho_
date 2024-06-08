@@ -14,7 +14,7 @@ export default function useQueryFetchTreeInfo({ userId }: { userId?: number | nu
     queryKey: [QueryKeys.TreeInfo],
     queryFn: () => {
       if (!userId) {
-        return Promise.reject();
+        return;
       }
 
       return getTreeInfo({ userId });
@@ -28,8 +28,10 @@ export default function useQueryFetchTreeInfo({ userId }: { userId?: number | nu
       return;
     }
 
-    setUserInfo({ ...userInfo, treeId: data.treeId });
-  }, [data]);
+    if (!userInfo.isGuest) {
+      setUserInfo({ ...userInfo, userId, treeId: data.treeId });
+    }
+  }, [data, userId]);
 
   return {
     data,

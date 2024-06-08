@@ -1,4 +1,4 @@
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { useMemo } from "react";
 
@@ -9,14 +9,11 @@ import SHLabel from "@/components/base/SHLabel";
 import { SHGlobalSpinner } from "@/components/base/SHSpinner";
 import HStack from "@/components/base/stack/HStack";
 import VStack from "@/components/base/stack/VStack";
-import useAppRepository from "@/components/hooks/useAppRepository";
 import { Pagination } from "@mui/material";
 import dayjs from "dayjs";
 
 import useQueryFetchTreeCharms from "../_hooks/queries/useQueryFetchTreeCharms";
-import useQueryFetchTreeInfo, {
-  UseFetchTreeInfoType,
-} from "../_hooks/queries/useQueryFetchTreeInfo";
+import useQueryFetchTreeInfo from "../_hooks/queries/useQueryFetchTreeInfo";
 import { UseHomeType } from "../_hooks/useHome";
 import CharmDownloadAndShareSheet from "./CharmDownloadAndShareSheet";
 import LuckyBox from "./LuckyBox";
@@ -44,7 +41,7 @@ export default function TreeSharedStatusView({
     isPending: isTreeCharmsPending,
     currentPage,
     updateCurrentPage,
-  } = useQueryFetchTreeCharms();
+  } = useQueryFetchTreeCharms({ userId: userId });
 
   const charmList = treeCharmsData?.treeCharmResponseList ?? [];
 
@@ -69,7 +66,7 @@ export default function TreeSharedStatusView({
     const treeId = treeInfoData?.treeId;
 
     if (treeId) {
-      push(`/luckytree/result/${treeId}/from-LuckyBox`);
+      push(`/luckytree/result/${treeId}/from-Shared`);
     }
   };
 

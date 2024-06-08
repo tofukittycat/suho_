@@ -5,6 +5,7 @@ import { localStorageEffect } from "@/providers/recoil/persistEffect";
 import { atom, useRecoilState } from "recoil";
 
 type UserInfoType = {
+  isGuest?: boolean;
   userId?: number | null;
   treeId?: number | null;
   birth?: string;

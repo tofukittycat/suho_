@@ -16,7 +16,7 @@ export function Toaster() {
     <ToastProvider>
       {toasts.map(function ({ id, title, description, action, customView, ...props }) {
         return (
-          <Toast key={id} duration={2000} {...props}>
+          <Toast key={id} duration={2000} style={{ zIndex: 1000 }} {...props}>
             {(() => {
               return customView ? (
                 <>{customView}</>

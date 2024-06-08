@@ -21,9 +21,17 @@ import useLuckyTree from "../../../../_hooks/useLuckyTree";
  * params의 from
  * 1. 홈의 luckybox : from-LuckyBox
  * 2. 나무 생성 마지막 : from-CreateTree
+ * 3. 공유 URL을 통해 들어옴 : from-Shared
+ * 4. 행운부적 써주기 : from-WriteCharm
  */
 export default function page({ params }: { params: { treeId: string; from: string } }) {
-  const { router, handleGoToLuckyTreeRemove, handleGoToHome, queryTreeFortune } = useLuckyTree();
+  const {
+    router,
+    handleGoToLuckyTreeRemove,
+    handleGoToHome,
+    handleGoToDecorateCharm,
+    queryTreeFortune,
+  } = useLuckyTree();
   const {
     userInfoStore: [userInfo],
   } = useAppRepository();
@@ -85,7 +93,7 @@ export default function page({ params }: { params: { treeId: string; from: strin
                   <VStack className="gap-[16px]">
                     <ElementalLottie luckySpirit={luckySpiritData.luckySpirit} />
                     <SHLabel type="SubTitle2" className="whitespace-pre-wrap text-white">
-                      {`오늘 ${userInfo?.username ?? "유저"}님에게\n`}
+                      {userInfo?.username && `오늘 ${userInfo?.username ?? "유저"}님에게\n`}
                       <span className="text-[#A48AFF]">{`${luckySpiritData.luckySpirit}의 기운`}</span>
                       이 행운을 가져다줘요.
                     </SHLabel>
@@ -107,8 +115,28 @@ export default function page({ params }: { params: { treeId: string; from: strin
                         right={{ children: "행운 나무 설정", onClick: handleGoToLuckyTreeRemove }}
                       />
                     );
-                  } else {
+                  } else if (params.from === "from-CreateTree") {
                     return <CTAButton onClick={handleGoToHome}>내 행운 나무 보러가기</CTAButton>;
+                  } else if (params.from === "from-WriteCharm") {
+                    return (
+                      <NavFooter
+                        ratio="1:3"
+                        left={{ onClick: router.back }}
+                        right={{
+                          children: "행운 부적 써주러 가기",
+                          onClick: () => handleGoToDecorateCharm(Number(params.treeId)),
+                        }}
+                      />
+                    );
+                  } else {
+                    return (
+                      <CTAButton
+                        className="bg-[#E4DCFF] text-[16px] font-[600] text-main-purple-suho hover:bg-[#d9d0f4]"
+                        onClick={router.back}
+                      >
+                        이전
+                      </CTAButton>
+                    );
                   }
                 })()}
               </CTAContainer>

@@ -36,6 +36,10 @@ export default function useLuckyTree() {
     router.push("/home");
   }, []);
 
+  const handleGoToDecorateCharm = useCallback((treeId: number) => {
+    router.push(`/decorate/${treeId}`);
+  }, []);
+
   const handleGoToTreeFortuneResult = useCallback((treeId: string) => {
     router.push(`/luckytree/result/${treeId}/from-CreateTree`);
   }, []);
@@ -107,6 +111,7 @@ export default function useLuckyTree() {
     queryTreeFortune,
     updateFields,
     handleGoToHome,
+    handleGoToDecorateCharm,
     handleGoToTreeFortuneResult,
     handleCreateLuckyTree,
     handleRemoveLuckyTree,

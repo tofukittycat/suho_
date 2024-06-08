@@ -14,3 +14,16 @@ export type StickersResponse = {
 export const getStickers = async ({ treeId }: { treeId: number }): Promise<StickersResponse> => {
   return (await apiClient.get(`/tree/${treeId}/stickers`)).data;
 };
+
+// 부적 생성
+export const createWriteCharm = async ({
+  treeId,
+  sender,
+  image,
+}: {
+  treeId: number;
+  sender: string;
+  image: Blob;
+}) => {
+  return (await apiClient.patch(`/tree/${treeId}/charm`, { sender, image })).data;
+};

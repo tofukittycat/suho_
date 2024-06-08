@@ -10,4 +10,5 @@ export const QueryKeys = {
 
   UserCheckInfo: "UserCheckInfo", // 유저 추가 정보 입력 체크
   UserInfo: "UserInfo", // 유저 정보
+  ProfileUserInfo: "ProfileUserInfo", // 프로필 유저 정보
 };

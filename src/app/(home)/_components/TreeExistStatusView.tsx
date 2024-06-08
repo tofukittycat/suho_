@@ -41,7 +41,7 @@ export default function TreeExistStatusView({
     isPending: isTreeCharmsPending,
     currentPage,
     updateCurrentPage,
-  } = useQueryFetchTreeCharms();
+  } = useQueryFetchTreeCharms({ userId: treeInfoData?.userId });
 
   const charmList = treeCharmsData?.treeCharmResponseList ?? [];
 
