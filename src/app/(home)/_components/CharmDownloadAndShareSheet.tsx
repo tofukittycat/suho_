@@ -44,6 +44,7 @@ export default function CharmDownloadAndShareSheet({
     open: openRemoveCharmCheckSheet,
     close: closeRemoveCharmCheckSheet,
   } = useToggle();
+
   const { isOpen: isOpenDrawer, open: openDrawer, close: closeDrawer } = useToggle();
 
   const { data: charmDetailsData, isPending } = useQuery({
@@ -123,7 +124,7 @@ export default function CharmDownloadAndShareSheet({
             </VStack>
           )
         ) : (
-          <InvisibleCheckCharmSheet />
+          <InvisibleCheckCharmSheet closeDrawer={closeDrawer} />
         )}
       </DrawerContent>
     </Drawer>

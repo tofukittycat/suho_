@@ -47,7 +47,9 @@ export default function useDecorate() {
         image,
       },
       {
-        onSuccess: () => {},
+        onSuccess: () => {
+          router.replace("/home");
+        },
         onError(error) {
           toast({
             title: "Uh on! Error",

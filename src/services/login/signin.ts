@@ -34,3 +34,19 @@ export const postAddUserInfo = async ({
 export const getProfileUserInfo = async (): Promise<ProfileUserInfoResponse> => {
   return (await apiClient.get("/users/info")).data;
 };
+
+/** sms 인증 요청 */
+export const postRequestPhoneNumber = async ({ phoneNumber }: { phoneNumber: string }) => {
+  return (await apiClient.post("/sms-request", null, { params: { phoneNumber } })).data;
+};
+
+/** sms 인증코드 검증 */
+export const getSMSVerification = async ({
+  phoneNumber,
+  code,
+}: {
+  phoneNumber: string;
+  code: number;
+}): Promise<{ authResult: boolean; phoneNumber: string }> => {
+  return (await apiClient.get("/sms-verification", { params: { phoneNumber, code } })).data;
+};

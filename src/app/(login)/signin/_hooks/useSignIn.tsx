@@ -10,6 +10,8 @@ import { AddUserInfoType } from "@/services/login/signin";
 import useMutateAddUserInfo from "./queries/useMutateAddUserInfo";
 
 type InfoDataType = {
+  phoneNumber: string | null;
+  certCode: number | null;
   birth: string | null;
   birthType: number | null;
   name: string | null;
@@ -26,6 +28,8 @@ export default function useSignIn() {
   const { mutate: addUserInfo } = useMutateAddUserInfo();
 
   const [infoData, setInfoData] = useState<InfoDataType>({
+    phoneNumber: null,
+    certCode: null,
     birth: null,
     birthType: 0,
     name: null,

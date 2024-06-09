@@ -86,7 +86,7 @@ export default function SHInputField({ fontColor, ...props }: SHInputFieldProps)
 export const InputFieldButton = ({ ...props }: ButtonProps) => {
   return (
     <Button
-      className="ml-3 h-[28px] rounded-[14px] bg-main-purple-suho text-[13px] font-[500] text-[#FFFFFF] hover:bg-main-purple-suho/90"
+      className="mb-2 ml-3 h-[28px] rounded-[14px] bg-main-purple-suho text-[13px] font-[500] text-[#FFFFFF] hover:bg-main-purple-suho/90"
       {...props}
     >
       {props.children}

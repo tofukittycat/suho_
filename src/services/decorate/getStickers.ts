@@ -25,5 +25,15 @@ export const createWriteCharm = async ({
   sender: string;
   image: Blob;
 }) => {
-  return (await apiClient.patch(`/tree/${treeId}/charm`, { sender, image })).data;
+  return (
+    await apiClient.post(
+      `/tree/${treeId}/charm`,
+      { sender, image },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    )
+  ).data;
 };

@@ -64,10 +64,11 @@ export const 십이간지시간Items = [
 
 type InfoDateStepProps = {
   useSignin: UseSignInType;
+  onClickBack: () => void;
   onClickSubmit: () => void;
 };
 
-export default function InfoDateStep({ useSignin, onClickSubmit }: InfoDateStepProps) {
+export default function InfoDateStep({ useSignin, onClickBack, onClickSubmit }: InfoDateStepProps) {
   const { router, infoData, updateFields } = useSignin;
 
   const disabledSubmitButton = useMemo(() => {
@@ -132,7 +133,7 @@ export default function InfoDateStep({ useSignin, onClickSubmit }: InfoDateStepP
       <CTAContainer className="px-0">
         <NavFooter
           ratio="1:3"
-          left={{ onClick: router.back }}
+          left={{ onClick: onClickBack }}
           right={{ disabled: disabledSubmitButton, onClick: onClickSubmit }}
         />
       </CTAContainer>
