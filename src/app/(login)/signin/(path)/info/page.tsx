@@ -5,7 +5,7 @@ import useMultiStepForm from "@/components/hooks/useMultiStep";
 
 import InfoDateStep from "../../_components/steps/InfoDateStep";
 import InfoNameStep from "../../_components/steps/InfoNameStep";
-import InfoPhoneNumberStep from "../../_components/steps/infoPhoneNumberStep";
+import InfoPhoneNumberStep from "../../_components/steps/InfoPhoneNumberStep";
 import useSignIn from "../../_hooks/useSignIn";
 
 const StepKeys = {
