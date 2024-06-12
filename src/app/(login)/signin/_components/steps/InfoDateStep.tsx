@@ -109,9 +109,9 @@ export default function InfoDateStep({ useSignin, onClickBack, onClickSubmit }: 
               isRow
               value={infoData.birthType ?? 0}
               items={[
-                { label: "음력", value: "0" },
                 { label: "양력", value: "1" },
-                { label: "음력 윤달", value: "2" },
+                { label: "음력", value: "0" },
+                { label: "음력 윤달", value: "0" },
               ]}
               onChange={handleChangeBirthType}
             />
