@@ -5,13 +5,10 @@ import NavFooter from "@/components/NavFooter";
 import SHInputField, { InputFieldButton } from "@/components/base/SHInputField";
 import SHLabel from "@/components/base/SHLabel";
 import VStack from "@/components/base/stack/VStack";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
 import { getSMSVerification, postRequestPhoneNumber } from "@/services/login/signin";
 import { formatPhoneNumberInProgress, removeHyphens, validatePhoneNumber } from "@/utils/utils";
-import dayjs from "dayjs";
-import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { isEmpty } from "lodash";
 import { useCountdown } from "usehooks-ts";
 
@@ -30,7 +27,7 @@ export default function InfoPhoneNumberStep({
 
   const [isRequestCert, setIsRequestCert] = useState(false);
   const [isSMSSuccess, setIsSMSSuccess] = useState<boolean | null>(null);
-  const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({
+  const [count, { startCountdown, resetCountdown }] = useCountdown({
     countStart: 180,
     intervalMs: 1000,
   });
@@ -47,11 +44,7 @@ export default function InfoPhoneNumberStep({
   };
 
   const handleChangeInputCertCode = (event: ChangeEvent<HTMLInputElement>) => {
-    const certCode = Number(event.target.value);
-    if (isNaN(certCode)) {
-      return;
-    }
-
+    const certCode = event.target.value;
     updateFields({ certCode });
   };
 
@@ -60,7 +53,7 @@ export default function InfoPhoneNumberStep({
       // 재요청
       resetCountdown();
       startCountdown();
-      updateFields({ certCode: 0 });
+      updateFields({ certCode: null });
       setIsSMSSuccess(false);
     } else {
       if (infoData.phoneNumber) {
@@ -80,7 +73,7 @@ export default function InfoPhoneNumberStep({
     if (infoData.phoneNumber && infoData.certCode) {
       getSMSVerification({
         phoneNumber: removeHyphens(infoData.phoneNumber),
-        code: infoData.certCode,
+        code: Number(infoData.certCode),
       })
         .then(res => {
           if (res.authResult) {
@@ -134,7 +127,7 @@ export default function InfoPhoneNumberStep({
               value={infoData.certCode}
               fontColor="white"
               onChange={handleChangeInputCertCode}
-              inputProps={{ maxLength: 6, inputMode: "numeric", pattern: "[0-9]*" }}
+              inputProps={{ maxLength: 6, inputMode: "decimal", pattern: "[0-9]*" }}
               autoComplete="one-time-code"
               InputProps={{
                 endAdornment: (

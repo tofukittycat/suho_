@@ -11,7 +11,7 @@ import useMutateAddUserInfo from "./queries/useMutateAddUserInfo";
 
 type InfoDataType = {
   phoneNumber: string | null;
-  certCode: number | null;
+  certCode: string | null;
   birth: string | null;
   birthType: number | null;
   name: string | null;
