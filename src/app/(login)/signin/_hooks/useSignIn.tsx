@@ -65,6 +65,9 @@ export default function useSignIn() {
   const handleSiginKakao = () => {
     window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/oauth2/authorization/kakao`;
   };
+  const handleSigninNaver = () => {
+    window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/oauth2/authorization/naver`;
+  };
 
   const handleAddUserInfo = (infoData: AddUserInfoType) => {
     addUserInfo(
@@ -101,6 +104,7 @@ export default function useSignIn() {
     handleGoToName,
     handleGoToHome,
     handleSiginKakao,
+    handleSigninNaver,
     handleAddUserInfo,
   };
 }

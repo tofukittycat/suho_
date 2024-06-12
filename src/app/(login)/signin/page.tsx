@@ -15,7 +15,7 @@ import useSignIn from "./_hooks/useSignIn";
 
 export default function SigninPage() {
   const { clearStorage } = useStorage();
-  const { handleSiginKakao } = useSignIn();
+  const { handleSiginKakao, handleSigninNaver } = useSignIn();
 
   useEffect(() => {
     clearStorage();
@@ -36,7 +36,10 @@ export default function SigninPage() {
       </VStack>
 
       <CTAContainer>
-        <LoginButton buttonType="KAKAO" onClick={handleSiginKakao} />
+        <VStack className="gap-[7px]">
+          <LoginButton buttonType="KAKAO" onClick={handleSiginKakao} />
+          <LoginButton buttonType="NAVER" onClick={handleSigninNaver} />
+        </VStack>
       </CTAContainer>
     </VStack>
     // <VStack
