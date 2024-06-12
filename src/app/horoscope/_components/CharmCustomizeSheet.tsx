@@ -10,8 +10,10 @@ import SHImage from "@/components/base/SHImage";
 import { SHGlobalSpinner } from "@/components/base/SHSpinner";
 import HStack from "@/components/base/stack/HStack";
 import VStack from "@/components/base/stack/VStack";
+import useAppRepository from "@/components/hooks/useAppRepository";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { useToast } from "@/components/ui/use-toast";
 import lStorage, { StorageKeys } from "@/utils/storage";
 import { fileNameByURL } from "@/utils/utils";
 
@@ -19,13 +21,24 @@ import useQueryFetchTodayHoroscopeCharmInfo from "../_hooks/queries/useQueryFetc
 
 export default function CharmCustomizeSheet() {
   const { push } = useRouter();
+  const { toast } = useToast();
   const { data, isPending } = useQueryFetchTodayHoroscopeCharmInfo();
 
+  const {
+    userInfoStore: [userInfo],
+  } = useAppRepository();
+
   const handleGoToDecorate = () => {
+    if (!userInfo.treeId) {
+      toast({ description: "먼저 행운 나무가 존재해야 합니다." });
+
+      return;
+    }
+
     push("/home");
 
     setTimeout(() => {
-      push("/decorate");
+      push(`/decorate/${userInfo.treeId}`);
     }, 100);
   };
 

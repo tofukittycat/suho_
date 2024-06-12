@@ -8,12 +8,16 @@ import { SHGlobalSpinner } from "@/components/base/SHSpinner";
 import HStack from "@/components/base/stack/HStack";
 import VCStack from "@/components/base/stack/VCStack";
 import VStack from "@/components/base/stack/VStack";
+import useAppRepository from "@/components/hooks/useAppRepository";
 
 import CharmCustomizeSheet from "../../_components/CharmCustomizeSheet";
 import useQueryFetchTodayHoroscope from "../../_hooks/queries/useQueryFetchTodayHoroscope";
 
 export default function DailyHoroscopePage() {
   const { data, isPending } = useQueryFetchTodayHoroscope();
+  const {
+    userInfoStore: [userInfo],
+  } = useAppRepository();
 
   return (
     <VStack className="h-full w-full overflow-auto">
@@ -103,7 +107,7 @@ export default function DailyHoroscopePage() {
                   <VStack className="gap-[20px]">
                     <ElementalLottie luckySpirit={data.luckSpirit} />
                     <SHLabel type="SubTitle2" className="whitespace-pre-wrap text-[#E6E8EB]">
-                      {`오늘 유진님에게\n`}
+                      {`오늘 ${userInfo.username}님에게\n`}
                       <span className="text-[#A48AFF]">{data?.luckSpirit}의 기운</span>이 행운을
                       가져다줘요.
                     </SHLabel>
