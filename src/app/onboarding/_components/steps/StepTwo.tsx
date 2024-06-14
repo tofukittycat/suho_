@@ -41,7 +41,7 @@ export default function StepTwo({ onClickSubmit }: StepTwoProps) {
         </div>
       </VStack>
       <CTAContainer className="gap-[46px]">
-        <SHLabel className="whitespace-pre-line text-center text-[18px] font-[700] text-[#6059AE]">
+        <SHLabel className="whitespace-pre-line text-center text-[18px] font-[500] text-[#6059AE]">
           {`사주에서 나에게 부족한 기운을 알아보고\n행운 부적으로 보완해보세요`}
         </SHLabel>
         <CTAButton onClick={onClickSubmit}>다음</CTAButton>
