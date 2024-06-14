@@ -11,6 +11,7 @@ import VStack from "@/components/base/stack/VStack";
 import useAppRepository from "@/components/hooks/useAppRepository";
 
 import CharmCustomizeSheet from "../../_components/CharmCustomizeSheet";
+import HoroscopeResultPending from "../../_components/HoroscopeResultPending";
 import useQueryFetchTodayHoroscope from "../../_hooks/queries/useQueryFetchTodayHoroscope";
 
 export default function DailyHoroscopePage() {
@@ -22,7 +23,7 @@ export default function DailyHoroscopePage() {
   return (
     <VStack className="h-full w-full overflow-auto">
       {isPending ? (
-        <SHGlobalSpinner />
+        <HoroscopeResultPending />
       ) : (
         <>
           {data && (
