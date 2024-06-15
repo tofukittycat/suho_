@@ -3,21 +3,18 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { GiHamburgerMenu as HamburgerMenuIcon } from "react-icons/gi";
 import { IoClose as CloseIcon } from "react-icons/io5";
 
 import useQueryFetchProfileUserInfo from "@/app/(login)/signin/_hooks/queries/useQueryFetchProfileUserInfo";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { getProfileUserInfo } from "@/services/login/signin";
-import { Button } from "@mui/material";
 import { isEmpty } from "lodash";
 
 import HDivider from "./HDivider";
 import SHLabel from "./base/SHLabel";
 import HStack from "./base/stack/HStack";
 import VStack from "./base/stack/VStack";
-import useAppRepository from "./hooks/useAppRepository";
 import useAuth from "./hooks/useAuth";
 import { Avatar, AvatarImage } from "./ui/avatar";
 
@@ -33,10 +30,7 @@ export default function HamburgerNav() {
   const routes = useMemo(() => {
     return {
       main: isEmpty(token)
-        ? [
-            { type: "홈", href: "/home" },
-            { type: "데일리 운세 보기", href: "/horoscope/today" },
-          ]
+        ? [{ type: "행운 나무 만들기", href: "/signin" }]
         : [
             { type: "홈", href: "/home" },
             { type: "행운 나무 설정", href: "/luckytree/remove" },
@@ -46,6 +40,7 @@ export default function HamburgerNav() {
         ? [
             { type: "자주 묻는 질문", href: "/setting/help-center" },
             { type: "이용약관", href: "/setting/terms-service" },
+            { type: "로그인", href: "/signin" },
           ]
         : [
             { type: "계정 설정", href: "/setting/account" },
@@ -83,12 +78,7 @@ export default function HamburgerNav() {
               </HStack>
             ) : (
               <HStack className="items-center gap-[16px]">
-                <div
-                  onClick={() => router.push("/signin")}
-                  className="cursor-pointer text-[20px] font-[700] text-main-purple-suho"
-                >
-                  로그인하기
-                </div>
+                <img src="/imgs/logo_blue.svg" alt="logo" />
               </HStack>
             )}
 
@@ -103,7 +93,7 @@ export default function HamburgerNav() {
                   {route.type}
                 </Link>
               ))}
-              <HDivider className="my-[25px]" />
+              <HDivider className="my-[15px]" />
               {routes.sub.map(route => (
                 <Link
                   key={route.type}

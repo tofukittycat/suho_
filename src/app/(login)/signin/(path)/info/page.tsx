@@ -29,10 +29,11 @@ export default function page() {
       case StepKeys.InfoName:
         handleAddUserInfo({
           birth: infoData.birth,
-          birthType: infoData.birthType ?? 0,
+          birthType: infoData.birthType === 1 ? 1 : 0, // 1은 양력, 나머지는 0 으로
           birthTime: infoData.birthTime,
           name: infoData.name,
         });
+
         break;
       default:
         break;

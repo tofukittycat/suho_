@@ -1,3 +1,5 @@
+import lStorage, { StorageKeys } from "@/utils/storage";
+
 import apiClient from "../apiClient";
 
 type UserCheckInfoResponse = {
@@ -34,4 +36,8 @@ export const patchUpdateUserInfo = async ({
   birthTime: string;
 }) => {
   return (await apiClient.patch(`/users/my/${userId}`, { birth, birthTime })).data;
+};
+
+export const deleteWithdrawal = async () => {
+  return (await apiClient.delete("/users/signout")).data;
 };

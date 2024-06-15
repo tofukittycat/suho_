@@ -13,6 +13,10 @@ import { UseSignInType } from "../../_hooks/useSignIn";
 
 export const 십이간지시간Items = [
   {
+    value: "모름",
+    label: "모름",
+  },
+  {
     value: "23:30~01:30",
     label: "子時(자시) - 23:30 ~ 01:30",
   },
@@ -107,11 +111,11 @@ export default function InfoDateStep({ useSignin, onClickBack, onClickSubmit }: 
             />
             <SHRadioGroup
               isRow
-              value={infoData.birthType ?? 0}
+              value={infoData.birthType ?? 1}
               items={[
                 { label: "양력", value: "1" },
                 { label: "음력", value: "0" },
-                { label: "음력 윤달", value: "0" },
+                { label: "음력 윤달", value: "2" },
               ]}
               onChange={handleChangeBirthType}
             />

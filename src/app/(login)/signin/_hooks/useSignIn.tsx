@@ -31,7 +31,7 @@ export default function useSignIn() {
     phoneNumber: null,
     certCode: null,
     birth: null,
-    birthType: 0,
+    birthType: 1, // 양력
     name: null,
     birthTime: null,
   });

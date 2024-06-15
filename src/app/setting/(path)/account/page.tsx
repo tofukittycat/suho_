@@ -14,7 +14,12 @@ import SHLabel from "@/components/base/SHLabel";
 import { SHSpinner } from "@/components/base/SHSpinner";
 import VCStack from "@/components/base/stack/VCStack";
 import VStack from "@/components/base/stack/VStack";
+import useAuth from "@/components/hooks/useAuth";
+import useToggle from "@/components/hooks/useToggle";
+import { deleteWithdrawal } from "@/services/user";
+import { Button } from "@mui/material";
 
+import WithdrawalBottomSheet from "../../_components/WithdrawalBottomSheet";
 import useMutateUpdateUserInfo from "../../_hooks/queries/useMutateUpdateUserInfo";
 import useQueryFetchUserInfo from "../../_hooks/queries/useQueryFetchUserInfo";
 
@@ -25,6 +30,7 @@ type UserAccountInfo = {
 
 export default function page() {
   const router = useRouter();
+  const { isOpen: isOpenWithdrawal, open: openWithdrawal, close: closeWithdrawal } = useToggle();
 
   const { data: userInfoData, isPending } = useQueryFetchUserInfo();
   const { mutate: updateUserInfo } = useMutateUpdateUserInfo();
@@ -37,6 +43,10 @@ export default function page() {
   const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setUpdatedInfo({ ...updatedInfo, [name]: value });
+  };
+
+  const handleWithdrawal = () => {
+    openWithdrawal();
   };
 
   const onSubmit = () => {
@@ -96,6 +106,17 @@ export default function page() {
             items={십이간지시간Items}
             onChange={handleChangeInput}
           />
+          <Button
+            sx={{
+              color: "white",
+              textAlign: "start",
+              width: "80px",
+              marginLeft: "-12px",
+            }}
+            onClick={handleWithdrawal}
+          >
+            계정 삭제
+          </Button>
         </VStack>
       )}
       <CTAContainer className="px-0">
@@ -105,6 +126,9 @@ export default function page() {
           right={{ disabled: isPending, onClick: onSubmit }}
         />
       </CTAContainer>
+      {isOpenWithdrawal && (
+        <WithdrawalBottomSheet isOpen={isOpenWithdrawal} onClose={closeWithdrawal} />
+      )}
     </VStack>
   );
 }
