@@ -30,7 +30,17 @@ export default function page() {
     }
   };
 
-  const { step, next } = useMultiStepForm([
+  const onClickBack = () => {
+    switch (step.key) {
+      case StepKeys.StepTwo:
+        back();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const { step, next, back } = useMultiStepForm([
     <StepOne
       key={StepKeys.StepOne}
       {...infoData}
@@ -42,6 +52,7 @@ export default function page() {
       {...infoData}
       useDecorateControls={useDecorateControls}
       onClickSubmit={onSubmit}
+      onClickBack={onClickBack}
     />,
   ]);
 

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
 import { IoIosCloseCircle as CloseIcon } from "react-icons/io";
-import { IoIosArrowBack as ArrowBackIcon } from "react-icons/io";
 import { Rnd } from "react-rnd";
 
 import CTAContainer from "@/components/CTAContainer";
@@ -25,10 +24,9 @@ import { toBlob } from "html-to-image";
 import useQueryFetchTreeStickers from "../_hooks/queries/useQueryFetchTreeStickers";
 import { UseDecorateType } from "../_hooks/useDecorate";
 
-type StepTwoProps = {
+type StepThreeProps = {
   useDecorateControls: UseDecorateType;
   onClickSubmit: () => void;
-  onClickBack: () => void;
 };
 
 type StickerType = {
@@ -45,7 +43,7 @@ const style = {
 
 const SUHO_CAPTURE_IMAGE = "to-capture-suho-image";
 
-export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmit }: StepTwoProps) {
+export default function StepThree({ useDecorateControls, onClickSubmit }: StepThreeProps) {
   const { treeId, router, infoData, updateFields } = useDecorateControls;
 
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(true);
@@ -110,21 +108,9 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
       <VStack className="h-full w-full justify-start">
         <VStack sx={{ width: "100%", gap: "10px" }}>
           <VStack className="mt-[45px] w-full items-center justify-center">
-            <HStack className="w-full items-center justify-between px-[20px]">
-              <ArrowBackIcon
-                className="h-[24px] w-[24px] cursor-pointer text-white"
-                onClick={onClickBack}
-              />
-              <Label className="flex-grow-1 text-[16px] font-[700] text-white">
-                행운을 담은 마음을 적어주세요.
-              </Label>
-              <Label
-                className="cursor-pointer text-[16px] font-[700] text-[#A48AFF]"
-                onClick={captureScreenshot}
-              >
-                완료
-              </Label>
-            </HStack>
+            <Label className="text-[16px] font-[700] text-white">
+              행운을 담은 마음을 적어주세요.
+            </Label>
             <Label className="text-[13px] font-[500] text-white">{description}</Label>
           </VStack>
           <VCStack className="shrink-0 items-center justify-center" onClick={initStickers}>
@@ -136,7 +122,7 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
               <Label className="absolute left-[60px] right-[60px] top-[38px] z-10 mx-auto  text-center text-[16px] font-[700] text-white">
                 {infoData.sender}
               </Label>
-              {/* 설명 */}
+              {/* 123 */}
               <EditTextarea
                 placeholder="행운을 담은 응원을 적어보세요."
                 rows={2}
@@ -204,6 +190,17 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
               ))}
             </SHImage>
           </VCStack>
+
+          <CTAContainer className="mt-[0px]">
+            <NavFooter
+              ratio="1:3"
+              left={{ onClick: router.back }}
+              right={{
+                children: "보내기",
+                onClick: captureScreenshot,
+              }}
+            />
+          </CTAContainer>
         </VStack>
       </VStack>
       {/* 받아오는 스티커 이미지들 */}
@@ -211,7 +208,7 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
         isOpen={isOpenBottomSheet}
         onOpen={openBottomSheet}
         onClose={closeBottomSheet}
-        snapPoints={[400, 100, 0]}
+        snapPoints={[400, 30, 0]}
         initialSnap={1}
       >
         <HStack className="w-full flex-wrap justify-center gap-[4px] overflow-auto bg-white p-[20px] sm:h-[460px]">

@@ -75,7 +75,6 @@ export default function page({ params }: { params: { treeId: string; from: strin
                   <VStack className="shrink-0">
                     <SHImage
                       src={guardianData.imageURL ?? ""}
-                      fallbackElement={<div>수호 이미지</div>}
                       className="h-[420px] w-[300px] rounded-[30px] object-contain"
                     />
                   </VStack>
