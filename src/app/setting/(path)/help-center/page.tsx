@@ -71,6 +71,11 @@ export default function page() {
 
   const router = useRouter();
 
+  const handleOneOnOne = () => {
+    const url = "https://www.notion.so/2ebd292258714f9fa61c61597481e0d1";
+    window.open(url, "_blank", "noopener, noreferrer");
+  };
+
   useEffect(() => {
     setVisibleBG(false);
 
@@ -102,7 +107,7 @@ export default function page() {
         <NavFooter
           ratio="1:1"
           left={{ onClick: router.back }}
-          right={{ children: "1:1 문의하기", onClick: () => {} }}
+          right={{ children: "1:1 문의하기", onClick: handleOneOnOne }}
         />
       </CTAContainer>
     </VStack>
