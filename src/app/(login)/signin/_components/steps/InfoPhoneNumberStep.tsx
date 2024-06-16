@@ -7,6 +7,7 @@ import SHLabel from "@/components/base/SHLabel";
 import VStack from "@/components/base/stack/VStack";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 import { getSMSVerification, postRequestPhoneNumber } from "@/services/login/signin";
 import { formatPhoneNumberInProgress, removeHyphens, validatePhoneNumber } from "@/utils/utils";
 import { isEmpty } from "lodash";
@@ -55,6 +56,17 @@ export default function InfoPhoneNumberStep({
       startCountdown();
       updateFields({ certCode: null });
       setIsSMSSuccess(false);
+
+      if (infoData.phoneNumber) {
+        postRequestPhoneNumber({ phoneNumber: removeHyphens(infoData.phoneNumber) })
+          .then(() => {
+            startCountdown();
+            setIsRequestCert(true);
+          })
+          .catch((error: Error) => {
+            toast({ description: error.message });
+          });
+      }
     } else {
       if (infoData.phoneNumber) {
         postRequestPhoneNumber({ phoneNumber: removeHyphens(infoData.phoneNumber) })
@@ -73,7 +85,7 @@ export default function InfoPhoneNumberStep({
     if (infoData.phoneNumber && infoData.certCode) {
       getSMSVerification({
         phoneNumber: removeHyphens(infoData.phoneNumber),
-        code: Number(infoData.certCode),
+        code: infoData.certCode,
       })
         .then(res => {
           if (res.authResult) {
@@ -135,11 +147,11 @@ export default function InfoPhoneNumberStep({
                 ),
               }}
               helperText={
-                <Label className="text-[#EB5847]">
+                <Label className={cn(isSMSSuccess ? "text-[#A48AFF]" : "text-[#EB5847]")}>
                   {isSMSSuccess === null
                     ? ""
                     : isSMSSuccess
-                      ? ""
+                      ? "인증이 완료 되었습니다."
                       : "인증코드 입력이 잘못되었습니다."}
                 </Label>
               }

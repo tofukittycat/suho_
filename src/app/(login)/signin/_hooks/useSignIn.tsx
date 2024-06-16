@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import useAppRepository from "@/components/hooks/useAppRepository";
 import { AddUserInfoType } from "@/services/login/signin";
+import { removeHyphens } from "@/utils/utils";
 
 import useMutateAddUserInfo from "./queries/useMutateAddUserInfo";
 
@@ -76,6 +77,7 @@ export default function useSignIn() {
         birthType: infoData.birthType ?? 0,
         birthTime: infoData.birthTime,
         name: infoData.name,
+        phoneNumber: infoData.phoneNumber,
       },
       {
         onSuccess(data, variables) {

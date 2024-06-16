@@ -3,8 +3,8 @@ import { useMutation } from "@tanstack/react-query";
 
 export default function useMutateAddUserInfo() {
   const { mutate, isPending } = useMutation({
-    mutationFn: ({ birth, birthType, birthTime, name }: AddUserInfoType) =>
-      postAddUserInfo({ birth, birthType, birthTime, name }),
+    mutationFn: ({ birth, birthType, birthTime, name, phoneNumber }: AddUserInfoType) =>
+      postAddUserInfo({ birth, birthType, birthTime, name, phoneNumber }),
   });
 
   return {

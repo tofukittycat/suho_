@@ -5,6 +5,7 @@ export type AddUserInfoType = {
   birthType: number | null;
   birthTime?: string | null;
   name: string | null;
+  phoneNumber: string | null;
 };
 
 type AddUserInfoResponse = {
@@ -26,8 +27,10 @@ export const postAddUserInfo = async ({
   birthType,
   birthTime,
   name,
+  phoneNumber,
 }: AddUserInfoType): Promise<AddUserInfoResponse> => {
-  return (await apiClient.post("/users/info", { birth, birthType, birthTime, name })).data;
+  return (await apiClient.post("/users/info", { birth, birthType, birthTime, name, phoneNumber }))
+    .data;
 };
 
 /** 유저 정보 (비로그인도 포함) */
@@ -46,7 +49,7 @@ export const getSMSVerification = async ({
   code,
 }: {
   phoneNumber: string;
-  code: number;
+  code: string;
 }): Promise<{ authResult: boolean; phoneNumber: string }> => {
   return (await apiClient.get("/sms-verification", { params: { phoneNumber, code } })).data;
 };

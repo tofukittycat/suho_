@@ -2,6 +2,7 @@
 
 import VStack from "@/components/base/stack/VStack";
 import useMultiStepForm from "@/components/hooks/useMultiStep";
+import { removeHyphens } from "@/utils/utils";
 
 import InfoDateStep from "../../_components/steps/InfoDateStep";
 import InfoNameStep from "../../_components/steps/InfoNameStep";
@@ -32,6 +33,7 @@ export default function page() {
           birthType: infoData.birthType === 1 ? 1 : 0, // 1은 양력, 나머지는 0 으로
           birthTime: infoData.birthTime,
           name: infoData.name,
+          phoneNumber: removeHyphens(infoData.phoneNumber ?? ""),
         });
 
         break;
