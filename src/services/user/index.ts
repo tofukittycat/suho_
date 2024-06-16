@@ -17,7 +17,9 @@ type UserInfoResponse = {
   email: string;
   birth: string;
   birthTime: string;
+  birthType: number;
   username: string;
+  socialType: string;
 };
 
 // 유저 정보 조회
