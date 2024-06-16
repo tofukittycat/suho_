@@ -3,9 +3,9 @@
 import VStack from "@/components/base/stack/VStack";
 import useMultiStepForm from "@/components/hooks/useMultiStep";
 
-import StepOne from "../_components/StepOne";
-import StepTwo from "../_components/StepTwo";
-import useDecorate from "../_hooks/useDecorate";
+import StepOne from "../../_components/StepOne";
+import StepTwo from "../../_components/StepTwo";
+import useDecorate from "../../_hooks/useDecorate";
 
 const StepKeys = {
   StepOne: "StepOne",

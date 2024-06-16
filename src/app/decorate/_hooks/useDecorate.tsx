@@ -4,6 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 
 import { useState } from "react";
 
+import useAppRepository from "@/components/hooks/useAppRepository";
 import { toast } from "@/components/ui/use-toast";
 
 import useMutateCreateWriteCharm from "./queries/useMutateCreateWriteCharm";
@@ -18,6 +19,10 @@ export type UseDecorateType = ReturnType<typeof useDecorate>;
 export default function useDecorate() {
   const params = useParams();
   const router = useRouter();
+
+  const {
+    decorateInfoStore: [decorateInfo],
+  } = useAppRepository();
 
   const { writeCharm, isPending } = useMutateCreateWriteCharm();
 
@@ -40,25 +45,27 @@ export default function useDecorate() {
       return;
     }
 
-    writeCharm(
-      {
-        treeId: Number(treeId),
-        sender,
-        image,
-      },
-      {
-        onSuccess: () => {
-          router.replace("/home");
+    if (!decorateInfo.onlyDownload) {
+      writeCharm(
+        {
+          treeId: Number(treeId),
+          sender,
+          image,
         },
-        onError(error) {
-          toast({
-            title: "Uh on! Error",
-            description: `${error.message}`,
-            duration: 2000,
-          });
+        {
+          onSuccess: () => {
+            router.replace("/home");
+          },
+          onError(error) {
+            toast({
+              title: "Uh on! Error",
+              description: `${error.message}`,
+              duration: 2000,
+            });
+          },
         },
-      },
-    );
+      );
+    }
   };
 
   return {

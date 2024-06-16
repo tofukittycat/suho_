@@ -2,7 +2,7 @@ import { useParams } from "next/navigation";
 
 import { useEffect, useState } from "react";
 import { EditText, EditTextarea } from "react-edit-text";
-import "react-edit-text/dist/index.css";
+// import "react-edit-text/dist/index.css";
 import { IoIosCloseCircle as CloseIcon } from "react-icons/io";
 import { Rnd } from "react-rnd";
 

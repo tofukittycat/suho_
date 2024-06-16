@@ -13,7 +13,6 @@ import VStack from "@/components/base/stack/VStack";
 import useAppRepository from "@/components/hooks/useAppRepository";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { useToast } from "@/components/ui/use-toast";
 import lStorage, { StorageKeys } from "@/utils/storage";
 import { fileNameByURL } from "@/utils/utils";
 
@@ -21,24 +20,19 @@ import useQueryFetchTodayHoroscopeCharmInfo from "../_hooks/queries/useQueryFetc
 
 export default function CharmCustomizeSheet() {
   const { push } = useRouter();
-  const { toast } = useToast();
   const { data, isPending } = useQueryFetchTodayHoroscopeCharmInfo();
 
   const {
     userInfoStore: [userInfo],
+    decorateInfoStore: [decorateInfo, setDecorateInfo],
   } = useAppRepository();
 
   const handleGoToDecorate = () => {
-    if (!userInfo.treeId) {
-      toast({ description: "먼저 행운 나무가 존재해야 합니다." });
-
-      return;
-    }
-
     push("/home");
 
     setTimeout(() => {
       push(`/decorate/${userInfo.treeId}`);
+      setDecorateInfo(prev => ({ ...prev, onlyDownload: true }));
     }, 100);
   };
 
@@ -76,8 +70,8 @@ export default function CharmCustomizeSheet() {
             <CTAContainer className="px-0">
               <NavFooter
                 ratio="1:1"
-                left={{ children: "이미지 다운로드", onClick: handleDownload }}
-                right={{ children: "꾸미러가기", onClick: handleGoToDecorate }}
+                left={{ children: "다운로드 하기", onClick: handleDownload }}
+                right={{ children: "행운부적 꾸미기", onClick: handleGoToDecorate }}
               />
             </CTAContainer>
           </VStack>

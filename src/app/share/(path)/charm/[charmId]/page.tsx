@@ -2,12 +2,9 @@
 
 import { useParams } from "next/navigation";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { IoClose as CloseIcon } from "react-icons/io5";
 
-import CharmCustomizeSheet from "@/app/horoscope/_components/CharmCustomizeSheet";
-import BottomSheet from "@/components/BottomSheet";
-import CTAButton from "@/components/CTAButton";
 import CTAContainer from "@/components/CTAContainer";
 import NavFooter from "@/components/NavFooter";
 import SHImage from "@/components/base/SHImage";

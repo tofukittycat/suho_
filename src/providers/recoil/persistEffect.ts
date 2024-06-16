@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 import lStorage from "@/utils/storage";
+import { recoilPersist } from "recoil-persist";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -14,3 +15,8 @@ export const localStorageEffect =
       isReset ? lStorage.remove(key) : lStorage.set(key, newValue);
     });
   };
+
+export const { persistAtom: persistSession } = recoilPersist({
+  key: "SH_Session",
+  storage: typeof window !== "undefined" ? window.sessionStorage : undefined,
+});

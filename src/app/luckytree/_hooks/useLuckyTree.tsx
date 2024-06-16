@@ -8,6 +8,7 @@ import useMutateCreateLuckyTree from "@/app/luckytree/_hooks/queries/useMutateCr
 import SHImage from "@/components/base/SHImage";
 import SHLabel from "@/components/base/SHLabel";
 import VCStack from "@/components/base/stack/VCStack";
+import useAppRepository from "@/components/hooks/useAppRepository";
 import { useToast } from "@/components/ui/use-toast";
 
 import useMutateRemoveTree from "./queries/useMutateRemoveTree";
@@ -21,6 +22,10 @@ type LuckyTreeInfoType = {
 export default function useLuckyTree() {
   const router = useRouter();
   const { toast } = useToast();
+
+  const {
+    decorateInfoStore: [_, setDecorateInfo],
+  } = useAppRepository();
 
   const queryTreeFortune = useQueryFetchTreeFortune();
   const { mutate: createLuckyTree } = useMutateCreateLuckyTree();
@@ -38,6 +43,7 @@ export default function useLuckyTree() {
 
   const handleGoToDecorateCharm = useCallback((treeId: number) => {
     router.push(`/decorate/${treeId}`);
+    setDecorateInfo(prev => ({ ...prev, onlyDownload: false }));
   }, []);
 
   const handleGoToTreeFortuneResult = useCallback((treeId: string) => {

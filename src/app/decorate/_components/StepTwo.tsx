@@ -1,29 +1,25 @@
-import { useParams } from "next/navigation";
-
 import { useEffect, useState } from "react";
-import { EditText, EditTextarea } from "react-edit-text";
+import { EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
-import { IoIosCloseCircle as CloseIcon } from "react-icons/io";
-import { IoIosArrowBack as ArrowBackIcon } from "react-icons/io";
+import { IoIosArrowBack as ArrowBackIcon, IoIosCloseCircle as CloseIcon } from "react-icons/io";
 import { Rnd } from "react-rnd";
 
-import CTAContainer from "@/components/CTAContainer";
-import NavFooter from "@/components/NavFooter";
 import SwipeableBottomSheet from "@/components/SwipeableBottomSheet";
 import SHImage from "@/components/base/SHImage";
-import SHInputField from "@/components/base/SHInputField";
 import { SHSpinner } from "@/components/base/SHSpinner";
 import HStack from "@/components/base/stack/HStack";
 import VCStack from "@/components/base/stack/VCStack";
 import VStack from "@/components/base/stack/VStack";
-import { Input } from "@/components/ui/input";
+import useAppRepository from "@/components/hooks/useAppRepository";
+import useToggle from "@/components/hooks/useToggle";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { Button, TextField } from "@mui/material";
-import { toBlob } from "html-to-image";
+import { Button } from "@mui/material";
+import { toBlob, toPng } from "html-to-image";
 
 import useQueryFetchTreeStickers from "../_hooks/queries/useQueryFetchTreeStickers";
 import { UseDecorateType } from "../_hooks/useDecorate";
+import CharmDownloadSheet from "./CharmDownloadSheet";
 
 type StepTwoProps = {
   useDecorateControls: UseDecorateType;
@@ -44,9 +40,14 @@ const style = {
 } as const;
 
 const SUHO_CAPTURE_IMAGE = "to-capture-suho-image";
+const PLACEHOLDER = "행운을 담은 응원을 적어보세요.";
 
 export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmit }: StepTwoProps) {
   const { treeId, router, infoData, updateFields } = useDecorateControls;
+
+  const {
+    decorateInfoStore: [decorateInfo, setDecorateInfo],
+  } = useAppRepository();
 
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(true);
   const [description, setDescription] = useState("24자내로 작성할 수 있어요.");
@@ -57,6 +58,10 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
 
   const [tempStickers, setTempStickers] = useState<StickerType[]>([]);
   const [selectedSticker, setSelectedSticker] = useState<StickerType>();
+  const [descMessage, setDescMessage] = useState(PLACEHOLDER);
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  const { isOpen: isOpenDetails, open: openDetails, close: closeDetails } = useToggle();
 
   const stickerImageURLs =
     stickersData?.supplementTypes.flatMap(sticker => sticker.images.map(image => image.url)) ?? [];
@@ -68,32 +73,48 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
   };
 
   const captureScreenshot = async () => {
-    initStickers();
+    initStickers(async () => {
+      setTimeout(async () => {
+        const element = document.getElementById(SUHO_CAPTURE_IMAGE);
 
-    const element = document.getElementById(SUHO_CAPTURE_IMAGE);
+        if (!element) {
+          return;
+        }
 
-    if (!element) {
-      return;
-    }
+        if (decorateInfo.onlyDownload) {
+          const imageURL = await toPng(element, { includeQueryParams: true });
+          setDecorateInfo(prev => ({ ...prev, imageURL }));
 
-    const blob = await toBlob(element, { includeQueryParams: true }) //
-      .catch(error => {
-        console.error("이미지화 에러 (decorate)", error);
-      });
+          openDetails();
+        } else {
+          const blob = await toBlob(element, { includeQueryParams: true }) //
+            .catch(error => {
+              console.error("이미지화 에러 (decorate)", error);
+            });
 
-    if (blob) {
-      updateFields({ image: blob });
-    }
+          if (blob) {
+            updateFields({ image: blob });
+          }
+        }
+      }, 100);
+    });
   };
 
   const openBottomSheet = () => setIsOpenBottomSheet(true);
   const closeBottomSheet = () => setIsOpenBottomSheet(false);
 
-  const initStickers = () => {
+  const initStickers = (callback?: () => void) => {
+    setDescMessage(prev => (prev === PLACEHOLDER ? "" : prev));
+    setIsEditMode(false);
+
     setTempStickers(prevStickers =>
       prevStickers.map(sticker => ({ ...sticker, isSelected: false })),
     );
+
+    callback?.();
   };
+
+  const handleCloseDetails = () => {};
 
   useEffect(() => {
     setSelectedSticker(tempStickers.find(sticker => sticker.isSelected === true));
@@ -127,32 +148,37 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
             </HStack>
             <Label className="text-[13px] font-[500] text-white">{description}</Label>
           </VStack>
-          <VCStack className="shrink-0 items-center justify-center" onClick={initStickers}>
+          <VCStack className="shrink-0 items-center justify-center" onClick={() => initStickers()}>
             <SHImage
               id={SUHO_CAPTURE_IMAGE}
               src={stickersData?.charmImageURL ?? ""}
-              className="relative z-0 h-[485px] w-[319px]"
+              className="relative z-0 h-[385px] w-[260px]"
             >
-              <Label className="absolute left-[60px] right-[60px] top-[38px] z-10 mx-auto  text-center text-[16px] font-[700] text-white">
+              <Label className="absolute left-[60px] right-[60px] top-[28px] z-10 mx-auto text-center text-[13px] font-[700] text-white">
                 {infoData.sender}
               </Label>
               {/* 설명 */}
               <EditTextarea
-                placeholder="행운을 담은 응원을 적어보세요."
                 rows={2}
                 style={{
                   position: "absolute",
-                  bottom: "90px",
+                  bottom: "50px",
                   left: 0,
                   right: 0,
-                  width: "260px",
+                  width: "230px",
                   margin: "0 auto",
-                  fontSize: "16px",
-                  backgroundColor: "#ffffff0",
+                  fontSize: "13px",
+                  backgroundColor: isEditMode ? "#030303d9" : "",
                   color: "white",
                   textAlign: "center",
-                  padding: "10px",
+                  padding: "12px",
+                  scrollbarColor: "blue",
+                  scrollbarWidth: "none",
                 }}
+                value={descMessage}
+                onChange={e => setDescMessage(e.target.value)}
+                onEditMode={() => setIsEditMode(true)}
+                onBlur={() => setIsEditMode(false)}
               />
               {tempStickers.map(item => (
                 <Rnd
@@ -211,7 +237,7 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
         isOpen={isOpenBottomSheet}
         onOpen={openBottomSheet}
         onClose={closeBottomSheet}
-        snapPoints={[400, 100, 0]}
+        snapPoints={[400, 180, 0]}
         initialSnap={1}
       >
         <HStack className="w-full flex-wrap justify-center gap-[4px] overflow-auto bg-white p-[20px] sm:h-[460px]">
@@ -259,6 +285,8 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
           })()}
         </HStack>
       </SwipeableBottomSheet>
+      {/* Details */}
+      <CharmDownloadSheet isOpen={isOpenDetails} close={closeDetails} />
     </>
   );
 }

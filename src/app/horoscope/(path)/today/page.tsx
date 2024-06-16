@@ -4,7 +4,6 @@ import ElementalLottie from "@/components/ElementalLottie";
 import SHCard from "@/components/base/SHCard";
 import SHImage from "@/components/base/SHImage";
 import SHLabel from "@/components/base/SHLabel";
-import { SHGlobalSpinner } from "@/components/base/SHSpinner";
 import HStack from "@/components/base/stack/HStack";
 import VCStack from "@/components/base/stack/VCStack";
 import VStack from "@/components/base/stack/VStack";

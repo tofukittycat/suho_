@@ -1,7 +1,5 @@
-import { useState } from "react";
-
 import { RecoilKeys } from "@/providers/recoil/keys";
-import { localStorageEffect } from "@/providers/recoil/persistEffect";
+import { localStorageEffect, persistSession } from "@/providers/recoil/persistEffect";
 import { atom, useRecoilState } from "recoil";
 
 type UserInfoType = {
@@ -26,11 +24,26 @@ export const visibleBGState = atom<boolean>({
   effects: [localStorageEffect(RecoilKeys.VisibleBG)],
 });
 
+type DecorateUserType = {
+  onlyDownload: boolean;
+  imageURL: string;
+};
+
+export const decorateInfoState = atom<DecorateUserType>({
+  key: RecoilKeys.DecorateInfo,
+  default: {
+    onlyDownload: false,
+    imageURL: "",
+  },
+  effects_UNSTABLE: [persistSession],
+});
+
 export default function useAppRepository() {
   const userInfoStore = useRecoilState(userInfoState);
   const visibleBGStore = useRecoilState(visibleBGState);
+  const decorateInfoStore = useRecoilState(decorateInfoState);
 
-  return { userInfoStore, visibleBGStore };
+  return { userInfoStore, visibleBGStore, decorateInfoStore };
 }
 
 // type UserInfoStateType = {

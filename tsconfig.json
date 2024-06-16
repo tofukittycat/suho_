@@ -36,7 +36,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "./next.config.mjs",
-    "src/app/decorate/[treeId]/page.jsx"
+    "src/app/decorate/(path)/[treeId]/page.jsx"
   ],
   "exclude": ["node_modules"]
 }
