@@ -72,8 +72,8 @@ export default function page() {
   const router = useRouter();
 
   const handleOneOnOne = () => {
-    const url = "https://www.notion.so/2ebd292258714f9fa61c61597481e0d1";
-    window.open(url, "_blank", "noopener, noreferrer");
+    window.location.href =
+      "https://best-pillow-625.notion.site/6e66de4624f246ffad52aae1574bbfc4?pvs=74";
   };
 
   useEffect(() => {

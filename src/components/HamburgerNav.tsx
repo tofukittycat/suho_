@@ -39,13 +39,13 @@ export default function HamburgerNav() {
       sub: isEmpty(token)
         ? [
             { type: "자주 묻는 질문", href: "/setting/help-center" },
-            { type: "이용약관", href: "/setting/terms-service" },
+            { type: "이용약관", href: "https://www.notion.so/3381dafb38c34852828d20c114aec58d" },
             { type: "로그인", href: "/signin" },
           ]
         : [
             { type: "계정 설정", href: "/setting/account" },
             { type: "자주 묻는 질문", href: "/setting/help-center" },
-            { type: "이용약관", href: "/setting/terms-service" },
+            { type: "이용약관", href: "https://www.notion.so/3381dafb38c34852828d20c114aec58d" },
             { type: "로그아웃", href: "/signin" },
           ],
     };
