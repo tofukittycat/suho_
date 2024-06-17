@@ -84,7 +84,7 @@ export default function CharmDownloadSheet({
                     router.replace("/home");
 
                     setTimeout(() => {
-                      // clear
+                      // decorate store clear
                       setDecorateInfo({ imageURL: "", onlyDownload: false });
                     }, 200);
                   }}
