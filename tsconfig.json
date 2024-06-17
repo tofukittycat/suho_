@@ -12,7 +12,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "types": ["src/utils/types/**/*.d.ts"],
+    "typeRoots": ["./src/utils/types"],
+    "types": ["react-base64-downloader"],
     "plugins": [
       {
         "name": "next"
