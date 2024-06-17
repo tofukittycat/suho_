@@ -137,7 +137,7 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
                 onClick={onClickBack}
               />
               <Label className="flex-grow-1 text-[16px] font-[700] text-white">
-                행운을 담은 마음을 적어주세요.
+                행운의 메세지와 스티커로 꾸미기
               </Label>
               <Label
                 className="cursor-pointer text-[16px] font-[700] text-[#A48AFF]"
@@ -148,7 +148,14 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
             </HStack>
             <Label className="text-[13px] font-[500] text-white">{description}</Label>
           </VStack>
-          <VCStack className="shrink-0 items-center justify-center" onClick={() => initStickers()}>
+          <VCStack
+            className="shrink-0 items-center justify-center"
+            onClick={() => {
+              setTempStickers(prevStickers =>
+                prevStickers.map(sticker => ({ ...sticker, isSelected: false })),
+              );
+            }}
+          >
             <SHImage
               id={SUHO_CAPTURE_IMAGE}
               src={stickersData?.charmImageURL ?? ""}
@@ -157,6 +164,7 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
               <Label className="absolute left-[60px] right-[60px] top-[28px] z-10 mx-auto text-center text-[13px] font-[700] text-white">
                 {infoData.sender}
               </Label>
+              {}
               {/* 설명 */}
               <EditTextarea
                 rows={2}
