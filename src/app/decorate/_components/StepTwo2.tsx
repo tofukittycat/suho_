@@ -18,7 +18,6 @@ import { Button } from "@mui/material";
 import { toBlob, toPng } from "html-to-image";
 
 import useQueryFetchTodayHoroscopeTreeStickers from "../_hooks/queries/useQueryFetchTodayHoroscopeTreeStickers";
-import useQueryFetchTreeStickers from "../_hooks/queries/useQueryFetchTreeStickers";
 import { UseDecorateType } from "../_hooks/useDecorate";
 import CharmDownloadSheet from "./CharmDownloadSheet";
 
@@ -117,8 +116,6 @@ export default function StepTwo2({
 
     callback?.();
   };
-
-  const handleCloseDetails = () => {};
 
   useEffect(() => {
     setSelectedSticker(tempStickers.find(sticker => sticker.isSelected === true));
