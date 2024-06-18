@@ -28,7 +28,8 @@ export default function useLuckyTree() {
   } = useAppRepository();
 
   const queryTreeFortune = useQueryFetchTreeFortune();
-  const { mutate: createLuckyTree } = useMutateCreateLuckyTree();
+  const { mutate: createLuckyTree, isPending: isPendingCreateLuckyTree } =
+    useMutateCreateLuckyTree();
   const { mutate: removeLuckyTree } = useMutateRemoveTree();
 
   const [infoData, setInfoData] = useState<LuckyTreeInfoType>({ luckyDate: null, tag: null });
@@ -115,6 +116,7 @@ export default function useLuckyTree() {
     router,
     infoData,
     queryTreeFortune,
+    isPendingCreateLuckyTree,
     updateFields,
     handleGoToHome,
     handleGoToDecorateCharm,

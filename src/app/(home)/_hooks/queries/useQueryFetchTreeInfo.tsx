@@ -23,16 +23,6 @@ export default function useQueryFetchTreeInfo({ userId }: { userId?: number | nu
     enabled: Boolean(userId),
   });
 
-  useEffect(() => {
-    if (!data) {
-      return;
-    }
-
-    if (!userInfo.isGuest) {
-      setUserInfo({ ...userInfo, userId, treeId: data.treeId });
-    }
-  }, [data, userId]);
-
   return {
     data,
     isPending,

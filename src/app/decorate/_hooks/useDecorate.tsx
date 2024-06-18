@@ -21,6 +21,7 @@ export default function useDecorate() {
   const router = useRouter();
 
   const {
+    userInfoStore: [userInfo],
     decorateInfoStore: [decorateInfo],
   } = useAppRepository();
 
@@ -54,7 +55,9 @@ export default function useDecorate() {
         },
         {
           onSuccess: () => {
-            router.replace("/home");
+            userInfo.owner
+              ? router.replace("/home")
+              : router.replace(`/home?shTI=${userInfo.treeId}&shUI=${userInfo.userId}`);
           },
           onError(error) {
             toast({

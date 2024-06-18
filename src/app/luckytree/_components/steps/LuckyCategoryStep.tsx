@@ -37,7 +37,7 @@ export default function LuckyCategoryStep({
   onClickSubmit,
   onClickBack,
 }: LuckyCategoryStepProps) {
-  const { infoData, updateFields } = useluckyTree;
+  const { infoData, isPendingCreateLuckyTree, updateFields } = useluckyTree;
 
   const onClickCategory = (category: string) => {
     updateFields({ tag: category });
@@ -85,7 +85,7 @@ export default function LuckyCategoryStep({
           }}
           right={{
             children: "다음",
-            disabled: isEmpty(infoData.tag),
+            disabled: isEmpty(infoData.tag) || isPendingCreateLuckyTree,
             onClick: onClickSubmit,
           }}
         />

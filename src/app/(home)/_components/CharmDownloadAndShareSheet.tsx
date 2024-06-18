@@ -15,6 +15,7 @@ import { SHGlobalSpinner } from "@/components/base/SHSpinner";
 import HStack from "@/components/base/stack/HStack";
 import VCStack from "@/components/base/stack/VCStack";
 import VStack from "@/components/base/stack/VStack";
+import useAppRepository from "@/components/hooks/useAppRepository";
 import useToggle from "@/components/hooks/useToggle";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
@@ -40,6 +41,10 @@ export default function CharmDownloadAndShareSheet({
   const { charmId, thumbnailUrl, sender } = charmData;
 
   const {
+    userInfoStore: [userInfo],
+  } = useAppRepository();
+
+  const {
     isOpen: isOpenRemoveCharmCheckSheet,
     open: openRemoveCharmCheckSheet,
     close: closeRemoveCharmCheckSheet,
@@ -48,7 +53,7 @@ export default function CharmDownloadAndShareSheet({
   const { isOpen: isOpenDrawer, open: openDrawer, close: closeDrawer } = useToggle();
 
   const { data: charmDetailsData, isPending } = useQuery({
-    queryKey: [QueryKeys.TreeCharmsDetails],
+    queryKey: [QueryKeys.TreeCharmsDetails, charmId],
     queryFn: () => getTreeCharmDetails({ charmId }),
     staleTime: 0,
   });
@@ -92,10 +97,12 @@ export default function CharmDownloadAndShareSheet({
             <VStack wFull hFull className="bg-black/50 px-[20px]">
               <HStack className="mt-[38px] justify-between">
                 <div className="size-[24px]"></div>
-                <RiDeleteBin6Line
-                  onClick={handleRemoveCharm}
-                  className="size-[24px] cursor-pointer text-white"
-                />
+                {userInfo.owner && (
+                  <RiDeleteBin6Line
+                    onClick={handleRemoveCharm}
+                    className="size-[24px] cursor-pointer text-white"
+                  />
+                )}
                 <DrawerClose onClick={closeDrawer}>
                   <CloseIcon className="size-[24px] text-white" />
                 </DrawerClose>
@@ -144,7 +151,6 @@ function RemoveCharmCheckSheet({
   closeRemoveCharmCheckSheet: () => void;
   closeDrawer: () => void;
 }) {
-  const router = useRouter();
   const { mutate: removeCharm } = useMutateRemoveCharm();
 
   const handleClickRemoveCharm = () => {

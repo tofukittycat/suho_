@@ -107,7 +107,7 @@ export default function DailyHoroscopePage() {
                   <VStack className="gap-[20px]">
                     <ElementalLottie luckySpirit={data.luckSpirit} />
                     <SHLabel type="SubTitle2" className="whitespace-pre-wrap text-[#E6E8EB]">
-                      {`오늘 ${userInfo.username}님에게\n`}
+                      {data.name && `오늘 ${data.name ?? userInfo.username}님에게\n`}
                       <span className="text-[#A48AFF]">{data?.luckSpirit}의 기운</span>이 행운을
                       가져다줘요.
                     </SHLabel>

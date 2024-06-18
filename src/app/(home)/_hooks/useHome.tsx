@@ -25,14 +25,14 @@ export default function useHome() {
   };
 
   const handleGoToLuckyTreeCreate = () => {
-    if (userInfo.userId) {
+    if (!userInfo.owner) {
+      router.replace("/signin");
+    } else {
       if (userInfo.treeId) {
         toast({ description: "이미 행운 나무가 존재합니다." });
       } else {
         router.push("luckytree/create");
       }
-    } else {
-      router.replace("/signin");
     }
   };
 

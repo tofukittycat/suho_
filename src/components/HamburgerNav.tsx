@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { GiHamburgerMenu as HamburgerMenuIcon } from "react-icons/gi";
 import { IoClose as CloseIcon } from "react-icons/io5";
 
@@ -15,6 +15,7 @@ import HDivider from "./HDivider";
 import SHLabel from "./base/SHLabel";
 import HStack from "./base/stack/HStack";
 import VStack from "./base/stack/VStack";
+import useAppRepository from "./hooks/useAppRepository";
 import useAuth from "./hooks/useAuth";
 import { Avatar, AvatarImage } from "./ui/avatar";
 
@@ -23,31 +24,37 @@ export default function HamburgerNav() {
   const router = useRouter();
   const { token } = useAuth();
 
+  const {
+    userInfoStore: [userInfo, setUserInfo],
+  } = useAppRepository();
+
   const { data: profileUserInfo, isPending } = useQueryFetchProfileUserInfo();
 
   const [isOpen, setIsOpen] = useState(false);
 
   const routes = useMemo(() => {
     return {
-      main: isEmpty(token)
-        ? [{ type: "행운 나무 만들기", href: "/signin" }]
-        : [
-            { type: "홈", href: "/home" },
-            { type: "행운 나무 설정", href: "/luckytree/remove" },
-            { type: "데일리 운세 보기", href: "/horoscope/today" },
-          ],
-      sub: isEmpty(token)
-        ? [
-            { type: "자주 묻는 질문", href: "/setting/help-center" },
-            { type: "이용약관", href: "https://www.notion.so/3381dafb38c34852828d20c114aec58d" },
-            { type: "로그인", href: "/signin" },
-          ]
-        : [
-            { type: "계정 설정", href: "/setting/account" },
-            { type: "자주 묻는 질문", href: "/setting/help-center" },
-            { type: "이용약관", href: "https://www.notion.so/3381dafb38c34852828d20c114aec58d" },
-            { type: "로그아웃", href: "/signin" },
-          ],
+      main:
+        isEmpty(token) && !userInfo.owner
+          ? [{ type: "행운 나무 만들기", href: "/signin" }]
+          : [
+              { type: "홈", href: "/home" },
+              { type: "행운 나무 설정", href: "/luckytree/remove" },
+              { type: "데일리 운세 보기", href: "/horoscope/today" },
+            ],
+      sub:
+        isEmpty(token) && !userInfo.owner
+          ? [
+              { type: "자주 묻는 질문", href: "/setting/help-center" },
+              { type: "이용약관", href: "https://www.notion.so/3381dafb38c34852828d20c114aec58d" },
+              { type: "로그인", href: "/signin" },
+            ]
+          : [
+              { type: "계정 설정", href: "/setting/account" },
+              { type: "자주 묻는 질문", href: "/setting/help-center" },
+              { type: "이용약관", href: "https://www.notion.so/3381dafb38c34852828d20c114aec58d" },
+              { type: "로그아웃", href: "/signin" },
+            ],
     };
   }, []);
 

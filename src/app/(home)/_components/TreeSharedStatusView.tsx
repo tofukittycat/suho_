@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 import CTAContainer from "@/components/CTAContainer";
 import HamburgerNav from "@/components/HamburgerNav";

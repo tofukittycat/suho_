@@ -2,11 +2,10 @@
 
 import { useSearchParams } from "next/navigation";
 
-import { Suspense, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
-import { SHGlobalSpinner } from "@/components/base/SHSpinner";
+import useQueryFetchProfileUserInfo from "@/app/(login)/signin/_hooks/queries/useQueryFetchProfileUserInfo";
 import useAppRepository from "@/components/hooks/useAppRepository";
-import { isEmpty } from "lodash";
 
 import TreeEmptyStatusView from "../../_components/TreeEmptyStatusView";
 import TreeExistStatusView from "../../_components/TreeExistStatusView";
@@ -28,45 +27,51 @@ const useCheckGuest = () => {
     return { treeId: treeId ? Number(treeId) : null, userId: userId ? Number(userId) : null };
   }, [searchParmas]);
 
-  const isGuest = Boolean(fromShareReceivedParam.treeId) && Boolean(fromShareReceivedParam.userId);
   const receivedParam = fromShareReceivedParam;
 
-  useEffect(() => {
-    setUserInfo({ ...userInfo, isGuest });
-  }, []);
+  // useEffect(() => {
+  //   setUserInfo({
+  //     ...userInfo,
+  //     userId: fromShareReceivedParam.userId,
+  //     treeId: fromShareReceivedParam.treeId,
+  //   });
+  // }, []);
 
   return {
-    isGuest,
     receivedParam,
   };
 };
 
 export default function Home() {
-  const { isGuest, receivedParam } = useCheckGuest();
+  const { receivedParam } = useCheckGuest();
 
   const useHomeState = useHome();
 
   const {
-    userInfoStore: [userInfo],
+    userInfoStore: [userInfo, setUserInfo],
   } = useAppRepository();
 
-  const useFetchTreeInfo = useQueryFetchTreeInfo({ userId: isGuest ? null : userInfo.userId });
+  const useFetchTreeInfo = useQueryFetchTreeInfo({ userId: userInfo.userId });
   const { data: treeInfoData, isPending: isTreeInfoPending } = useFetchTreeInfo;
 
   const treeId = useMemo(() => {
     return treeInfoData?.treeId;
   }, [treeInfoData]);
 
+  useEffect(() => {
+    if (!treeInfoData) {
+      return;
+    }
+
+    setUserInfo({ ...treeInfoData });
+  }, [treeInfoData]);
+
   return (
     <>
       {(() => {
-        if (isGuest) {
+        if (!treeInfoData?.treeId && !treeInfoData?.tag && !treeInfoData?.date) {
           return (
-            <TreeSharedStatusView
-              useHomeStatus={useHomeState}
-              treeId={receivedParam.treeId ?? 0}
-              userId={receivedParam.userId ?? 0}
-            />
+            <TreeEmptyStatusView useHomeStatus={useHomeState} useFetchTreeInfo={useFetchTreeInfo} />
           );
         } else {
           if (treeId) {
@@ -76,11 +81,12 @@ export default function Home() {
                 useFetchTreeInfo={useFetchTreeInfo}
               />
             );
-          } else {
+          } else if (!treeInfoData.owner) {
             return (
-              <TreeEmptyStatusView
+              <TreeSharedStatusView
                 useHomeStatus={useHomeState}
-                useFetchTreeInfo={useFetchTreeInfo}
+                treeId={receivedParam.treeId ?? 0}
+                userId={receivedParam.userId ?? 0}
               />
             );
           }

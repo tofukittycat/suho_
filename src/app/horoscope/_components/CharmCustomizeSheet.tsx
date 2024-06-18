@@ -31,8 +31,13 @@ export default function CharmCustomizeSheet() {
     push("/home");
 
     setTimeout(() => {
-      push(`/decorate/${userInfo.treeId}`);
-      setDecorateInfo(prev => ({ ...prev, onlyDownload: true }));
+      if (userInfo.treeId) {
+        push(`/decorate/${userInfo.treeId}`);
+      } else {
+        push(`/decorate`);
+      }
+
+      setDecorateInfo(prev => ({ ...prev, onlyDownload: true, imageURL: data?.imageURL ?? "" }));
     }, 100);
   };
 

@@ -3,13 +3,13 @@ import { localStorageEffect, persistSession } from "@/providers/recoil/persistEf
 import { atom, useRecoilState } from "recoil";
 
 type UserInfoType = {
-  isGuest?: boolean;
   userId?: number | null;
   treeId?: number | null;
   birth?: string;
   birthType?: number;
   birthTime?: string;
   username?: string;
+  owner?: boolean; // false 면 guest
 };
 
 export const userInfoState = atom<UserInfoType>({

@@ -26,6 +26,7 @@ export default function useQueryFetchTreeCharms({ userId }: UseQueryFetchTreeCha
       });
     },
     enabled: Boolean(userId),
+    staleTime: 0,
   });
 
   const updateCurrentPage = useCallback((page: number) => {
