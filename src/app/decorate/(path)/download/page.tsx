@@ -1,11 +1,14 @@
 "use client";
 
+import dynamic from "next/dynamic";
+
 import VStack from "@/components/base/stack/VStack";
 import useMultiStepForm from "@/components/hooks/useMultiStep";
 
-import StepOne from "../_components/StepOne";
-import StepTwo2 from "../_components/StepTwo2";
-import useDecorate from "../_hooks/useDecorate";
+import StepOne from "../../_components/StepOne";
+import useDecorate from "../../_hooks/useDecorate";
+
+const DynamicStepTwoV2 = dynamic(() => import("../../_components/StepTwoV2"), { ssr: false });
 
 const StepKeys = {
   StepOne: "StepOne",
@@ -47,7 +50,7 @@ export default function page() {
       useDecorateControls={useDecorateControls}
       onClickSubmit={onSubmit}
     />,
-    <StepTwo2
+    <DynamicStepTwoV2
       key={StepKeys.StepTwo}
       {...infoData}
       useDecorateControls={useDecorateControls}

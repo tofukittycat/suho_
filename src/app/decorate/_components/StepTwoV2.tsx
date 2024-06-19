@@ -1,3 +1,5 @@
+import dynamic from "next/dynamic";
+
 import { useEffect, useState } from "react";
 import { EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
@@ -19,7 +21,8 @@ import { toBlob, toPng } from "html-to-image";
 
 import useQueryFetchTodayHoroscopeTreeStickers from "../_hooks/queries/useQueryFetchTodayHoroscopeTreeStickers";
 import { UseDecorateType } from "../_hooks/useDecorate";
-import CharmDownloadSheet from "./CharmDownloadSheet";
+
+const CharmDownloadSheetNoSSR = dynamic(() => import("./CharmDownloadSheet"), { ssr: false });
 
 type StepTwoProps = {
   useDecorateControls: UseDecorateType;
@@ -42,12 +45,12 @@ const style = {
 const SUHO_CAPTURE_IMAGE = "to-capture-suho-image";
 const PLACEHOLDER = "행운을 담은 응원을 적어보세요.";
 
-export default function StepTwo2({
+export default function StepTwoV2({
   useDecorateControls,
   onClickBack,
   onClickSubmit,
 }: StepTwoProps) {
-  const { router, infoData, updateFields } = useDecorateControls;
+  const { infoData, updateFields } = useDecorateControls;
 
   const {
     decorateInfoStore: [decorateInfo, setDecorateInfo],
@@ -59,12 +62,12 @@ export default function StepTwo2({
   const { data: stickersData, isPending: isPendingStickers } =
     useQueryFetchTodayHoroscopeTreeStickers({ imageURL: decorateInfo.imageURL });
 
+  const { isOpen: isOpenDetails, open: openDetails, close: closeDetails } = useToggle();
+
   const [tempStickers, setTempStickers] = useState<StickerType[]>([]);
   const [selectedSticker, setSelectedSticker] = useState<StickerType>();
   const [descMessage, setDescMessage] = useState(PLACEHOLDER);
   const [isEditMode, setIsEditMode] = useState(false);
-
-  const { isOpen: isOpenDetails, open: openDetails, close: closeDetails } = useToggle();
 
   const stickerImageURLs =
     stickersData?.supplementTypes.flatMap(sticker => sticker.images.map(image => image.url)) ?? [];
@@ -295,7 +298,7 @@ export default function StepTwo2({
         </HStack>
       </SwipeableBottomSheet>
       {/* Details */}
-      <CharmDownloadSheet isOpen={isOpenDetails} close={closeDetails} />
+      <CharmDownloadSheetNoSSR isOpen={isOpenDetails} close={closeDetails} />
     </>
   );
 }

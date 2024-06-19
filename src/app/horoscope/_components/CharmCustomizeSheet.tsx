@@ -34,7 +34,7 @@ export default function CharmCustomizeSheet() {
       if (userInfo.treeId) {
         push(`/decorate/${userInfo.treeId}`);
       } else {
-        push(`/decorate`);
+        push(`/decorate/download`);
       }
 
       setDecorateInfo(prev => ({ ...prev, onlyDownload: true, imageURL: data?.imageURL ?? "" }));

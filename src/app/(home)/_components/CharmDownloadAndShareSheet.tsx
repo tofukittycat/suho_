@@ -1,14 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
 import { IoClose as CloseIcon } from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 import { fileDownload } from "@/app/horoscope/_components/CharmCustomizeSheet";
 import BottomSheet from "@/components/BottomSheet";
 import CTAContainer from "@/components/CTAContainer";
-import NavFooter from "@/components/NavFooter";
 import SHImage from "@/components/base/SHImage";
 import SHLabel from "@/components/base/SHLabel";
 import { SHGlobalSpinner } from "@/components/base/SHSpinner";
@@ -116,11 +113,12 @@ export default function CharmDownloadAndShareSheet({
                 )}
               </VStack>
               <CTAContainer className="px-0">
-                <NavFooter
-                  ratio="1:1"
-                  left={{ children: "공유하기", onClick: treeURLCopyToClipboard }}
-                  right={{ children: "다운로드", onClick: handleDownload }}
-                />
+                <Button
+                  className={` mt-[20px] h-[54px] rounded-[15px] bg-main-purple-suho text-[16px] font-[600] text-white hover:bg-[#7553f0]`}
+                  onClick={handleDownload}
+                >
+                  다운로드
+                </Button>
               </CTAContainer>
               <RemoveCharmCheckSheet
                 charmId={charmId}

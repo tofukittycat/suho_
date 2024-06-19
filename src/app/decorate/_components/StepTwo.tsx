@@ -43,7 +43,7 @@ const SUHO_CAPTURE_IMAGE = "to-capture-suho-image";
 const PLACEHOLDER = "행운을 담은 응원을 적어보세요.";
 
 export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmit }: StepTwoProps) {
-  const { treeId, router, infoData, updateFields } = useDecorateControls;
+  const { treeId, infoData, updateFields } = useDecorateControls;
 
   const {
     decorateInfoStore: [decorateInfo, setDecorateInfo],
@@ -113,8 +113,6 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
 
     callback?.();
   };
-
-  const handleCloseDetails = () => {};
 
   useEffect(() => {
     setSelectedSticker(tempStickers.find(sticker => sticker.isSelected === true));

@@ -4,7 +4,6 @@ import { useSearchParams } from "next/navigation";
 
 import { useEffect, useMemo } from "react";
 
-import useQueryFetchProfileUserInfo from "@/app/(login)/signin/_hooks/queries/useQueryFetchProfileUserInfo";
 import useAppRepository from "@/components/hooks/useAppRepository";
 
 import TreeEmptyStatusView from "../../_components/TreeEmptyStatusView";
@@ -29,13 +28,13 @@ const useCheckGuest = () => {
 
   const receivedParam = fromShareReceivedParam;
 
-  // useEffect(() => {
-  //   setUserInfo({
-  //     ...userInfo,
-  //     userId: fromShareReceivedParam.userId,
-  //     treeId: fromShareReceivedParam.treeId,
-  //   });
-  // }, []);
+  useEffect(() => {
+    setUserInfo({
+      ...userInfo,
+      userId: fromShareReceivedParam.userId,
+      treeId: fromShareReceivedParam.treeId,
+    });
+  }, [fromShareReceivedParam]);
 
   return {
     receivedParam,
@@ -63,7 +62,7 @@ export default function Home() {
       return;
     }
 
-    setUserInfo({ ...treeInfoData });
+    setUserInfo({ ...userInfo, ...treeInfoData });
   }, [treeInfoData]);
 
   return (
@@ -74,19 +73,19 @@ export default function Home() {
             <TreeEmptyStatusView useHomeStatus={useHomeState} useFetchTreeInfo={useFetchTreeInfo} />
           );
         } else {
-          if (treeId) {
-            return (
-              <TreeExistStatusView
-                useHomeStatus={useHomeState}
-                useFetchTreeInfo={useFetchTreeInfo}
-              />
-            );
-          } else if (!treeInfoData.owner) {
+          if (!treeInfoData.owner) {
             return (
               <TreeSharedStatusView
                 useHomeStatus={useHomeState}
                 treeId={receivedParam.treeId ?? 0}
                 userId={receivedParam.userId ?? 0}
+              />
+            );
+          } else if (treeId) {
+            return (
+              <TreeExistStatusView
+                useHomeStatus={useHomeState}
+                useFetchTreeInfo={useFetchTreeInfo}
               />
             );
           }
