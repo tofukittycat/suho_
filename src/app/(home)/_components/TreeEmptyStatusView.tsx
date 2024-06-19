@@ -20,9 +20,7 @@ export default function TreeEmptyStatusView({
   useHomeStatus,
   useFetchTreeInfo,
 }: TreeEmptyStatusViewProps) {
-  const { handleGoToTodayHoroscope, handleGoToLuckyTree } = useHomeStatus;
-
-  useFetchTreeInfo;
+  const { handleGoToTodayHoroscope, handleGoToLuckyTreeCreate } = useHomeStatus;
 
   const {
     userInfoStore: [userInfo],
@@ -68,7 +66,7 @@ export default function TreeEmptyStatusView({
             }}
             right={{
               children: "행운나무 만들기",
-              onClick: handleGoToLuckyTree,
+              onClick: handleGoToLuckyTreeCreate,
             }}
           />
         </CTABottomPadding>

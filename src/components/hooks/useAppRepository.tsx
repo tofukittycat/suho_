@@ -1,23 +1,49 @@
 import { RecoilKeys } from "@/providers/recoil/keys";
+import { localStorageEffect, persistSession } from "@/providers/recoil/persistEffect";
 import { atom, useRecoilState } from "recoil";
 
 type UserInfoType = {
   userId?: number | null;
+  treeId?: number | null;
   birth?: string;
   birthType?: number;
   birthTime?: string;
   username?: string;
+  owner?: boolean; // false 면 guest
 };
 
 export const userInfoState = atom<UserInfoType>({
   key: RecoilKeys.UserInfo,
   default: undefined,
+  effects: [localStorageEffect(RecoilKeys.UserInfo)],
+});
+
+export const visibleBGState = atom<boolean>({
+  key: RecoilKeys.VisibleBG,
+  default: false,
+  effects: [localStorageEffect(RecoilKeys.VisibleBG)],
+});
+
+type DecorateUserType = {
+  onlyDownload: boolean;
+  imageURL: string;
+};
+
+export const decorateInfoState = atom<DecorateUserType>({
+  key: RecoilKeys.DecorateInfo,
+  default: {
+    onlyDownload: false,
+    imageURL: "",
+  },
+  effects_UNSTABLE: [persistSession],
 });
 
 export default function useAppRepository() {
   const userInfoStore = useRecoilState(userInfoState);
+  const visibleBGStore = useRecoilState(visibleBGState);
+  const decorateInfoStore = useRecoilState(decorateInfoState);
 
-  return { userInfoStore };
+  return { userInfoStore, visibleBGStore, decorateInfoStore };
 }
 
 // type UserInfoStateType = {

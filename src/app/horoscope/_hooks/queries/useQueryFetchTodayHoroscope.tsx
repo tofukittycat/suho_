@@ -1,16 +1,23 @@
+import useAppRepository from "@/components/hooks/useAppRepository";
 import { QueryKeys } from "@/services/queryKeys";
 import { useQuery } from "@tanstack/react-query";
 
 import { getTodayHoroscope } from "../../../../services/horoscope";
 
-type UseQueryFetchTodayHoroscopeProps = {
-  id: string;
-};
+export default function useQueryFetchTodayHoroscope() {
+  const {
+    userInfoStore: [userInfo],
+  } = useAppRepository();
 
-export default function useQueryFetchTodayHoroscope({ id }: UseQueryFetchTodayHoroscopeProps) {
   const { data, isPending } = useQuery({
     queryKey: [QueryKeys.TodayHoroscope],
-    queryFn: () => getTodayHoroscope({ id }),
+    queryFn: () => {
+      if (!userInfo.userId) {
+        return Promise.reject();
+      }
+
+      return getTodayHoroscope({ id: userInfo.userId });
+    },
   });
 
   return {

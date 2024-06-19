@@ -5,33 +5,60 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 
 import { SHGlobalSpinner } from "@/components/base/SHSpinner";
-import useStorage from "@/components/hooks/useAuth";
+import useAppRepository from "@/components/hooks/useAppRepository";
+import useAuth from "@/components/hooks/useAuth";
+import { getUserCheckInfo, getUserInfo } from "@/services/user";
 
 function EntryRouting() {
-  const { push } = useRouter();
+  const {
+    visibleBGStore: [visibleBG, setVisibleBG],
+    userInfoStore: [userInfo, setUserInfo],
+  } = useAppRepository();
 
   const searchParams = useSearchParams();
   const path = usePathname();
 
-  const { set, clearStorage } = useStorage();
+  const { push } = useRouter();
+  const { isEmptyToken, updateToken } = useAuth();
 
   useEffect(() => {
-    // "/" 에서만 체크
-    if (path !== "/") {
-      return;
-    }
+    setVisibleBG(false);
 
-    const token = searchParams.get("token");
+    // 로그인성공시 param으로 token이 들어옴
 
-    if (!token) {
-      // 로그인 화면으로
-      push("/signin");
-      clearStorage();
-    } else {
-      // 홈 화면으로
-      set("token", token);
-      push("/home");
-    }
+    const handleRouting = async () => {
+      const token = searchParams.get("token");
+
+      if (token) {
+        updateToken(token);
+
+        const userCheckInfo = await getUserCheckInfo();
+        const userInfo = await getUserInfo({ userId: userCheckInfo.id });
+
+        setUserInfo({
+          ...userInfo,
+          userId: userCheckInfo.id,
+          birth: userInfo.birth,
+          birthTime: userInfo.birthTime,
+          username: userInfo.username,
+        });
+
+        // 홈 화면으로
+        if (userCheckInfo.hasInfo) {
+          push("/home");
+        } else {
+          push("/signin/info");
+        }
+      } else {
+        if (isEmptyToken) {
+          push("/onboarding");
+        } else {
+          push("/home");
+        }
+      }
+    };
+
+    handleRouting();
   }, [path, searchParams]);
 
   return <SHGlobalSpinner />;
@@ -40,7 +67,7 @@ function EntryRouting() {
 // token 리다이렉션 page
 export default function RedirectionEntryPage() {
   return (
-    <Suspense>
+    <Suspense fallback={<SHGlobalSpinner />}>
       <EntryRouting />
     </Suspense>
   );

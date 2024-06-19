@@ -5,7 +5,6 @@ import {
   ToastClose,
   ToastDescription,
   ToastProvider,
-  ToastTitle,
   ToastViewport,
 } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
@@ -15,15 +14,26 @@ export function Toaster() {
 
   return (
     <ToastProvider>
-      {toasts.map(function ({ id, title, description, action, ...props }) {
+      {toasts.map(function ({ id, title, description, action, customView, ...props }) {
         return (
-          <Toast key={id} duration={2000} {...props}>
-            <div className="grid gap-1">
-              {title && <ToastTitle>{title}</ToastTitle>}
-              {description && <ToastDescription>{description}</ToastDescription>}
-            </div>
-            {action}
-            <ToastClose />
+          <Toast key={id} duration={2000} style={{ zIndex: 1000 }} {...props}>
+            {(() => {
+              return customView ? (
+                <>{customView}</>
+              ) : (
+                <>
+                  <div className="grid w-full gap-1">
+                    {description && (
+                      <ToastDescription className="w-full text-center text-main-purple-suho">
+                        {description}
+                      </ToastDescription>
+                    )}
+                  </div>
+                  {action}
+                  <ToastClose />
+                </>
+              );
+            })()}
           </Toast>
         );
       })}

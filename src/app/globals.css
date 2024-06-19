@@ -5,16 +5,25 @@
 html,
 body {
   position: fixed;
+
+  height: auto;
+
+  /* mobile viewport bug fix */
+  min-height: -webkit-fill-available;
+  min-height: 100dvh;
+
+  background-image: url("/imgs/back.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 :root {
   --vh: 1vh;
-}
-
-/* Safari Mobile 사이징 */
-html.is-safari,
-html.is-safari body {
-  height: calc(var(--vh, 1vh) * 100);
 }
 
 @layer base {

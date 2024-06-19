@@ -1,8 +1,10 @@
+import lStorage, { StorageKeys } from "@/utils/storage";
+
 import apiClient from "../apiClient";
 
 type UserCheckInfoResponse = {
   id: number;
-  hasInfo: boolean;
+  hasInfo: boolean; // false이면 유저 추가 정보를 입력해야 함.
 };
 
 // 추가 정보 입력 체크
@@ -15,7 +17,9 @@ type UserInfoResponse = {
   email: string;
   birth: string;
   birthTime: string;
+  birthType: number;
   username: string;
+  socialType: string;
 };
 
 // 유저 정보 조회
@@ -34,4 +38,8 @@ export const patchUpdateUserInfo = async ({
   birthTime: string;
 }) => {
   return (await apiClient.patch(`/users/my/${userId}`, { birth, birthTime })).data;
+};
+
+export const deleteWithdrawal = async () => {
+  return (await apiClient.delete("/users/signout")).data;
 };

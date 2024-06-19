@@ -1,31 +1,32 @@
 import { useCallback, useRef, useState } from "react";
 
-import useAppRepository from "@/components/hooks/useAppRepository";
 import { getTreeCharms } from "@/services/home";
 import { QueryKeys } from "@/services/queryKeys";
 import { useQuery } from "@tanstack/react-query";
 
-export default function useQueryFetchTreeCharms() {
-  const {
-    userInfoStore: [userInfo],
-  } = useAppRepository();
+type UseQueryFetchTreeCharmsProps = {
+  userId?: number;
+};
 
+export default function useQueryFetchTreeCharms({ userId }: UseQueryFetchTreeCharmsProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const pagePerPage = useRef(10);
 
-  const { data, isPending } = useQuery({
+  const { data, isPending, isError } = useQuery({
     queryKey: [QueryKeys.TreeCharms, { currentPage, pagePerPage }],
     queryFn: () => {
-      if (!userInfo.userId) {
+      if (!userId) {
         return Promise.reject();
       }
 
       return getTreeCharms({
-        userId: userInfo.userId,
+        userId,
         page: currentPage,
         size: pagePerPage.current,
       });
     },
+    enabled: Boolean(userId),
+    staleTime: 0,
   });
 
   const updateCurrentPage = useCallback((page: number) => {
@@ -35,6 +36,7 @@ export default function useQueryFetchTreeCharms() {
   return {
     data,
     isPending,
+    isError,
     currentPage,
     updateCurrentPage,
   };

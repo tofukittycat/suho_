@@ -7,13 +7,14 @@ import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 
 type SHRadioGroupProps = {
   isRow: boolean;
+  value?: number;
   items: { value: string; label: string }[];
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function SHRadioGroup({ isRow, items, onChange }: SHRadioGroupProps) {
+export default function SHRadioGroup({ isRow, items, value, onChange }: SHRadioGroupProps) {
   return (
-    <RadioGroup row={isRow} onChange={onChange}>
+    <RadioGroup row={isRow} value={value ?? items[0].value} onChange={onChange}>
       {items.map(({ label, value }, index) => (
         <SHRadio key={index} label={label} value={value} />
       ))}

@@ -1,60 +1,96 @@
 "use client";
 
-import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
-import { SHGlobalSpinner } from "@/components/base/SHSpinner";
+import { useEffect, useMemo } from "react";
+
+import useAppRepository from "@/components/hooks/useAppRepository";
 
 import TreeEmptyStatusView from "../../_components/TreeEmptyStatusView";
 import TreeExistStatusView from "../../_components/TreeExistStatusView";
+import TreeSharedStatusView from "../../_components/TreeSharedStatusView";
 import useQueryFetchTreeInfo from "../../_hooks/queries/useQueryFetchTreeInfo";
-import useQueryFetchUserCheckInfo from "../../_hooks/queries/useQueryFetchUserCheckInfo";
 import useHome from "../../_hooks/useHome";
 
-export default function Home() {
-  const useHomeState = useHome();
-  const { router } = useHomeState;
+const useCheckGuest = () => {
+  const searchParmas = useSearchParams();
 
-  const { data: userCheckInfoData, isPending: isUserCheckInfoPending } =
-    useQueryFetchUserCheckInfo();
+  const {
+    userInfoStore: [userInfo, setUserInfo],
+  } = useAppRepository();
 
-  const useFetchTreeInfo = useQueryFetchTreeInfo();
-  const { data: treeInfoData, isPending: isTreeInfoPending } = useFetchTreeInfo;
+  const fromShareReceivedParam = useMemo(() => {
+    const treeId = searchParmas.get("shTI");
+    const userId = searchParmas.get("shUI");
+
+    return { treeId: treeId ? Number(treeId) : null, userId: userId ? Number(userId) : null };
+  }, [searchParmas]);
+
+  const receivedParam = fromShareReceivedParam;
 
   useEffect(() => {
-    if (!userCheckInfoData) {
+    setUserInfo({
+      ...userInfo,
+      userId: fromShareReceivedParam.userId,
+      treeId: fromShareReceivedParam.treeId,
+    });
+  }, [fromShareReceivedParam]);
+
+  return {
+    receivedParam,
+  };
+};
+
+export default function Home() {
+  const { receivedParam } = useCheckGuest();
+
+  const useHomeState = useHome();
+
+  const {
+    userInfoStore: [userInfo, setUserInfo],
+  } = useAppRepository();
+
+  const useFetchTreeInfo = useQueryFetchTreeInfo({ userId: userInfo.userId });
+  const { data: treeInfoData, isPending: isTreeInfoPending } = useFetchTreeInfo;
+
+  const treeId = useMemo(() => {
+    return treeInfoData?.treeId;
+  }, [treeInfoData]);
+
+  useEffect(() => {
+    if (!treeInfoData) {
       return;
     }
 
-    if (userCheckInfoData.hasInfo === false) {
-      router.push("/signin/info");
-    }
-  }, [userCheckInfoData]);
+    setUserInfo({ ...userInfo, ...treeInfoData });
+  }, [treeInfoData]);
 
   return (
     <>
-      {isUserCheckInfoPending || isTreeInfoPending ? (
-        <SHGlobalSpinner />
-      ) : (
-        <>
-          {(() => {
-            if (treeInfoData?.treeYn) {
-              return (
-                <TreeExistStatusView
-                  useHomeStatus={useHomeState}
-                  useFetchTreeInfo={useFetchTreeInfo}
-                />
-              );
-            } else {
-              return (
-                <TreeEmptyStatusView
-                  useHomeStatus={useHomeState}
-                  useFetchTreeInfo={useFetchTreeInfo}
-                />
-              );
-            }
-          })()}
-        </>
-      )}
+      {(() => {
+        if (!treeInfoData?.treeId && !treeInfoData?.tag && !treeInfoData?.date) {
+          return (
+            <TreeEmptyStatusView useHomeStatus={useHomeState} useFetchTreeInfo={useFetchTreeInfo} />
+          );
+        } else {
+          if (!treeInfoData.owner) {
+            return (
+              <TreeSharedStatusView
+                useHomeStatus={useHomeState}
+                treeId={receivedParam.treeId ?? 0}
+                userId={receivedParam.userId ?? 0}
+              />
+            );
+          } else if (treeId) {
+            return (
+              <TreeExistStatusView
+                useHomeStatus={useHomeState}
+                useFetchTreeInfo={useFetchTreeInfo}
+              />
+            );
+          }
+        }
+      })()}
     </>
   );
 }

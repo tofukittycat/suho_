@@ -1,22 +1,29 @@
 "use client";
 
-import lStorage from "@/utils/storage";
+import lStorage, { StorageKeys } from "@/utils/storage";
+import { isEmpty } from "lodash";
 
-export default function useStorage() {
-  const clearStorage = () => {
-    lStorage.clearAll();
-  };
-  const set = (key: string, value: string) => {
-    lStorage.set(key, value);
+import useStorage from "./useStorage";
+
+export default function useAuth() {
+  const { get, set } = useStorage();
+
+  const token = get(StorageKeys.Token) as string;
+
+  const isEmptyToken = isEmpty(token);
+
+  const updateToken = (token: string) => {
+    set(StorageKeys.Token, token);
   };
 
-  const get = (key: string) => {
-    return lStorage.get(key);
+  const clearToken = () => {
+    lStorage.remove(StorageKeys.Token);
   };
 
   return {
-    clearStorage,
-    get,
-    set,
+    token,
+    isEmptyToken,
+    updateToken,
+    clearToken,
   };
 }

@@ -1,35 +1,60 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { GiHamburgerMenu as HamburgerMenuIcon } from "react-icons/gi";
 import { IoClose as CloseIcon } from "react-icons/io5";
 
+import useQueryFetchProfileUserInfo from "@/app/(login)/signin/_hooks/queries/useQueryFetchProfileUserInfo";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { isEmpty } from "lodash";
 
 import HDivider from "./HDivider";
 import SHLabel from "./base/SHLabel";
 import HStack from "./base/stack/HStack";
 import VStack from "./base/stack/VStack";
+import useAppRepository from "./hooks/useAppRepository";
+import useAuth from "./hooks/useAuth";
 import { Avatar, AvatarImage } from "./ui/avatar";
 
+/* eslint-disable indent */
 export default function HamburgerNav() {
+  const router = useRouter();
+  const { token } = useAuth();
+
+  const {
+    userInfoStore: [userInfo, setUserInfo],
+  } = useAppRepository();
+
+  const { data: profileUserInfo, isPending } = useQueryFetchProfileUserInfo();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const routes = useMemo(() => {
     return {
-      main: [
-        { type: "홈", href: "/home" },
-        { type: "행운 나무 설정", href: "/horoscope/remove" },
-        { type: "데일리 운세 보기", href: "/horoscope/today" },
-      ],
-      sub: [
-        { type: "계정 설정", href: "/setting/account" },
-        { type: "자주 묻는 질문", href: "/" },
-        { type: "이용약관", href: "/" },
-        { type: "로그아웃", href: "/signin" },
-      ],
+      main:
+        isEmpty(token) && !userInfo.owner
+          ? [{ type: "행운 나무 만들기", href: "/signin" }]
+          : [
+              { type: "홈", href: "/home" },
+              { type: "행운 나무 설정", href: "/luckytree/remove" },
+              { type: "데일리 운세 보기", href: "/horoscope/today" },
+            ],
+      sub:
+        isEmpty(token) && !userInfo.owner
+          ? [
+              { type: "자주 묻는 질문", href: "/setting/help-center" },
+              { type: "이용약관", href: "https://www.notion.so/3381dafb38c34852828d20c114aec58d" },
+              { type: "로그인", href: "/signin" },
+            ]
+          : [
+              { type: "계정 설정", href: "/setting/account" },
+              { type: "자주 묻는 질문", href: "/setting/help-center" },
+              { type: "이용약관", href: "https://www.notion.so/3381dafb38c34852828d20c114aec58d" },
+              { type: "로그아웃", href: "/signin" },
+            ],
     };
   }, []);
 
@@ -48,14 +73,22 @@ export default function HamburgerNav() {
               </DrawerClose>
             </HStack>
             {/* User Profile */}
-            <HStack className="items-center gap-[16px]">
-              <Avatar className="size-[48px] rounded-full">
-                <AvatarImage src="https://github.com/shadcn.png" />
-              </Avatar>
-              <SHLabel className="text-[20px] font-[700]">
-                <span className="text-main-purple-suho">푸른 양 승진</span>님
-              </SHLabel>
-            </HStack>
+            {profileUserInfo?.imageURL ? (
+              <HStack className="items-center gap-[16px]">
+                <Avatar className="size-[48px] rounded-full">
+                  <AvatarImage src={profileUserInfo?.imageURL} />
+                </Avatar>
+                <SHLabel className="text-[20px] font-[700]">
+                  <span className="text-main-purple-suho">{`${profileUserInfo.color} ${profileUserInfo.animal} ${profileUserInfo.name}`}</span>
+                  님
+                </SHLabel>
+              </HStack>
+            ) : (
+              <HStack className="items-center gap-[16px]">
+                <img src="/imgs/logo_blue.svg" alt="logo" />
+              </HStack>
+            )}
+
             <HDivider className="my-[25px]" />
             <nav className="flex flex-col gap-[14px]">
               {routes.main.map(route => (
@@ -67,7 +100,7 @@ export default function HamburgerNav() {
                   {route.type}
                 </Link>
               ))}
-              <HDivider className="my-[25px]" />
+              <HDivider className="my-[15px]" />
               {routes.sub.map(route => (
                 <Link
                   key={route.type}

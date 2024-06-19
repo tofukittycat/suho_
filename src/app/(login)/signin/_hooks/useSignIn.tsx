@@ -6,10 +6,13 @@ import { useState } from "react";
 
 import useAppRepository from "@/components/hooks/useAppRepository";
 import { AddUserInfoType } from "@/services/login/signin";
+import { removeHyphens } from "@/utils/utils";
 
 import useMutateAddUserInfo from "./queries/useMutateAddUserInfo";
 
 type InfoDataType = {
+  phoneNumber: string | null;
+  certCode: string | null;
   birth: string | null;
   birthType: number | null;
   name: string | null;
@@ -26,8 +29,10 @@ export default function useSignIn() {
   const { mutate: addUserInfo } = useMutateAddUserInfo();
 
   const [infoData, setInfoData] = useState<InfoDataType>({
+    phoneNumber: null,
+    certCode: null,
     birth: null,
-    birthType: 0,
+    birthType: 1, // 양력
     name: null,
     birthTime: null,
   });
@@ -61,6 +66,9 @@ export default function useSignIn() {
   const handleSiginKakao = () => {
     window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/oauth2/authorization/kakao`;
   };
+  const handleSigninNaver = () => {
+    window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/oauth2/authorization/naver`;
+  };
 
   const handleAddUserInfo = (infoData: AddUserInfoType) => {
     addUserInfo(
@@ -69,6 +77,7 @@ export default function useSignIn() {
         birthType: infoData.birthType ?? 0,
         birthTime: infoData.birthTime,
         name: infoData.name,
+        phoneNumber: infoData.phoneNumber,
       },
       {
         onSuccess(data, variables) {
@@ -97,6 +106,7 @@ export default function useSignIn() {
     handleGoToName,
     handleGoToHome,
     handleSiginKakao,
+    handleSigninNaver,
     handleAddUserInfo,
   };
 }

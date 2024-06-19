@@ -1,36 +1,51 @@
+import Image from "next/image";
+
+import { useEffect } from "react";
+import Lottie from "react-lottie";
+
 import CTAButton from "@/components/CTAButton";
+import CTAContainer from "@/components/CTAContainer";
 import SHLabel from "@/components/base/SHLabel";
-import TreeBGView from "@/components/base/bg/TreeBGView";
-import VCStack from "@/components/base/stack/VCStack";
+import VStack from "@/components/base/stack/VStack";
+import useAppRepository from "@/components/hooks/useAppRepository";
+
+import * as animationData from "../../../../../public/lotties/onboarding_card.json";
 
 type StepTwoProps = {
   onClickSubmit: () => void;
 };
 
 export default function StepTwo({ onClickSubmit }: StepTwoProps) {
+  const {
+    visibleBGStore: [_, setVisibleBG],
+  } = useAppRepository();
+
+  useEffect(() => {
+    setVisibleBG(true);
+  }, []);
+
   return (
-    <>
-      <TreeBGView
-        hiddenTree
-        treeLayout={
-          <VCStack>
-            <VCStack className="h-[300px] w-[60%] items-center bg-gray-400">이미지</VCStack>
-          </VCStack>
-        }
-        hillLayout={
-          <VCStack wFull>
-            <SHLabel className="mt-[30px] whitespace-pre-line text-center text-[18px] font-[700] text-[#303538]">
-              {"부적은 무섭고 어렵다고 생각하나요?\n"}
-              <span className="text-[18px] font-[700] text-main-purple-suho">
-                {"바라는 마음을 담아 만들면 부적이에요."}
-              </span>
-            </SHLabel>
-            <div className="mt-[35px] w-full px-[20px]">
-              <CTAButton onClick={onClickSubmit}>다음</CTAButton>
-            </div>
-          </VCStack>
-        }
-      />
-    </>
+    <VStack className="h-full w-full justify-between">
+      <VStack className="mt-[36px] w-full items-center">
+        <Image src={"/imgs/small_logo_blue.svg"} alt="logo" width={74} height={14} />
+        <div className="px-[60px]">
+          <Lottie
+            options={{
+              loop: true,
+              autoplay: true,
+              animationData: animationData,
+            }}
+            height={"100%"}
+            width={"100%"}
+          />
+        </div>
+      </VStack>
+      <CTAContainer className="gap-[46px]">
+        <SHLabel className="whitespace-pre-line text-center text-[18px] font-[500] text-[#6059AE]">
+          {`사주에서 나에게 부족한 기운을 알아보고\n행운 부적으로 보완해보세요`}
+        </SHLabel>
+        <CTAButton onClick={onClickSubmit}>다음</CTAButton>
+      </CTAContainer>
+    </VStack>
   );
 }
