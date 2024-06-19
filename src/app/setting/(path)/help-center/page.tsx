@@ -15,6 +15,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { 일대일문의URL } from "@/constants";
 
 const data = [
   {
@@ -72,8 +73,7 @@ export default function page() {
   const router = useRouter();
 
   const handleOneOnOne = () => {
-    window.location.href =
-      "https://best-pillow-625.notion.site/6e66de4624f246ffad52aae1574bbfc4?pvs=74";
+    window.location.href = 일대일문의URL;
   };
 
   useEffect(() => {

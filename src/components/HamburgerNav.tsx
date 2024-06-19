@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { GiHamburgerMenu as HamburgerMenuIcon } from "react-icons/gi";
 import { IoClose as CloseIcon } from "react-icons/io5";
 
 import useQueryFetchProfileUserInfo from "@/app/(login)/signin/_hooks/queries/useQueryFetchProfileUserInfo";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { 이용약관URL } from "@/constants";
 import { isEmpty } from "lodash";
 
 import HDivider from "./HDivider";
@@ -46,13 +47,13 @@ export default function HamburgerNav() {
         isEmpty(token) && !userInfo.owner
           ? [
               { type: "자주 묻는 질문", href: "/setting/help-center" },
-              { type: "이용약관", href: "https://www.notion.so/3381dafb38c34852828d20c114aec58d" },
+              { type: "이용약관", href: 이용약관URL },
               { type: "로그인", href: "/signin" },
             ]
           : [
               { type: "계정 설정", href: "/setting/account" },
               { type: "자주 묻는 질문", href: "/setting/help-center" },
-              { type: "이용약관", href: "https://www.notion.so/3381dafb38c34852828d20c114aec58d" },
+              { type: "이용약관", href: 이용약관URL },
               { type: "로그아웃", href: "/signin" },
             ],
     };
