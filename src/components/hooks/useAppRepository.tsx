@@ -27,7 +27,7 @@ export const visibleBGState = atom<boolean>({
 type DecorateUserType = {
   onlyDownload: boolean;
   imageURL: string;
-  base64URL: string;
+  blobURL: string;
 };
 
 export const decorateInfoState = atom<DecorateUserType>({
@@ -35,7 +35,7 @@ export const decorateInfoState = atom<DecorateUserType>({
   default: {
     onlyDownload: false,
     imageURL: "",
-    base64URL: "",
+    blobURL: "",
   },
   effects_UNSTABLE: [persistSession],
 });

@@ -36,7 +36,7 @@ export default function CharmDownloadSheet({
   };
 
   const handleDownload = () => {
-    triggerBase64Download(decorateInfo.base64URL, "onsuho.png");
+    triggerBase64Download(decorateInfo.blobURL, "onsuho.png");
   };
 
   return (
@@ -47,19 +47,14 @@ export default function CharmDownloadSheet({
           <HStack sx={{ justifyContent: "flex-end", mt: "34px" }}>
             <CloseIcon className="size-[24px] text-white" onClick={handleClose} />
           </HStack>
-          {/* {decorateInfo.base64URL && (
+          {decorateInfo.blobURL && (
             <img
-              src={decorateInfo.base64URL}
+              src={decorateInfo.blobURL}
               alt="suho"
               className="mx-auto mt-[10px] h-[485px] w-[319px]"
             />
-          )} */}
-          {/* <SHImage
-            src={decorateInfo.base64URL}
-            className="mx-auto mt-[10px] h-[485px] w-[319px]"
-            fallbackElement={<div>{decorateInfo.base64URL}</div>}
-          /> */}
-          <SHLabel className="text-white">{decorateInfo.base64URL}</SHLabel>
+          )}
+
           <Button
             className={` mt-[20px] h-[54px] rounded-[15px] bg-main-purple-suho text-[16px] font-[600] text-white hover:bg-[#7553f0]`}
             onClick={handleDownload}
@@ -94,7 +89,7 @@ export default function CharmDownloadSheet({
 
                   setTimeout(() => {
                     // decorate store clear
-                    setDecorateInfo({ imageURL: "", base64URL: "", onlyDownload: false });
+                    setDecorateInfo({ imageURL: "", blobURL: "", onlyDownload: false });
                   }, 200);
                 }}
                 className="h-full w-full rounded-[15px] bg-[#EB5847] text-[16px] font-[600] text-white hover:bg-[#da5445]"
