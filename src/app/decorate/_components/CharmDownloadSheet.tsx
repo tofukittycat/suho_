@@ -89,7 +89,7 @@ export default function CharmDownloadSheet({
 
                   setTimeout(() => {
                     // decorate store clear
-                    setDecorateInfo({ imageURL: "", onlyDownload: false });
+                    setDecorateInfo({ imageURL: "", base64URL: "", onlyDownload: false });
                   }, 200);
                 }}
                 className="h-full w-full rounded-[15px] bg-[#EB5847] text-[16px] font-[600] text-white hover:bg-[#da5445]"
