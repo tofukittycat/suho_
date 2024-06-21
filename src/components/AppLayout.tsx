@@ -37,9 +37,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
               <Image fill src={"/imgs/logo.svg"} alt="logo" onClick={handleGoToHome} />
             </div>
             {/* Content */}
-            <HCStack className="z-10 h-screen w-full min-w-[375px] max-w-[430px]">
-              {children}
-            </HCStack>
+            <HCStack className="z-10 h-dvh w-full min-w-[375px] max-w-[430px]">{children}</HCStack>
             {/* BG_BOTTOM(언덕) */}
             {visibleBG && (
               <div className="absolute bottom-0 left-0 right-0 z-0 h-[35%] w-full bg-[url('/imgs/bg_bottom.svg')] bg-top bg-no-repeat" />

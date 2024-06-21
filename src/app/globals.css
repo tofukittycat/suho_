@@ -8,8 +8,10 @@ body {
 
   /* mobile viewport bug fix */
   min-height: -webkit-fill-available;
-  min-height: 100svh;
-  height: 100svh;
+  /* min-height: 100dvh;
+  height: 100dvh; */
+  /* min-height: 100dvh; */
+  /* height: 80dvh; */
 
   background-image: url("/imgs/back.svg");
   background-position: center;
@@ -22,7 +24,7 @@ body {
 }
 
 :root {
-  --vh: 1svh;
+  --vh: 1dvh;
 }
 
 @layer base {

@@ -42,7 +42,7 @@ export default function RootLayout({
       <body
         className={cn(
           pretendard.className,
-          "h-full w-full bg-gradient-to-b from-[#030329] to-[#9E83FF] bg-cover bg-no-repeat",
+          "h-dvh w-full bg-gradient-to-b from-[#030329] to-[#9E83FF] bg-cover bg-no-repeat",
         )}
       >
         <AppRegister>
