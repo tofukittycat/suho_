@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
+import { useEffect, useState } from "react";
 import { triggerBase64Download } from "react-base64-downloader";
 import { IoClose as CloseIcon } from "react-icons/io5";
 
@@ -35,22 +36,24 @@ export default function CharmDownloadSheet({
   };
 
   const handleDownload = () => {
-    triggerBase64Download(decorateInfo.imageURL, "onsuho.png");
+    triggerBase64Download(decorateInfo.base64URL, "onsuho.png");
   };
 
   return (
     <Drawer direction="bottom" open={isOpen} onClose={close}>
       <DrawerTrigger></DrawerTrigger>
-      <DrawerContent className="mx-auto flex h-full w-full items-center justify-center rounded-none border-none bg-transparent  md:w-[430px]">
+      <DrawerContent className="mx-auto flex h-full w-full items-center justify-center rounded-none border-none bg-transparent md:w-[430px]">
         <VStack wFull hFull className=" bg-black/50 px-[20px] ">
           <HStack sx={{ justifyContent: "flex-end", mt: "34px" }}>
             <CloseIcon className="size-[24px] text-white" onClick={handleClose} />
           </HStack>
-          <img
-            src={decorateInfo.imageURL}
-            alt="suho"
-            className="mx-auto mt-[10px] h-[485px] w-[319px]"
-          />
+          {decorateInfo.base64URL && (
+            <img
+              src={decorateInfo.base64URL}
+              alt="suho"
+              className="mx-auto mt-[10px] h-[485px] w-[319px]"
+            />
+          )}
           {/* <SHImage src={decorateInfo.imageURL} className="mx-auto mt-[10px] h-[485px] w-[319px]" /> */}
           <Button
             className={` mt-[20px] h-[54px] rounded-[15px] bg-main-purple-suho text-[16px] font-[600] text-white hover:bg-[#7553f0]`}

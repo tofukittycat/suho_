@@ -88,8 +88,8 @@ export default function StepTwoV2({
         }
 
         if (decorateInfo.onlyDownload) {
-          const imageURL = await toPng(element, { includeQueryParams: true });
-          setDecorateInfo(prev => ({ ...prev, imageURL }));
+          const base64URL = await toPng(element, { includeQueryParams: false });
+          setDecorateInfo(prev => ({ ...prev, base64URL }));
 
           openDetails();
         } else {
