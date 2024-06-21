@@ -132,7 +132,7 @@ export default function StepTwoV2({
 
   return (
     <>
-      <VStack className="h-full w-full justify-start">
+      <VStack className="h-full w-full justify-start overflow-y-auto">
         <VStack sx={{ width: "100%", gap: "10px" }}>
           <VStack className="mt-[45px] w-full items-center justify-center">
             <HStack className="w-full items-center justify-between px-[20px]">
@@ -187,10 +187,21 @@ export default function StepTwoV2({
                   scrollbarColor: "blue",
                   scrollbarWidth: "none",
                 }}
+                placeholder={PLACEHOLDER}
                 value={descMessage}
                 onChange={e => setDescMessage(e.target.value)}
-                onEditMode={() => setIsEditMode(true)}
-                onBlur={() => setIsEditMode(false)}
+                onEditMode={() => {
+                  if (descMessage === PLACEHOLDER) {
+                    setDescMessage("");
+                  }
+
+                  setIsEditMode(true);
+                }}
+                onBlur={() => {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  (window.document.body.style as any).zoom = 1;
+                  setIsEditMode(false);
+                }}
               />
               {tempStickers.map(item => (
                 <Rnd
