@@ -92,9 +92,10 @@ export default function StepTwoV2({
           // setDecorateInfo(prev => ({ ...prev, base64URL }));
 
           const blob = await toBlob(element);
+
           if (blob) {
             const url = window.URL.createObjectURL(blob);
-            setDecorateInfo(prev => ({ ...prev, base64URL: url }));
+            setDecorateInfo(prev => ({ ...prev, blobURL: url }));
           }
 
           openDetails();

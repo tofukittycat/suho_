@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 
-import { useEffect, useState } from "react";
 import { triggerBase64Download } from "react-base64-downloader";
 import { IoClose as CloseIcon } from "react-icons/io5";
 
@@ -47,14 +46,11 @@ export default function CharmDownloadSheet({
           <HStack sx={{ justifyContent: "flex-end", mt: "34px" }}>
             <CloseIcon className="size-[24px] text-white" onClick={handleClose} />
           </HStack>
-          {decorateInfo.blobURL && (
-            <img
-              src={decorateInfo.blobURL}
-              alt="suho"
-              className="mx-auto mt-[10px] h-[485px] w-[319px]"
-            />
-          )}
-
+          <img
+            src={decorateInfo.blobURL}
+            alt="suho"
+            className="mx-auto mt-[10px] h-[485px] w-[319px]"
+          />
           <Button
             className={` mt-[20px] h-[54px] rounded-[15px] bg-main-purple-suho text-[16px] font-[600] text-white hover:bg-[#7553f0]`}
             onClick={handleDownload}
