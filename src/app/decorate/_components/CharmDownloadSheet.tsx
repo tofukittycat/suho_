@@ -47,14 +47,19 @@ export default function CharmDownloadSheet({
           <HStack sx={{ justifyContent: "flex-end", mt: "34px" }}>
             <CloseIcon className="size-[24px] text-white" onClick={handleClose} />
           </HStack>
-          {decorateInfo.base64URL && (
+          {/* {decorateInfo.base64URL && (
             <img
               src={decorateInfo.base64URL}
               alt="suho"
               className="mx-auto mt-[10px] h-[485px] w-[319px]"
             />
-          )}
-          {/* <SHImage src={decorateInfo.imageURL} className="mx-auto mt-[10px] h-[485px] w-[319px]" /> */}
+          )} */}
+          {/* <SHImage
+            src={decorateInfo.base64URL}
+            className="mx-auto mt-[10px] h-[485px] w-[319px]"
+            fallbackElement={<div>{decorateInfo.base64URL}</div>}
+          /> */}
+          <SHLabel className="text-white">{decorateInfo.base64URL}</SHLabel>
           <Button
             className={` mt-[20px] h-[54px] rounded-[15px] bg-main-purple-suho text-[16px] font-[600] text-white hover:bg-[#7553f0]`}
             onClick={handleDownload}
