@@ -46,7 +46,12 @@ export default function CharmDownloadSheet({
           <HStack sx={{ justifyContent: "flex-end", mt: "34px" }}>
             <CloseIcon className="size-[24px] text-white" onClick={handleClose} />
           </HStack>
-          <SHImage src={decorateInfo.imageURL} className="mx-auto mt-[10px] h-[485px] w-[319px]" />
+          <img
+            src={decorateInfo.imageURL}
+            alt="suho"
+            className="mx-auto mt-[10px] h-[485px] w-[319px]"
+          />
+          {/* <SHImage src={decorateInfo.imageURL} className="mx-auto mt-[10px] h-[485px] w-[319px]" /> */}
           <Button
             className={` mt-[20px] h-[54px] rounded-[15px] bg-main-purple-suho text-[16px] font-[600] text-white hover:bg-[#7553f0]`}
             onClick={handleDownload}
