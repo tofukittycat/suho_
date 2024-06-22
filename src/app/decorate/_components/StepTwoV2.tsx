@@ -89,11 +89,17 @@ export default function StepTwoV2({
 
       if (decorateInfo.onlyDownload) {
         setTimeout(async () => {
+          let blob: Blob | null = null;
+          const i = 0;
+          const maxAttempts = 100;
+
           await toBlob(element, { cacheBust: true });
           await toBlob(element, { cacheBust: true });
           await toBlob(element, { cacheBust: true });
 
-          const blob = await toBlob(element, { cacheBust: true });
+          while ((blob?.size ?? 0) <= 0 && i < maxAttempts) {
+            blob = await toBlob(element, { cacheBust: true });
+          }
 
           if (blob) {
             const response = await apiClient.post(
