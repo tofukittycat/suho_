@@ -92,6 +92,10 @@ export default function StepTwoV2({
         let i = 0;
         const maxAttempts = 10;
 
+        await toSvg(element, { filter: node => node.tagName !== "i" });
+        await toSvg(element, { filter: node => node.tagName !== "i" });
+        await toSvg(element, { filter: node => node.tagName !== "i" });
+
         while (dataUrl.length < minDataLength && i < maxAttempts) {
           dataUrl = await toSvg(element, {
             filter(domNode) {
@@ -101,11 +105,13 @@ export default function StepTwoV2({
           i += 1;
         }
 
-        setDecorateInfo(prev => ({ ...prev, blobURL: dataUrl }));
+        if (dataUrl !== "") {
+          setDecorateInfo(prev => ({ ...prev, blobURL: dataUrl }));
 
-        setTimeout(() => {
-          openDetails();
-        }, 100);
+          setTimeout(() => {
+            openDetails();
+          }, 100);
+        }
 
         // toBlob(element).then(async blob => {
         //   console.log("@@@@blob", blob);
