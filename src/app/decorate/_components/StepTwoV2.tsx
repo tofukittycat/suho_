@@ -70,8 +70,6 @@ export default function StepTwoV2({
   const [descMessage, setDescMessage] = useState(PLACEHOLDER);
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const [testURL, setTestURL] = useState<string>();
-
   const stickerImageURLs =
     stickersData?.supplementTypes.flatMap(sticker => sticker.images.map(image => image.url)) ?? [];
 
@@ -90,47 +88,27 @@ export default function StepTwoV2({
       }
 
       if (decorateInfo.onlyDownload) {
-        // let dataUrl = "";
-        // const minDataLength = 2000000;
-        // let i = 0;
-        // const maxAttempts = 100;
-        // await toSvg(element, { filter: node => node.tagName !== "i" });
-        // await toSvg(element, { filter: node => node.tagName !== "i" });
-        // await toSvg(element, { filter: node => node.tagName !== "i" });
-        // while (dataUrl.length < minDataLength && i < maxAttempts) {
-        //   dataUrl = await toSvg(element, {
-        //     filter(domNode) {
-        //       return domNode.tagName !== "i";
-        //     },
-        //   });
-        //   i += 1;
-        // }
-        // if (dataUrl !== "") {
-        //   console.log("@@@@@@@@@@@@@@ dataUrl", dataUrl);
-        //   console.log("@@@@@@@@@@@@@@ i", i);
-        //   setDecorateInfo(prev => ({ ...prev, blobURL: dataUrl }));
-        //   setTimeout(() => {
-        //     openDetails();
-        //   }, 100);
-        // }
-        setTimeout(() => {
-          toBlob(element).then(async blob => {
-            await apiClient
-              .post(
-                "/charms",
-                { image: blob },
-                {
-                  headers: {
-                    "Content-Type": "multipart/form-data",
-                  },
+        setTimeout(async () => {
+          await toBlob(element, { cacheBust: true });
+          await toBlob(element, { cacheBust: true });
+          await toBlob(element, { cacheBust: true });
+
+          const blob = await toBlob(element, { cacheBust: true });
+
+          if (blob) {
+            const response = await apiClient.post(
+              "/charms",
+              { image: blob },
+              {
+                headers: {
+                  "Content-Type": "multipart/form-data",
                 },
-              )
-              .then(res => {
-                setTestURL(res.data);
-                setDecorateInfo(prev => ({ ...prev, blobURL: res.data }));
-                openDetails();
-              });
-          });
+              },
+            );
+
+            setDecorateInfo(prev => ({ ...prev, blobURL: response.data }));
+            openDetails();
+          }
         }, 200);
       } else {
         toBlob(element, { includeQueryParams: true })
@@ -385,7 +363,7 @@ export default function StepTwoV2({
         </HStack>
       </SwipeableBottomSheet>
       {/* Details */}
-      <CharmDownloadSheetNoSSR testURL={testURL} isOpen={isOpenDetails} close={closeDetails} />
+      <CharmDownloadSheetNoSSR isOpen={isOpenDetails} close={closeDetails} />
     </>
   );
 }
