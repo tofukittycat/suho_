@@ -17,6 +17,7 @@ type AppLayoutProps = {
 
 export default function AppLayout({ children }: AppLayoutProps) {
   const {
+    userInfoStore: [userInfo],
     visibleBGStore: [visibleBG],
   } = useAppRepository();
 
@@ -24,7 +25,11 @@ export default function AppLayout({ children }: AppLayoutProps) {
   const isClient = useIsClient();
 
   const handleGoToHome = () => {
-    replace("/home");
+    if (userInfo.owner) {
+      replace("/home");
+    } else {
+      replace(`/home?shTI=${userInfo.treeId}&shUI=${userInfo.userId}`);
+    }
   };
 
   return (
