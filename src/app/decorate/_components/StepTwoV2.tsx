@@ -96,8 +96,10 @@ export default function StepTwoV2({
           await toBlob(element, { cacheBust: true });
           await toBlob(element, { cacheBust: true });
           await toBlob(element, { cacheBust: true });
+          await toBlob(element, { cacheBust: true });
+          await toBlob(element, { cacheBust: true });
 
-          while ((blob?.size ?? 0) <= 0 && i < maxAttempts) {
+          while ((blob?.size ?? 0) < 1000 && i < maxAttempts) {
             blob = await toBlob(element, { cacheBust: true });
           }
 
