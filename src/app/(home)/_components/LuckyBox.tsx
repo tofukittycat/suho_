@@ -25,7 +25,7 @@ export default function LuckyBox({ date, onClick }: LuckyBoxProps) {
           onClick={handleClick}
           className="cursor-pointer text-center text-[10px] font-[600] text-main-purple-suho"
         >
-          {`${date} 행운기운 보기`}
+          행운 부적 만들기
         </Label>
         <MdOpenInNew className="size-[13px] text-main-purple-suho" />
       </HStack>

@@ -107,6 +107,7 @@ export default function StepTwoV2({
 
         if (dataUrl !== "") {
           console.log("@@@@@@@@@@@@@@ dataUrl", dataUrl);
+          console.log("@@@@@@@@@@@@@@ i", i);
           setDecorateInfo(prev => ({ ...prev, blobURL: dataUrl }));
 
           setTimeout(() => {

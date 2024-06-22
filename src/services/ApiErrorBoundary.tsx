@@ -8,7 +8,7 @@ import axios, { AxiosError } from "axios";
 
 type ErrorResponseType = {
   status: number;
-  error: string;
+  message: string;
   path: string;
 };
 
@@ -36,7 +36,7 @@ export default function ApiErrorBoundary({ children }: ApiErrorBoundaryProps) {
 
     const errorResponse = axiosError.response?.data as ErrorResponseType;
     const statusCode = errorResponse.status;
-    const message = errorResponse.error;
+    const message = errorResponse.message;
 
     console.error(message);
 

@@ -70,13 +70,6 @@ export default function useLuckyTree() {
           const treeId = data.id;
           handleGoToTreeFortuneResult(treeId);
         },
-        onError(error) {
-          toast({
-            title: "Uh on! Error",
-            description: `${error.message}`,
-            duration: 2000,
-          });
-        },
       },
     );
   };

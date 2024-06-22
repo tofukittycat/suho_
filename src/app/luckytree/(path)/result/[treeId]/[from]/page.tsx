@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 
+import CharmCustomizeSheet from "@/app/horoscope/_components/CharmCustomizeSheet";
 import LuckyResultPending from "@/app/luckytree/_components/LuckyResultPending";
 import CTAButton from "@/components/CTAButton";
 import CTAContainer from "@/components/CTAContainer";
@@ -111,7 +112,9 @@ export default function page({ params }: { params: { treeId: string; from: strin
                       <NavFooter
                         ratio="1:3"
                         left={{ onClick: router.back }}
-                        right={{ children: "행운 나무 설정", onClick: handleGoToLuckyTreeRemove }}
+                        right={{
+                          children: <CharmCustomizeSheet />,
+                        }}
                       />
                     );
                   } else if (params.from === "from-CreateTree") {
