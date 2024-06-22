@@ -69,6 +69,8 @@ export default function StepTwoV2({
   const [descMessage, setDescMessage] = useState(PLACEHOLDER);
   const [isEditMode, setIsEditMode] = useState(false);
 
+  const [testURL, setTestURL] = useState<string>();
+
   const stickerImageURLs =
     stickersData?.supplementTypes.flatMap(sticker => sticker.images.map(image => image.url)) ?? [];
 
@@ -93,11 +95,12 @@ export default function StepTwoV2({
         toBlob(element).then(blob => {
           if (blob) {
             const url = window.URL.createObjectURL(blob);
+            setTestURL(url);
             setDecorateInfo(prev => ({ ...prev, blobURL: url }));
 
             setTimeout(() => {
               openDetails();
-            }, 3000);
+            });
           }
         });
       } else {
@@ -353,7 +356,7 @@ export default function StepTwoV2({
         </HStack>
       </SwipeableBottomSheet>
       {/* Details */}
-      <CharmDownloadSheetNoSSR isOpen={isOpenDetails} close={closeDetails} />
+      <CharmDownloadSheetNoSSR isOpen={isOpenDetails} testURL={testURL} close={closeDetails} />
     </>
   );
 }
