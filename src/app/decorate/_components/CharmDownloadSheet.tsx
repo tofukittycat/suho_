@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { triggerBase64Download } from "react-base64-downloader";
 import { IoClose as CloseIcon } from "react-icons/io5";
 
+import { fileDownload } from "@/app/horoscope/_components/CharmCustomizeSheet";
 import BottomSheet from "@/components/BottomSheet";
 import SHImage from "@/components/base/SHImage";
 import SHLabel from "@/components/base/SHLabel";
@@ -15,6 +16,7 @@ import useAppRepository from "@/components/hooks/useAppRepository";
 import useToggle from "@/components/hooks/useToggle";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { fileNameByURL } from "@/utils/utils";
 
 export default function CharmDownloadSheet({
   isOpen,
@@ -35,7 +37,9 @@ export default function CharmDownloadSheet({
   };
 
   const handleDownload = () => {
-    triggerBase64Download(decorateInfo.blobURL, "onsuho.png");
+    if (decorateInfo.blobURL) {
+      fileDownload(decorateInfo.blobURL, fileNameByURL(decorateInfo.blobURL));
+    }
   };
 
   return (
@@ -48,7 +52,7 @@ export default function CharmDownloadSheet({
           </HStack>
           <SHImage src={decorateInfo.blobURL} className="mx-auto mt-[10px] h-[485px] w-[319px]" />
           <Button
-            className={` mt-[20px] h-[54px] rounded-[15px] bg-main-purple-suho text-[16px] font-[600] text-white hover:bg-[#7553f0]`}
+            className={`mt-[20px] h-[54px] rounded-[15px] bg-main-purple-suho text-[16px] font-[600] text-white hover:bg-[#7553f0]`}
             onClick={handleDownload}
           >
             다운로드
