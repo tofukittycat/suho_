@@ -70,6 +70,8 @@ export default function StepTwoV2({
   const [descMessage, setDescMessage] = useState(PLACEHOLDER);
   const [isEditMode, setIsEditMode] = useState(false);
 
+  const [testURL, setTestURL] = useState<string>();
+
   const stickerImageURLs =
     stickersData?.supplementTypes.flatMap(sticker => sticker.images.map(image => image.url)) ?? [];
 
@@ -124,6 +126,7 @@ export default function StepTwoV2({
                 },
               )
               .then(res => {
+                setTestURL(res.data);
                 setDecorateInfo(prev => ({ ...prev, blobURL: res.data }));
                 openDetails();
               });
@@ -382,7 +385,7 @@ export default function StepTwoV2({
         </HStack>
       </SwipeableBottomSheet>
       {/* Details */}
-      <CharmDownloadSheetNoSSR isOpen={isOpenDetails} close={closeDetails} />
+      <CharmDownloadSheetNoSSR testURL={testURL} isOpen={isOpenDetails} close={closeDetails} />
     </>
   );
 }
