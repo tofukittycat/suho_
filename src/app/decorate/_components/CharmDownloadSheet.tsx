@@ -18,11 +18,9 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
 export default function CharmDownloadSheet({
   isOpen,
-  testURL,
   close,
 }: {
   isOpen: boolean;
-  testURL?: string;
   close: () => void;
 }) {
   const router = useRouter();
@@ -48,12 +46,7 @@ export default function CharmDownloadSheet({
           <HStack sx={{ justifyContent: "flex-end", mt: "34px" }}>
             <CloseIcon className="size-[24px] text-white" onClick={handleClose} />
           </HStack>
-          {testURL && <SHImage src={testURL} className="mx-auto mt-[10px] h-[485px] w-[319px]" />}
-          {/* <img
-            src={decorateInfo.blobURL}
-            alt="suho"
-            className="mx-auto mt-[10px] h-[485px] w-[319px]"
-          /> */}
+          <SHImage src={decorateInfo.blobURL} className="mx-auto mt-[10px] h-[485px] w-[319px]" />
           <Button
             className={` mt-[20px] h-[54px] rounded-[15px] bg-main-purple-suho text-[16px] font-[600] text-white hover:bg-[#7553f0]`}
             onClick={handleDownload}

@@ -17,7 +17,7 @@ import useToggle from "@/components/hooks/useToggle";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Button } from "@mui/material";
-import { toBlob } from "html-to-image";
+import { toBlob, toSvg } from "html-to-image";
 
 import useQueryFetchTodayHoroscopeTreeStickers from "../_hooks/queries/useQueryFetchTodayHoroscopeTreeStickers";
 import { UseDecorateType } from "../_hooks/useDecorate";
@@ -69,8 +69,6 @@ export default function StepTwoV2({
   const [descMessage, setDescMessage] = useState(PLACEHOLDER);
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const [testURL, setTestURL] = useState<string>();
-
   const stickerImageURLs =
     stickersData?.supplementTypes.flatMap(sticker => sticker.images.map(image => image.url)) ?? [];
 
@@ -91,18 +89,57 @@ export default function StepTwoV2({
       if (decorateInfo.onlyDownload) {
         // const base64URL = await toPng(element, { includeQueryParams: false });
         // setDecorateInfo(prev => ({ ...prev, base64URL }));
+        toSvg(element, {
+          filter(domNode) {
+            return domNode.tagName !== "i";
+          },
+        }).then(imageURL => {
+          setDecorateInfo(prev => ({ ...prev, blobURL: imageURL }));
 
-        toBlob(element).then(blob => {
-          if (blob) {
-            const url = window.URL.createObjectURL(blob);
-            setTestURL(url);
-            setDecorateInfo(prev => ({ ...prev, blobURL: url }));
-
-            setTimeout(() => {
-              openDetails();
-            });
-          }
+          setTimeout(() => {
+            openDetails();
+          }, 100);
         });
+
+        // toBlob(element).then(async blob => {
+        //   console.log("@@@@blob", blob);
+        //   const url = await apiClient
+        //     .post(
+        //       "/charms",
+        //       { image: blob },
+        //       {
+        //         headers: {
+        //           "Content-Type": "multipart/form-data",
+        //         },
+        //       },
+        //     )
+        //     .then(response => {
+        //       const blob = new Blob([response.data], { type: response.headers["content-type"] });
+        //       console.log("@@@@@@@@@@@@", blob);
+        //       const image = URL.createObjectURL(blob);
+
+        //       return image;
+        //     })
+        //     .then(image => {
+        //       setDecorateInfo(prev => ({ ...prev, blobURL: image }));
+
+        //       setTimeout(() => {
+        //         openDetails();
+        //       }, 100);
+        //     });
+        // });
+
+        // toBlob(element).then(blob => {
+        //   if (blob) {
+        //     const url = window.URL.createObjectURL(blob);
+        //     setTestURL(url);
+        //     setDecorateInfo(prev => ({ ...prev, blobURL: url }));
+
+        //     setTimeout(() => {
+        //       openDetails();
+        //     });
+        //   }
+        // });
       } else {
         toBlob(element, { includeQueryParams: true })
           .then(blob => {
@@ -356,7 +393,7 @@ export default function StepTwoV2({
         </HStack>
       </SwipeableBottomSheet>
       {/* Details */}
-      <CharmDownloadSheetNoSSR isOpen={isOpenDetails} testURL={testURL} close={closeDetails} />
+      <CharmDownloadSheetNoSSR isOpen={isOpenDetails} close={closeDetails} />
     </>
   );
 }
