@@ -17,7 +17,7 @@ import useToggle from "@/components/hooks/useToggle";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Button } from "@mui/material";
-import { toBlob, toPng } from "html-to-image";
+import { toBlob, toPng, toSvg } from "html-to-image";
 
 import useQueryFetchTodayHoroscopeTreeStickers from "../_hooks/queries/useQueryFetchTodayHoroscopeTreeStickers";
 import { UseDecorateType } from "../_hooks/useDecorate";
@@ -93,7 +93,11 @@ export default function StepTwoV2({
         const maxAttempts = 10;
 
         while (dataUrl.length < minDataLength && i < maxAttempts) {
-          dataUrl = await toPng(element);
+          dataUrl = await toSvg(element, {
+            filter(domNode) {
+              return domNode.tagName !== "i";
+            },
+          });
           i += 1;
         }
 
