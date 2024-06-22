@@ -17,7 +17,7 @@ import useToggle from "@/components/hooks/useToggle";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Button } from "@mui/material";
-import { toBlob, toPng } from "html-to-image";
+import { toBlob } from "html-to-image";
 
 import useQueryFetchTodayHoroscopeTreeStickers from "../_hooks/queries/useQueryFetchTodayHoroscopeTreeStickers";
 import { UseDecorateType } from "../_hooks/useDecorate";
@@ -79,40 +79,75 @@ export default function StepTwoV2({
   };
 
   const captureScreenshot = async () => {
-    initStickers(async () => {
-      setTimeout(async () => {
-        const element = document.getElementById(SUHO_CAPTURE_IMAGE);
+    initStickers(() => {
+      const element = document.getElementById(SUHO_CAPTURE_IMAGE);
 
-        if (!element) {
-          return;
-        }
+      if (!element) {
+        return;
+      }
 
-        if (decorateInfo.onlyDownload) {
-          // const base64URL = await toPng(element, { includeQueryParams: false });
-          // setDecorateInfo(prev => ({ ...prev, base64URL }));
+      if (decorateInfo.onlyDownload) {
+        // const base64URL = await toPng(element, { includeQueryParams: false });
+        // setDecorateInfo(prev => ({ ...prev, base64URL }));
 
-          await toBlob(element).then(blob => {
-            if (blob) {
-              const url = window.URL.createObjectURL(blob);
-              setDecorateInfo(prev => ({ ...prev, blobURL: url }));
-
-              setTimeout(() => {
-                openDetails();
-              }, 100);
-            }
-          });
-        } else {
-          const blob = await toBlob(element, { includeQueryParams: true }) //
-            .catch(error => {
-              console.error("이미지화 에러 (decorate)", error);
-            });
-
+        toBlob(element).then(blob => {
           if (blob) {
-            updateFields({ image: blob });
+            const url = window.URL.createObjectURL(blob);
+            setDecorateInfo(prev => ({ ...prev, blobURL: url }));
+
+            setTimeout(() => {
+              openDetails();
+            }, 3000);
           }
-        }
-      }, 100);
+        });
+      } else {
+        toBlob(element, { includeQueryParams: true })
+          .then(blob => {
+            if (blob) {
+              updateFields({ image: blob });
+            }
+          })
+          .catch(error => {
+            console.error("이미지화 에러 (decorate)", error);
+          });
+      }
     });
+
+    //
+    // initStickers(async () => {
+    //   setTimeout(async () => {
+    //     const element = document.getElementById(SUHO_CAPTURE_IMAGE);
+
+    //     if (!element) {
+    //       return;
+    //     }
+
+    //     if (decorateInfo.onlyDownload) {
+    //       // const base64URL = await toPng(element, { includeQueryParams: false });
+    //       // setDecorateInfo(prev => ({ ...prev, base64URL }));
+
+    //       await toBlob(element).then(blob => {
+    //         if (blob) {
+    //           const url = window.URL.createObjectURL(blob);
+    //           setDecorateInfo(prev => ({ ...prev, blobURL: url }));
+
+    //           setTimeout(() => {
+    //             openDetails();
+    //           }, 100);
+    //         }
+    //       });
+    //     } else {
+    //       const blob = await toBlob(element, { includeQueryParams: true }) //
+    //         .catch(error => {
+    //           console.error("이미지화 에러 (decorate)", error);
+    //         });
+
+    //       if (blob) {
+    //         updateFields({ image: blob });
+    //       }
+    //     }
+    //   }, 100);
+    // });
   };
 
   const openBottomSheet = () => setIsOpenBottomSheet(true);
