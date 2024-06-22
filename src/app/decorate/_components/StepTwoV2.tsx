@@ -17,7 +17,7 @@ import useToggle from "@/components/hooks/useToggle";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Button } from "@mui/material";
-import { toBlob, toSvg } from "html-to-image";
+import { toBlob, toPng } from "html-to-image";
 
 import useQueryFetchTodayHoroscopeTreeStickers from "../_hooks/queries/useQueryFetchTodayHoroscopeTreeStickers";
 import { UseDecorateType } from "../_hooks/useDecorate";
@@ -79,7 +79,7 @@ export default function StepTwoV2({
   };
 
   const captureScreenshot = async () => {
-    initStickers(() => {
+    initStickers(async () => {
       const element = document.getElementById(SUHO_CAPTURE_IMAGE);
 
       if (!element) {
@@ -87,19 +87,21 @@ export default function StepTwoV2({
       }
 
       if (decorateInfo.onlyDownload) {
-        // const base64URL = await toPng(element, { includeQueryParams: false });
-        // setDecorateInfo(prev => ({ ...prev, base64URL }));
-        toSvg(element, {
-          filter(domNode) {
-            return domNode.tagName !== "i";
-          },
-        }).then(imageURL => {
-          setDecorateInfo(prev => ({ ...prev, blobURL: imageURL }));
+        let dataUrl = "";
+        const minDataLength = 2000000;
+        let i = 0;
+        const maxAttempts = 10;
 
-          setTimeout(() => {
-            openDetails();
-          }, 100);
-        });
+        while (dataUrl.length < minDataLength && i < maxAttempts) {
+          dataUrl = await toPng(element);
+          i += 1;
+        }
+
+        setDecorateInfo(prev => ({ ...prev, blobURL: dataUrl }));
+
+        setTimeout(() => {
+          openDetails();
+        }, 100);
 
         // toBlob(element).then(async blob => {
         //   console.log("@@@@blob", blob);
