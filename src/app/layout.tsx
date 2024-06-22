@@ -24,9 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ONSUHO",
     description: "부족한 기운을 채워 수호해주는 행운 부적 서비스",
-    images: {
-      url: "/og_image.png",
-    },
+    images: [{ url: "/og_image.png", width: 800, height: 400 }],
     locale: "ko_KR",
     type: "website",
   },
