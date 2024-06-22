@@ -16,6 +16,7 @@ import useAppRepository from "@/components/hooks/useAppRepository";
 import useToggle from "@/components/hooks/useToggle";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import apiClient from "@/services/apiClient";
 import { Button } from "@mui/material";
 import { toBlob, toPng, toSvg } from "html-to-image";
 
@@ -87,73 +88,47 @@ export default function StepTwoV2({
       }
 
       if (decorateInfo.onlyDownload) {
-        let dataUrl = "";
-        const minDataLength = 2000000;
-        let i = 0;
-        const maxAttempts = 100;
-
-        await toSvg(element, { filter: node => node.tagName !== "i" });
-        await toSvg(element, { filter: node => node.tagName !== "i" });
-        await toSvg(element, { filter: node => node.tagName !== "i" });
-
-        while (dataUrl.length < minDataLength && i < maxAttempts) {
-          dataUrl = await toSvg(element, {
-            filter(domNode) {
-              return domNode.tagName !== "i";
-            },
+        // let dataUrl = "";
+        // const minDataLength = 2000000;
+        // let i = 0;
+        // const maxAttempts = 100;
+        // await toSvg(element, { filter: node => node.tagName !== "i" });
+        // await toSvg(element, { filter: node => node.tagName !== "i" });
+        // await toSvg(element, { filter: node => node.tagName !== "i" });
+        // while (dataUrl.length < minDataLength && i < maxAttempts) {
+        //   dataUrl = await toSvg(element, {
+        //     filter(domNode) {
+        //       return domNode.tagName !== "i";
+        //     },
+        //   });
+        //   i += 1;
+        // }
+        // if (dataUrl !== "") {
+        //   console.log("@@@@@@@@@@@@@@ dataUrl", dataUrl);
+        //   console.log("@@@@@@@@@@@@@@ i", i);
+        //   setDecorateInfo(prev => ({ ...prev, blobURL: dataUrl }));
+        //   setTimeout(() => {
+        //     openDetails();
+        //   }, 100);
+        // }
+        setTimeout(() => {
+          toBlob(element).then(async blob => {
+            await apiClient
+              .post(
+                "/charms",
+                { image: blob },
+                {
+                  headers: {
+                    "Content-Type": "multipart/form-data",
+                  },
+                },
+              )
+              .then(res => {
+                setDecorateInfo(prev => ({ ...prev, blobURL: res.data }));
+                openDetails();
+              });
           });
-          i += 1;
-        }
-
-        if (dataUrl !== "") {
-          console.log("@@@@@@@@@@@@@@ dataUrl", dataUrl);
-          console.log("@@@@@@@@@@@@@@ i", i);
-          setDecorateInfo(prev => ({ ...prev, blobURL: dataUrl }));
-
-          setTimeout(() => {
-            openDetails();
-          }, 100);
-        }
-
-        // toBlob(element).then(async blob => {
-        //   console.log("@@@@blob", blob);
-        //   const url = await apiClient
-        //     .post(
-        //       "/charms",
-        //       { image: blob },
-        //       {
-        //         headers: {
-        //           "Content-Type": "multipart/form-data",
-        //         },
-        //       },
-        //     )
-        //     .then(response => {
-        //       const blob = new Blob([response.data], { type: response.headers["content-type"] });
-        //       console.log("@@@@@@@@@@@@", blob);
-        //       const image = URL.createObjectURL(blob);
-
-        //       return image;
-        //     })
-        //     .then(image => {
-        //       setDecorateInfo(prev => ({ ...prev, blobURL: image }));
-
-        //       setTimeout(() => {
-        //         openDetails();
-        //       }, 100);
-        //     });
-        // });
-
-        // toBlob(element).then(blob => {
-        //   if (blob) {
-        //     const url = window.URL.createObjectURL(blob);
-        //     setTestURL(url);
-        //     setDecorateInfo(prev => ({ ...prev, blobURL: url }));
-
-        //     setTimeout(() => {
-        //       openDetails();
-        //     });
-        //   }
-        // });
+        }, 200);
       } else {
         toBlob(element, { includeQueryParams: true })
           .then(blob => {
