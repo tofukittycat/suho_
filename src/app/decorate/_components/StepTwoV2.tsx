@@ -90,7 +90,7 @@ export default function StepTwoV2({
         let dataUrl = "";
         const minDataLength = 2000000;
         let i = 0;
-        const maxAttempts = 10;
+        const maxAttempts = 100;
 
         await toSvg(element, { filter: node => node.tagName !== "i" });
         await toSvg(element, { filter: node => node.tagName !== "i" });
@@ -106,6 +106,7 @@ export default function StepTwoV2({
         }
 
         if (dataUrl !== "") {
+          console.log("@@@@@@@@@@@@@@ dataUrl", dataUrl);
           setDecorateInfo(prev => ({ ...prev, blobURL: dataUrl }));
 
           setTimeout(() => {
