@@ -18,8 +18,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import apiClient from "@/services/apiClient";
 import { Button } from "@mui/material";
-// import { toBlob, toPng, toSvg } from "html-to-image";
-import domtoimage from "dom-to-image";
+import { toBlob, toPng, toSvg } from "html-to-image";
 
 import useQueryFetchTodayHoroscopeTreeStickers from "../_hooks/queries/useQueryFetchTodayHoroscopeTreeStickers";
 import { UseDecorateType } from "../_hooks/useDecorate";
@@ -90,23 +89,21 @@ export default function StepTwoV2({
 
       if (decorateInfo.onlyDownload) {
         setTimeout(async () => {
-          // let blob: Blob | null = null;
-          // const i = 0;
-          // const maxAttempts = 100;
+          let blob: Blob | null = null;
+          const i = 0;
+          const maxAttempts = 100;
 
-          // await toBlob(element, { cacheBust: true });
-          // await toBlob(element, { cacheBust: true });
-          // await toBlob(element, { cacheBust: true });
+          await toBlob(element, { cacheBust: true });
+          await toBlob(element, { cacheBust: true });
+          await toBlob(element, { cacheBust: true });
 
-          // while ((blob?.size ?? 0) <= 0 && i < maxAttempts) {
-          //   blob = await toBlob(element, { cacheBust: true });
-          // }
-
-          const blob = await domtoimage.toBlob(element);
+          while ((blob?.size ?? 0) <= 0 && i < maxAttempts) {
+            blob = await toBlob(element, { cacheBust: true });
+          }
 
           if (blob) {
             const response = await apiClient.post(
-              "/charms/upload",
+              "/charms",
               { image: blob },
               {
                 headers: {
@@ -120,8 +117,7 @@ export default function StepTwoV2({
           }
         }, 200);
       } else {
-        await domtoimage
-          .toBlob(element)
+        toBlob(element, { includeQueryParams: true })
           .then(blob => {
             if (blob) {
               updateFields({ image: blob });
@@ -130,15 +126,6 @@ export default function StepTwoV2({
           .catch(error => {
             console.error("이미지화 에러 (decorate)", error);
           });
-        // toBlob(element, { includeQueryParams: true })
-        //   .then(blob => {
-        //     if (blob) {
-        //       updateFields({ image: blob });
-        //     }
-        //   })
-        //   .catch(error => {
-        //     console.error("이미지화 에러 (decorate)", error);
-        //   });
       }
     });
 
