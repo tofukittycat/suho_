@@ -106,7 +106,7 @@ export default function StepTwoV2({
 
           if (blob) {
             const response = await apiClient.post(
-              "/charms",
+              "/charms/upload",
               { image: blob },
               {
                 headers: {
