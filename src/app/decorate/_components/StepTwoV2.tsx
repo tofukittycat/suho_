@@ -91,14 +91,16 @@ export default function StepTwoV2({
           // const base64URL = await toPng(element, { includeQueryParams: false });
           // setDecorateInfo(prev => ({ ...prev, base64URL }));
 
-          const blob = await toBlob(element);
+          await toBlob(element).then(blob => {
+            if (blob) {
+              const url = window.URL.createObjectURL(blob);
+              setDecorateInfo(prev => ({ ...prev, blobURL: url }));
 
-          if (blob) {
-            const url = window.URL.createObjectURL(blob);
-            setDecorateInfo(prev => ({ ...prev, blobURL: url }));
-          }
-
-          openDetails();
+              setTimeout(() => {
+                openDetails();
+              }, 100);
+            }
+          });
         } else {
           const blob = await toBlob(element, { includeQueryParams: true }) //
             .catch(error => {
