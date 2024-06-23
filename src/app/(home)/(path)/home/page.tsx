@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo } from "react";
 
 import useAppRepository from "@/components/hooks/useAppRepository";
+import useAuth from "@/components/hooks/useAuth";
 
 import TreeEmptyStatusView from "../../_components/TreeEmptyStatusView";
 import TreeExistStatusView from "../../_components/TreeExistStatusView";
@@ -14,6 +15,7 @@ import useHome from "../../_hooks/useHome";
 
 const useCheckGuest = () => {
   const searchParmas = useSearchParams();
+  const { clearToken } = useAuth();
 
   const {
     userInfoStore: [userInfo, setUserInfo],
@@ -29,6 +31,10 @@ const useCheckGuest = () => {
   const receivedParam = fromShareReceivedParam;
 
   useEffect(() => {
+    if (receivedParam.treeId && receivedParam.userId) {
+      clearToken();
+    }
+
     setUserInfo({
       ...userInfo,
       userId: fromShareReceivedParam.userId,
