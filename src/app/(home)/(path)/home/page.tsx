@@ -52,7 +52,12 @@ export default function Home() {
     userInfoStore: [userInfo, setUserInfo],
   } = useAppRepository();
 
-  const useFetchTreeInfo = useQueryFetchTreeInfo({ userId: userInfo.userId });
+  const useFetchTreeInfo = useQueryFetchTreeInfo({
+    userId: receivedParam.userId ? receivedParam.userId : userInfo.userId,
+  });
+  // const useFetchTreeInfo = useQueryFetchTreeInfo({
+  //   userId: userInfo.userId,
+  // });
   const { data: treeInfoData, isPending: isTreeInfoPending } = useFetchTreeInfo;
 
   const treeId = useMemo(() => {
