@@ -114,7 +114,7 @@ export default function DailyHoroscopePage() {
                     </SHLabel>
                     {/* 오늘의 행운 부적 받기 버튼 */}
                     <VStack className="mt-[16px]">
-                      <CharmCustomizeSheet />
+                      <CharmCustomizeSheet onlyDownload={true} />
                     </VStack>
                   </VStack>
                 </SHCard>

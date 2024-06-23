@@ -15,7 +15,8 @@ import useToggle from "@/components/hooks/useToggle";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import apiClient from "@/services/apiClient";
-import { Button } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { Button, CircularProgress } from "@mui/material";
 import { toBlob } from "html-to-image";
 
 import useQueryFetchTreeStickers from "../_hooks/queries/useQueryFetchTreeStickers";
@@ -61,6 +62,7 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
   const [selectedSticker, setSelectedSticker] = useState<StickerType>();
   const [descMessage, setDescMessage] = useState(PLACEHOLDER);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { isOpen: isOpenDetails, open: openDetails, close: closeDetails } = useToggle();
 
@@ -74,6 +76,8 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
   };
 
   const captureScreenshot = async () => {
+    setIsLoading(true);
+
     initStickers(async () => {
       setTimeout(async () => {
         const element = document.getElementById(SUHO_CAPTURE_IMAGE);
@@ -108,6 +112,7 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
               },
             );
 
+            setIsLoading(false);
             setDecorateInfo(prev => ({ ...prev, blobURL: response.data }));
             openDetails();
           }
@@ -127,6 +132,7 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
           }
 
           if (blob) {
+            setIsLoading(false);
             updateFields({ image: blob });
           }
         }
@@ -165,18 +171,29 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
           <VStack className="mt-[45px] w-full items-center justify-center">
             <HStack className="w-full items-center justify-between px-[20px]">
               <ArrowBackIcon
-                className="h-[24px] w-[24px] cursor-pointer text-white"
+                className="mr-[14px] h-[24px] w-[24px] cursor-pointer text-white"
                 onClick={onClickBack}
               />
-              <Label className="flex-grow-1 text-[16px] font-[700] text-white">
+              <Label className="flex-grow-1 mx-[20px] w-full text-center text-[16px] font-[700] text-white">
                 행운의 메세지와 스티커로 꾸미기
               </Label>
-              <Label
-                className="cursor-pointer text-[16px] font-[700] text-[#A48AFF]"
+              <LoadingButton
+                loading={isLoading}
+                loadingIndicator={<CircularProgress size={"20px"} />}
                 onClick={captureScreenshot}
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 700,
+                  color: "#A48AFF",
+                  padding: 0,
+                  marginRight: "-10px",
+                  width: "46px",
+                  minWidth: "46px",
+                }}
+                color="inherit"
               >
                 완료
-              </Label>
+              </LoadingButton>
             </HStack>
             <Label className="text-[13px] font-[500] text-white">{description}</Label>
           </VStack>
@@ -215,7 +232,6 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
                   scrollbarColor: "blue",
                   scrollbarWidth: "none",
                 }}
-                placeholder={PLACEHOLDER}
                 value={descMessage}
                 onChange={e => setDescMessage(e.target.value)}
                 onEditMode={() => {

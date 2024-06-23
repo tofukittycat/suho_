@@ -1,5 +1,3 @@
-import lStorage, { StorageKeys } from "@/utils/storage";
-
 import apiClient from "../apiClient";
 
 type UserCheckInfoResponse = {

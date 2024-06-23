@@ -113,7 +113,7 @@ export default function page({ params }: { params: { treeId: string; from: strin
                         ratio="1:3"
                         left={{ onClick: router.back }}
                         right={{
-                          children: <CharmCustomizeSheet />,
+                          children: <CharmCustomizeSheet onlyDownload={false} />,
                         }}
                       />
                     );

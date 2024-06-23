@@ -18,7 +18,7 @@ import { fileNameByURL } from "@/utils/utils";
 
 import useQueryFetchTodayHoroscopeCharmInfo from "../_hooks/queries/useQueryFetchTodayHoroscopeCharmInfo";
 
-export default function CharmCustomizeSheet() {
+export default function CharmCustomizeSheet({ onlyDownload }: { onlyDownload: boolean }) {
   const { push } = useRouter();
   const { data, isPending } = useQueryFetchTodayHoroscopeCharmInfo();
 
@@ -31,12 +31,19 @@ export default function CharmCustomizeSheet() {
     push("/home");
 
     setTimeout(() => {
-      if (userInfo.treeId) {
-        push(`/decorate/${userInfo.treeId}`);
-        setDecorateInfo(prev => ({ ...prev, onlyDownload: false, imageURL: data?.imageURL ?? "" }));
-      } else {
+      // if (userInfo.treeId) {
+      //   push(`/decorate/${userInfo.treeId}`);
+      //   setDecorateInfo(prev => ({ ...prev, onlyDownload: false, imageURL: data?.imageURL ?? "" }));
+      // } else {
+      //   push(`/decorate/download`);
+      //   setDecorateInfo(prev => ({ ...prev, onlyDownload: true, imageURL: data?.imageURL ?? "" }));
+      // }
+      if (onlyDownload) {
         push(`/decorate/download`);
         setDecorateInfo(prev => ({ ...prev, onlyDownload: true, imageURL: data?.imageURL ?? "" }));
+      } else {
+        push(`/decorate/${userInfo.treeId}`);
+        setDecorateInfo(prev => ({ ...prev, onlyDownload: false, imageURL: data?.imageURL ?? "" }));
       }
     }, 100);
   };
