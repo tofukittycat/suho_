@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 
 import AppLayout from "@/components/AppLayout";
 import { cn } from "@/lib/utils";
+import ExternalLinkHandler from "@/providers/ExternalLinkHandler";
 
 import AppRegister from "../AppRegister";
 import "./globals.css";
@@ -55,6 +56,7 @@ export default function RootLayout({
         )}
       >
         <AppRegister>
+          <ExternalLinkHandler />
           <AppLayout>{children}</AppLayout>
         </AppRegister>
       </body>
