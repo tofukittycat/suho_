@@ -31,10 +31,6 @@ const useCheckGuest = () => {
   const receivedParam = fromShareReceivedParam;
 
   useEffect(() => {
-    if (receivedParam.treeId && receivedParam.userId) {
-      clearToken();
-    }
-
     setUserInfo({
       ...userInfo,
       userId: fromShareReceivedParam.userId,
