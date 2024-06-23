@@ -16,6 +16,7 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.onsuho.com/"),
   title: "ONSUHO",
   description: "부족한 기운을 채워 수호해주는 행운 부적 서비스",
   icons: {
@@ -28,6 +29,15 @@ export const metadata: Metadata = {
     locale: "ko_KR",
     type: "website",
   },
+  twitter: {
+    images: [
+      {
+        url: "/og_image.png",
+        width: 800,
+        height: 400,
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -37,6 +47,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${pretendard.variable} font-pretendard font-semibold`}>
+      <head></head>
       <body
         className={cn(
           pretendard.className,
