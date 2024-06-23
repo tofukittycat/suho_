@@ -88,84 +88,54 @@ export default function StepTwoV2({
       }
 
       if (decorateInfo.onlyDownload) {
-        setTimeout(async () => {
-          let blob: Blob | null = null;
-          const i = 0;
-          const maxAttempts = 100;
+        let blob: Blob | null = null;
+        const i = 0;
+        const maxAttempts = 100;
 
-          await toBlob(element, { cacheBust: true });
-          await toBlob(element, { cacheBust: true });
-          await toBlob(element, { cacheBust: true });
-          await toBlob(element, { cacheBust: true });
-          await toBlob(element, { cacheBust: true });
+        await toBlob(element, { cacheBust: true });
+        await toBlob(element, { cacheBust: true });
+        await toBlob(element, { cacheBust: true });
+        await toBlob(element, { cacheBust: true });
+        await toBlob(element, { cacheBust: true });
 
-          while ((blob?.size ?? 0) < 1000 && i < maxAttempts) {
-            blob = await toBlob(element, { cacheBust: true });
-          }
+        while ((blob?.size ?? 0) < 1000 && i < maxAttempts) {
+          blob = await toBlob(element, { cacheBust: true });
+        }
 
-          if (blob) {
-            const response = await apiClient.post(
-              "/charms",
-              { image: blob },
-              {
-                headers: {
-                  "Content-Type": "multipart/form-data",
-                },
+        if (blob) {
+          const response = await apiClient.post(
+            "/charms",
+            { image: blob },
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
               },
-            );
+            },
+          );
 
-            setDecorateInfo(prev => ({ ...prev, blobURL: response.data }));
-            openDetails();
-          }
-        }, 200);
+          setDecorateInfo(prev => ({ ...prev, blobURL: response.data }));
+          openDetails();
+        }
       } else {
-        toBlob(element, { includeQueryParams: true })
-          .then(blob => {
-            if (blob) {
-              updateFields({ image: blob });
-            }
-          })
-          .catch(error => {
-            console.error("이미지화 에러 (decorate)", error);
-          });
+        let blob: Blob | null = null;
+        const i = 0;
+        const maxAttempts = 100;
+
+        await toBlob(element, { cacheBust: true });
+        await toBlob(element, { cacheBust: true });
+        await toBlob(element, { cacheBust: true });
+        await toBlob(element, { cacheBust: true });
+        await toBlob(element, { cacheBust: true });
+
+        while ((blob?.size ?? 0) < 1000 && i < maxAttempts) {
+          blob = await toBlob(element, { cacheBust: true });
+        }
+
+        if (blob) {
+          updateFields({ image: blob });
+        }
       }
     });
-
-    //
-    // initStickers(async () => {
-    //   setTimeout(async () => {
-    //     const element = document.getElementById(SUHO_CAPTURE_IMAGE);
-
-    //     if (!element) {
-    //       return;
-    //     }
-
-    //     if (decorateInfo.onlyDownload) {
-    //       // const base64URL = await toPng(element, { includeQueryParams: false });
-    //       // setDecorateInfo(prev => ({ ...prev, base64URL }));
-
-    //       await toBlob(element).then(blob => {
-    //         if (blob) {
-    //           const url = window.URL.createObjectURL(blob);
-    //           setDecorateInfo(prev => ({ ...prev, blobURL: url }));
-
-    //           setTimeout(() => {
-    //             openDetails();
-    //           }, 100);
-    //         }
-    //       });
-    //     } else {
-    //       const blob = await toBlob(element, { includeQueryParams: true }) //
-    //         .catch(error => {
-    //           console.error("이미지화 에러 (decorate)", error);
-    //         });
-
-    //       if (blob) {
-    //         updateFields({ image: blob });
-    //       }
-    //     }
-    //   }, 100);
-    // });
   };
 
   const openBottomSheet = () => setIsOpenBottomSheet(true);

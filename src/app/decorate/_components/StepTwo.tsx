@@ -14,6 +14,7 @@ import useAppRepository from "@/components/hooks/useAppRepository";
 import useToggle from "@/components/hooks/useToggle";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import apiClient from "@/services/apiClient";
 import { Button } from "@mui/material";
 import { toBlob, toPng } from "html-to-image";
 
@@ -82,15 +83,48 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
         }
 
         if (decorateInfo.onlyDownload) {
-          const imageURL = await toPng(element, { includeQueryParams: true });
-          setDecorateInfo(prev => ({ ...prev, imageURL }));
+          let blob: Blob | null = null;
+          const i = 0;
+          const maxAttempts = 100;
 
-          openDetails();
+          await toBlob(element, { cacheBust: true });
+          await toBlob(element, { cacheBust: true });
+          await toBlob(element, { cacheBust: true });
+          await toBlob(element, { cacheBust: true });
+          await toBlob(element, { cacheBust: true });
+
+          while ((blob?.size ?? 0) < 1000 && i < maxAttempts) {
+            blob = await toBlob(element, { cacheBust: true });
+          }
+
+          if (blob) {
+            const response = await apiClient.post(
+              "/charms",
+              { image: blob },
+              {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+              },
+            );
+
+            setDecorateInfo(prev => ({ ...prev, blobURL: response.data }));
+            openDetails();
+          }
         } else {
-          const blob = await toBlob(element, { includeQueryParams: true }) //
-            .catch(error => {
-              console.error("이미지화 에러 (decorate)", error);
-            });
+          let blob: Blob | null = null;
+          const i = 0;
+          const maxAttempts = 100;
+
+          await toBlob(element, { cacheBust: true });
+          await toBlob(element, { cacheBust: true });
+          await toBlob(element, { cacheBust: true });
+          await toBlob(element, { cacheBust: true });
+          await toBlob(element, { cacheBust: true });
+
+          while ((blob?.size ?? 0) < 1000 && i < maxAttempts) {
+            blob = await toBlob(element, { cacheBust: true });
+          }
 
           if (blob) {
             updateFields({ image: blob });
