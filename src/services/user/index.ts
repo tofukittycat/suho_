@@ -23,8 +23,8 @@ type UserInfoResponse = {
 };
 
 // 유저 정보 조회
-export const getUserInfo = async ({ userId }: { userId: number }): Promise<UserInfoResponse> => {
-  return (await apiClient.get(`/users/my/${userId}`)).data;
+export const getUserInfo = async (): Promise<UserInfoResponse> => {
+  return (await apiClient.get(`/users/my`)).data;
 };
 
 // 유저 정보 업데이트

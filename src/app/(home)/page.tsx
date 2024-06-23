@@ -33,7 +33,7 @@ function EntryRouting() {
         updateToken(token);
 
         const userCheckInfo = await getUserCheckInfo();
-        const userInfo = await getUserInfo({ userId: userCheckInfo.id });
+        const userInfo = await getUserInfo();
 
         setUserInfo({
           ...userInfo,

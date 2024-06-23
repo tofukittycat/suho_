@@ -12,11 +12,7 @@ export default function useQueryFetchUserInfo() {
   const { data, isPending } = useQuery({
     queryKey: [QueryKeys.UserInfo],
     queryFn: () => {
-      if (!userInfo.userId) {
-        return Promise.reject();
-      }
-
-      return getUserInfo({ userId: userInfo.userId });
+      return getUserInfo();
     },
     staleTime: 0,
   });
