@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { ReactNode } from "react";
 
 import { useToast } from "@/components/ui/use-toast";
@@ -18,6 +20,7 @@ type ApiErrorBoundaryProps = {
 
 export default function ApiErrorBoundary({ children }: ApiErrorBoundaryProps) {
   const queryClient = useQueryClient();
+  const { replace } = useRouter();
   const { toast } = useToast();
 
   queryClient.getQueryCache().config = {
@@ -38,18 +41,13 @@ export default function ApiErrorBoundary({ children }: ApiErrorBoundaryProps) {
     const statusCode = errorResponse.status;
     const message = errorResponse.message;
 
-    console.error(message);
-
     switch (statusCode) {
-      case 400:
       case 401:
-      case 403:
+        window.location.href = "/signin";
         toast({ description: message });
-
         break;
       default:
         toast({ description: `⚠️ ${message}: ${statusCode}` });
-        // window.location.href = "/signin"; // 일단 로그인으로~
         break;
     }
   }
