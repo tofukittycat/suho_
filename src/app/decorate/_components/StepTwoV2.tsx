@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import apiClient from "@/services/apiClient";
 import { Button } from "@mui/material";
-import { toBlob, toPng, toSvg } from "html-to-image";
+import { toBlob } from "html-to-image";
 
 import useQueryFetchTodayHoroscopeTreeStickers from "../_hooks/queries/useQueryFetchTodayHoroscopeTreeStickers";
 import { UseDecorateType } from "../_hooks/useDecorate";

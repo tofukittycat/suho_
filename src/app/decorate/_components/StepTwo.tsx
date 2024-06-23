@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import apiClient from "@/services/apiClient";
 import { Button } from "@mui/material";
-import { toBlob, toPng } from "html-to-image";
+import { toBlob } from "html-to-image";
 
 import useQueryFetchTreeStickers from "../_hooks/queries/useQueryFetchTreeStickers";
 import { UseDecorateType } from "../_hooks/useDecorate";
@@ -215,10 +215,21 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
                   scrollbarColor: "blue",
                   scrollbarWidth: "none",
                 }}
+                placeholder={PLACEHOLDER}
                 value={descMessage}
                 onChange={e => setDescMessage(e.target.value)}
-                onEditMode={() => setIsEditMode(true)}
-                onBlur={() => setIsEditMode(false)}
+                onEditMode={() => {
+                  if (descMessage === PLACEHOLDER) {
+                    setDescMessage("");
+                  }
+
+                  setIsEditMode(true);
+                }}
+                onBlur={() => {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  (window.document.body.style as any).zoom = 1;
+                  setIsEditMode(false);
+                }}
               />
               {tempStickers.map(item => (
                 <Rnd
