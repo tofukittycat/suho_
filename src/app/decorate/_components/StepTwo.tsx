@@ -160,7 +160,7 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
 
   return (
     <>
-      <VStack className="h-full w-full justify-start">
+      <VStack className="h-full w-full justify-start overflow-y-auto">
         <VStack sx={{ width: "100%", gap: "10px" }}>
           <VStack className="mt-[45px] w-full items-center justify-center">
             <HStack className="w-full items-center justify-between px-[20px]">
