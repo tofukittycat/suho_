@@ -347,7 +347,14 @@ export default function StepTwoV2({
                         closeBottomSheet();
                       }}
                     >
-                      <img src={url} alt="sticker" className="h-full w-full" />
+                      <object
+                        type="image/svg+xml"
+                        data={url}
+                        className="pointer-events-none inline-block fill-slate-100 stroke-transparent"
+                        width={"100%"}
+                        height={"100%"}
+                      ></object>
+                      {/* <img src={url} alt="sticker" className="h-full w-full" /> */}
                     </Button>
                   ))}
                 </>
