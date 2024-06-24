@@ -137,6 +137,7 @@ export default function StepTwoV2({
         }
 
         if (blob) {
+          setIsLoading(false);
           updateFields({ image: blob });
         }
       }
