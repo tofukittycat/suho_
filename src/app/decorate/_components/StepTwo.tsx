@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { isMobileSafari } from "react-device-detect";
 import { EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
 import { IoIosArrowBack as ArrowBackIcon, IoIosCloseCircle as CloseIcon } from "react-icons/io";
@@ -343,13 +344,15 @@ export default function StepTwo({ useDecorateControls, onClickBack, onClickSubmi
                         closeBottomSheet();
                       }}
                     >
-                      <object
-                        type="image/svg+xml"
-                        data={url}
-                        className="pointer-events-none inline-block fill-slate-100 stroke-transparent"
-                        width={"100%"}
-                        height={"100%"}
-                      ></object>
+                      {isMobileSafari ? (
+                        <object
+                          type="image/svg+xml"
+                          data={url}
+                          className="pointer-events-none h-full w-full"
+                        />
+                      ) : (
+                        <img src={url} alt="sticker" className="h-full w-full" />
+                      )}
                     </Button>
                   ))}
                 </>
