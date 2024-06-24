@@ -97,7 +97,6 @@ export default function TreeExistStatusView({
           <VStack className="h-[52%] w-full items-center justify-end">
             <VStack>
               <VStack
-                component={"object"}
                 className={
                   "relative h-[280px] w-[310px] items-center bg-[url('/imgs/home_tree_top.svg')] bg-contain bg-bottom bg-no-repeat pt-[15px] sm:h-[370px] sm:w-[350px] sm:pt-[70px]"
                 }
