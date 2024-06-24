@@ -1,5 +1,6 @@
 "use client";
 
+import { isMobileSafari } from "react-device-detect";
 import { IoClose as CloseIcon } from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
@@ -81,8 +82,13 @@ export default function CharmDownloadAndShareSheet({
   return (
     <Drawer direction="bottom" open={isOpenDrawer} onClose={closeDrawer}>
       <DrawerTrigger onClick={openDrawer}>
-        <VStack className="max-h-[70px] w-[50px] max-w-[50px] cursor-pointer items-center bg-none hover:bg-black-purple-suho/10">
-          {thumbnailUrl && <SHImage src={thumbnailUrl} className="h-[50px] w-[50px]" />}
+        <VStack className="pointer-events-none max-h-[70px] w-[50px] max-w-[50px] cursor-pointer items-center bg-none hover:bg-black-purple-suho/10">
+          {thumbnailUrl &&
+            (isMobileSafari ? (
+              <object data={thumbnailUrl} className="h-[50px] w-[50px]" />
+            ) : (
+              <SHImage src={thumbnailUrl} className="h-[50px] w-[50px]" />
+            ))}
           <SHLabel className="text-[13px] font-[500] text-white">{sender}</SHLabel>
         </VStack>
       </DrawerTrigger>

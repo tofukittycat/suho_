@@ -354,7 +354,6 @@ export default function StepTwoV2({
                         width={"100%"}
                         height={"100%"}
                       ></object>
-                      {/* <img src={url} alt="sticker" className="h-full w-full" /> */}
                     </Button>
                   ))}
                 </>
