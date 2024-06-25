@@ -112,7 +112,7 @@ export default function DailyHoroscopePage() {
                     <SHLabel className="whitespace-pre-wrap text-[14px] font-[500] text-[#E6E8EB]">
                       {data?.gptResponse.luckSpiritContent}
                     </SHLabel>
-                    {/* 오늘의 행운 부적 받기 버튼 */}
+                    {/* 행운 부적 받기 버튼 */}
                     <VStack className="mt-[16px]">
                       <CharmCustomizeSheet onlyDownload={true} />
                     </VStack>

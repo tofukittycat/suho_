@@ -60,7 +60,7 @@ export default function CharmCustomizeSheet({ onlyDownload }: { onlyDownload: bo
     <Drawer direction="bottom">
       <DrawerTrigger>
         <Button className="h-[54px] w-full rounded-[15px] bg-main-purple-suho text-[16px] font-[600] text-white hover:bg-[#7553f0]">
-          오늘의 행운 부적 받기
+          행운 부적 받기
         </Button>
       </DrawerTrigger>
       <DrawerContent className="mx-auto flex h-full w-full items-center justify-center rounded-none border-none bg-transparent  md:w-[430px]">
