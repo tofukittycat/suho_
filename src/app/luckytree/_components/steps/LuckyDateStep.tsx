@@ -24,18 +24,21 @@ export default function LuckyDateStep({ useluckyTree, onClickSubmit }: LuckyDate
   const [date, setDate] = useState<Date | undefined>(new Date());
 
   const onSelectDate = (date: Date | undefined) => {
+    const selectedDate = dayjs(date);
+    const yesterday = dayjs().set("date", dayjs().date() - 1);
+
     if (date) {
       // ex) 2024-05-17
       const formatedDate = dayjs(date).format("YYYY-MM-DD");
+      setDate(date);
 
-      if (!dayjs().isBefore(date)) {
+      // 오늘부터 선택 가능
+      if (selectedDate.isBefore(yesterday)) {
+        toast({ description: "오늘부터 선택이 가능합니다." });
         updateFields({ luckyDate: null });
-
-        toast({ description: "오늘 이후의 날짜를 선택해주세요." });
         return;
       }
 
-      setDate(date);
       updateFields({ luckyDate: formatedDate });
     }
   };
